@@ -8,7 +8,7 @@ import Signup from "./Pages/Signup";
 import Navbar from "./Components/Navbar";
 import './App.css';
 import Notfound from "./Pages/Notfound";
-import { AuthProvider } from './Context/authcontext';
+import { AuthProvider } from './Context/authcontext'; //
 import ProductDetail from "./Pages/Productdeatils";
 import Footer from "./Components/Footer";
 import About from "./Components/About";
