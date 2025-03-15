@@ -15,10 +15,15 @@ import About from "./Components/About";
 import Sellerlogin from "./Pages/Sellerlogin";
 import Selleregister from "./Pages/Sellerregister";
 import SellerHome from "./Pages/SellerHome";  // New page for sellers
-
+import LoadingSpinner from "./Components/Loadingspinner";
+import BestofElectronicsHome from "./Components/BestofElectronicsHome";
 function App() {
-  const { user } = useAuth();  // Get user from context
-
+  const { user,loading } = useAuth();  // Get user from context
+   
+  if (loading) {
+    return <LoadingSpinner />;  // Display the spinner while loading
+  }
+    
   const router = createBrowserRouter([
     {
       path: "/",
@@ -67,6 +72,16 @@ function App() {
         <div>
           <Navbar />
           <ProductDetail />
+          <Footer />
+        </div>
+      ),
+    },
+    {
+      path: "/electronicsitems/:id",
+      element: (
+        <div>
+          <Navbar />
+          <BestofElectronicsHome />
           <Footer />
         </div>
       ),

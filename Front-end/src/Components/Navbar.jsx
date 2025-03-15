@@ -49,7 +49,7 @@ const Navbar = () => {
               </NavLink>
             </li>
             <li className="relative flex items-center w-70">
-              <input type="text" placeholder="Search products..." className="w-full px-5 py-2 font-mono border-gray-400 rounded-xl text-gray-500 outline-none bg-white" />
+              <input type="text" placeholder="Search products..." className="w-full px-5 py-2 font-normal border-gray-400 rounded-xl text-gray-500 outline-none bg-white" />
             </li>
             <li>
               <NavLink to="/mywishlist" className={({ isActive }) => isActive ? "text-blue-400 border-b-2 border-blue-400 pb-1 flex items-center gap-2" : "hover:text-gray-300 flex items-center gap-2"}>
@@ -87,7 +87,7 @@ const Navbar = () => {
               </div>
             ) : (
               <div className="relative">
-                <NavLink onClick={() => setDropdownOpenL(!dropdownOpenL)} className="flex items-center gap-2 text-2xl px-3 py-2 rounded-xl bg-amber-400 text-black hover:bg-amber-200">
+                <NavLink onClick={() => setDropdownOpenL(!dropdownOpenL)} className="flex items-center gap-2 text-2xl px-5 py-[5px] rounded-xl text-red-400 border-2 bg-transparent  hover:text-yellow-50">
                   <FaSignInAlt className="text-xl" /> Login
                 </NavLink>
                 

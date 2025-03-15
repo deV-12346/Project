@@ -1,6 +1,6 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import { products, laptoplist, mobilelist } from "../assets/assets";
+import { products, laptoplist, mobilelist,earphones ,cars} from "../assets/assets";
 
 const ProductDetail = () => {
   const { id } = useParams();
@@ -41,6 +41,44 @@ const ProductDetail = () => {
                   className="w-full h-32 rounded-md object-cover"
                 />
                 <h2 className="mt-2 font-semibold text-sm text-center">{mobile.name}</h2>
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+    }
+    if (id === "2") {
+      return (
+        <div className="p-5">
+          <h1 className="text-2xl font-bold mb-4">Available Mobiles</h1>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {cars.map((car) => (
+              <div key={car.id} className="p-4 bg-gray-100 rounded-lg shadow-md">
+                <img
+                  src={car.image}
+                  alt={car.name}
+                  className="w-full h-32 rounded-md object-cover"
+                />
+                <h2 className="mt-2 font-semibold text-sm text-center">{car.name}</h2>
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+    }
+    if (id === "3") {
+      return (
+        <div className="p-5">
+          <h1 className="text-2xl font-bold mb-4">Available Mobiles</h1>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {earphones.map((earphone) => (
+              <div key={earphone.id} className="p-4 bg-gray-100 rounded-lg shadow-md">
+                <img
+                  src={earphone.image}
+                  alt={earphone.name}
+                  className="w-full h-32 rounded-md object-cover"
+                />
+                <h2 className="mt-2 font-semibold text-sm text-center">{earphone.name}</h2>
               </div>
             ))}
           </div>

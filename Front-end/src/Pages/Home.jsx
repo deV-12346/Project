@@ -2,6 +2,7 @@ import React from 'react'
 import {  FaMapMarkerAlt } from 'react-icons/fa';
 import Displayhome from './Displayhome';
 import { Link } from "react-router-dom";
+import Homelectronic from '../Components/Homelectronic';
 
 const Home = () => {
   return (
@@ -20,6 +21,7 @@ const Home = () => {
             <button className='flex hover:underline'><FaMapMarkerAlt className='text-2xl'/>My Loaction</button>
         </div>
         <Displayhome />
+        <Homelectronic/>
       </div>
   )
 }

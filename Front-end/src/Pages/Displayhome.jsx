@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 const Displayhome = () => {
   return (
     <div>
-      <div className="bg-amber-100 md: w-full h-auto pb-5 mb-5">
+      <div className="bg-amber-100 md: w-full h-auto pb-5 mt-4 mb-5 rounded-2xl">
         <h1 className="ml-5 py-3 font-bold text-2xl text-center md:text-left">
           Featured Products
         </h1>
@@ -16,7 +16,7 @@ const Displayhome = () => {
                 <img
                   src={item.image}
                   alt={item.name}
-                  className="w-full h-42 rounded-md object-cover hover:grayscale-100"
+                  className="w-full h-52 rounded-md object-cover hover:grayscale-100"
                 />
                 <h2 className="mt-2 font-semibold text-sm text-center hover:underline">
                   {item.name}
