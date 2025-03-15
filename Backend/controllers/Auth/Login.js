@@ -2,7 +2,7 @@ const User = require("../../Models/user.model");
 const bcrypt = require("bcryptjs");
 const { loginValidation } = require("../../Services/Validatiion_schema"); // Import your validation schema
 
-const login = async (req, res, next) => {
+const Login = async (req, res, next) => {
   try {
 
     const { email, password } = await loginValidation.validateAsync(req.body);
@@ -38,4 +38,4 @@ const login = async (req, res, next) => {
   }
 };
 
-module.exports = { login };
+module.exports = { Login };

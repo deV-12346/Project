@@ -15,7 +15,7 @@ const validateMessages = {
   },
 };
 
-const Signup = () => {
+const Selleregister = () => {
   const navigate = useNavigate();
 
   const onFinish = (values) => {
@@ -23,13 +23,13 @@ const Signup = () => {
 
     // Make API call
     axios
-      .post("http://localhost:5001/api/auth/register", values) // Corrected endpoint
+      .post("http://localhost:5001/api/auth/sellerregister", values) // Corrected endpoint
       .then((response) => {
         console.log("Response:", response);
 
         if (response.data.success) {
           toast.success(response.data.message || "Registered successfully!"); // Success toast
-          setTimeout(() => navigate("/login"), 3000); // Redirect after 3 seconds
+          setTimeout(() => navigate("/Sellerlogin"), 1000); // Redirect after 3 seconds
         } else {
           toast.error(response.data.message || "Registration failed!"); // Show error message
         }
@@ -42,17 +42,17 @@ const Signup = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-500">
+    <div className="flex items-center justify-center min-h-screen bg-blue-500">
       <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-sm">
-        <h2 className="text-2xl font-bold mb-6 text-center">Sign Up</h2>
+        <h2 className="text-2xl font-bold mb-6 text-center">Seller Sign Up</h2>
         <Form
           name="signup-form"
           onFinish={onFinish}
           className="w-full"
           validateMessages={validateMessages}
         >
-          <Form.Item name="username" rules={[{ required: true, min: 3, max: 15 }]}>
-            <Input placeholder="Enter full name" />
+          <Form.Item name="sellername" rules={[{ required: true, min: 3, max: 15 }]}>
+            <Input placeholder="Enter full sellername" />
           </Form.Item>
 
           <Form.Item name="email" rules={[{ type: "email", required: true }]}>
@@ -87,21 +87,15 @@ const Signup = () => {
               htmlType="submit"
               className="w-full bg-blue-500 hover:bg-blue-600 text-white rounded-md"
             >
-              Register
+              Register as seller
             </Button>
           </Form.Item>
         </Form>
 
         <div className="text-center mt-4">
           <span className="text-gray-600">Already registered? </span>
-          <Link to="/login" className="text-blue-500 hover:underline">
+          <Link to="/Sellerlogin" className="text-blue-500 hover:underline">
             Login
-          </Link>
-        </div>
-        <div className="text-center mt-4">
-          <span className="text-gray-600">Become a seller </span>
-          <Link to="/Sellerregister" className="text-blue-500 hover:underline">
-            Register
           </Link>
         </div>
       </div>
@@ -110,4 +104,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default Selleregister;

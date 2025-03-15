@@ -1,4 +1,4 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, RouterProvider, Navigate } from "react-router-dom";
 import Home from "./Pages/Home";
 import Shop from "./Pages/Shop";
 import Wishlist from "./Pages/Wishlist";
@@ -8,19 +8,25 @@ import Signup from "./Pages/Signup";
 import Navbar from "./Components/Navbar";
 import './App.css';
 import Notfound from "./Pages/Notfound";
-import { AuthProvider } from './Context/authcontext'; //
+import { AuthProvider, useAuth } from './Context/authcontext';  // Import auth context
 import ProductDetail from "./Pages/Productdeatils";
 import Footer from "./Components/Footer";
 import About from "./Components/About";
+import Sellerlogin from "./Pages/Sellerlogin";
+import Selleregister from "./Pages/Sellerregister";
+import SellerHome from "./Pages/SellerHome";  // New page for sellers
 
 function App() {
+  const { user } = useAuth();  // Get user from context
+
   const router = createBrowserRouter([
     {
       path: "/",
       element: (
         <div>
           <Navbar />
-          <Home />
+          {/* Conditionally render Home page based on user role */}
+          {user?.sellername ? <Navigate to="/sellerhome" /> : <Home />}
           <Footer />
         </div>
       ),
@@ -77,18 +83,37 @@ function App() {
     },
     {
       path: "/login",
-      element:
-      <Login/>,
+      element: <Login />,
     },
     {
       path: "/signup",
-      element: <Signup/>,
+      element: <Signup />,
+    },
+    {
+      path: "/sellerlogin",
+      element: <Sellerlogin />,
+    },
+    {
+      path: "/sellerregister",
+      element: <Selleregister />,
+    },
+    {
+      path: "/sellerhome",  // Seller's homepage
+      element: user?.sellername ? (
+        <div>
+          <Navbar />
+          <SellerHome />
+          <Footer />
+        </div>
+      ) : (
+        <Navigate to="/" />
+      ),
     },
     {
       path: "*",
       element: (
         <div>
-          <Notfound/>
+          <Notfound />
         </div>
       ),
     },
@@ -97,7 +122,7 @@ function App() {
   return (
     <div>
       <AuthProvider>
-      <RouterProvider router={router} />
+        <RouterProvider router={router} />
       </AuthProvider>
     </div>
   );

@@ -1,6 +1,6 @@
 const User = require("../../Models/user.model");
 const { registrationValidation } = require("../../Services/Validatiion_schema");
-const register = async (req, res, next) => {
+const Register = async (req, res, next) => {
   try {
     const registerValues = await registrationValidation.validateAsync(req.body);
     console.log(registerValues);
@@ -35,4 +35,4 @@ const register = async (req, res, next) => {
   }
 };
 
-module.exports = register;
+module.exports = Register;

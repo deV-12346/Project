@@ -1,4 +1,4 @@
-// mongo connection 
+// mongo connection establish
 const mongoose = require("mongoose");
 const chalk = require("chalk");
 const routes = require("./routes/index");

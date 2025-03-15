@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { FaHome, FaShoppingBag, FaChevronDown,FaHeart, FaBox, FaSignInAlt, FaUser, FaTimes } from "react-icons/fa"; // Added FaTimes for close button
+import { FaHome, FaShoppingBag, FaChevronDown, FaHeart, FaBox, FaSignInAlt, FaUser, FaTimes } from "react-icons/fa"; 
 import { useAuth } from "../Context/authcontext"; // Import authentication context
 
 const Navbar = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [dropdownOpen, setDropdownOpen] = useState(false); // State for dropdown
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [dropdownOpenL, setDropdownOpenL] = useState(false);
   const { user, logout } = useAuth(); // Get user & logout function
   const navigate = useNavigate(); // Navigation hook
 
@@ -14,6 +15,10 @@ const Navbar = () => {
     setDropdownOpen(false); // Close dropdown
     navigate("/login"); // Redirect to login page
   };
+
+  useEffect(() => {
+    console.log(user);  // Check the user object for debugging purposes
+  }, [user]);  // Log user whenever it changes
 
   return (
     <>
@@ -64,14 +69,14 @@ const Navbar = () => {
               <div className="relative">
                 {/* Clickable User Icon with Username */}
                 <button onClick={() => setDropdownOpen(!dropdownOpen)} className="cursor-pointer font-semibold flex items-center gap-2 hover:underline">
-                  <FaUser className="text-xl" /> {user.username} 
+                  <FaUser className="text-xl" /> {user.sellername || user.username}  {/* Display sellername or username */}
                   <FaChevronDown />
                 </button>
 
                 {/* Dropdown Logout Button */}
                 {dropdownOpen && (
                   <div className="absolute right-0 mt-2 w-42 bg-white rounded-md shadow-lg">
-                      <button onClick={handleLogout} className="block rounded bg-amber-200 w-full text-center px-4 py-2 text-gray-800 hover:bg-gray-400">
+                    <button onClick={handleLogout} className="block rounded bg-amber-200 w-full text-center px-4 py-2 text-gray-800 hover:bg-gray-400">
                       Change Password
                     </button>
                     <button onClick={handleLogout} className="block rounded bg-amber-200 w-full text-center px-4 py-2 text-gray-800 hover:bg-gray-400">
@@ -81,9 +86,23 @@ const Navbar = () => {
                 )}
               </div>
             ) : (
-              <NavLink to="/login" className="flex items-center gap-2 text-2xl px-3 py-2 rounded-xl bg-amber-400 text-black hover:bg-amber-200">
-                <FaSignInAlt className="text-xl" /> Login
-              </NavLink>
+              <div className="relative">
+                <NavLink onClick={() => setDropdownOpenL(!dropdownOpenL)} className="flex items-center gap-2 text-2xl px-3 py-2 rounded-xl bg-amber-400 text-black hover:bg-amber-200">
+                  <FaSignInAlt className="text-xl" /> Login
+                </NavLink>
+                
+                {/* Dropdown for Login Choices */}
+                {dropdownOpenL && (
+                  <div className="absolute right-0 mt-2 w-42 bg-white rounded-md shadow-lg">
+                    <NavLink to="/login" key="buyer-login" className="block rounded bg-amber-200 w-full text-center px-4 py-2 text-gray-800 hover:bg-gray-400">
+                      Log in as Buyer
+                    </NavLink>
+                    <NavLink to="/Sellerlogin" key="seller-login" className="block rounded bg-amber-200 w-full text-center px-4 py-2 text-gray-800 hover:bg-gray-400">
+                      Login as Seller
+                    </NavLink>
+                  </div>
+                )}
+              </div>
             )}
           </div>
         </div>

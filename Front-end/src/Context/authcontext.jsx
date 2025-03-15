@@ -10,6 +10,7 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     // Fetch user data from localStorage
     const storedUser = localStorage.getItem("user");
+    console.log('Stored User in LocalStorage:', storedUser);  // Log to check
     if (storedUser) {
       setUser(JSON.parse(storedUser));  // Set user state from localStorage
     }
@@ -17,6 +18,7 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const login = (user) => {
+    console.log('Login User:', user);  // Log to check user object during login
     localStorage.setItem("user", JSON.stringify(user));  // Store user in localStorage
     setUser(user);  // Set user in context state
   };
