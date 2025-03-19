@@ -8,7 +8,7 @@ import LoadingSpinner from '../Components/Loadingspinner';
 
 const Login = () => {
   const navigate = useNavigate();
-  const { login } = useAuth(); // Get login function from context
+  const { login } = useAuth(); 
   const [loading,setloading] = useState(false)
 
   const onFinish = async (values) => {

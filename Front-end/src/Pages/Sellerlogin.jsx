@@ -1,14 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button, Form, Input, message } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import { useAuth } from "../Context/authcontext";  // Import useAuth
+import LoadingSpinner from '../Components/Loadingspinner';
 
 const Sellerlogin = () => {
   const navigate = useNavigate();
   const { login } = useAuth(); 
    // Get login function from context
+   const [loading,setloading] = useState(false)
 
   const onFinish = async (values) => {
     try {
@@ -18,21 +20,26 @@ const Sellerlogin = () => {
       if (response.data.success) {
         toast.success(response.data.message);
         message.success(response.data.message);
-        login(response.data.user);
-        navigate('/');  // Redirect to home page or dashboard
+        setloading(true)
+        setTimeout(() => {
+          login(response.data.user);
+          navigate('/');  // Redirect to home page or dashboard
+        }, 2000);
       } 
     } catch (error) {
       console.log("Error response:", error.response?.data);
       const errorMessage = error.response?.data?.message || "Login failed";
       toast.error(errorMessage);
       message.error(errorMessage);
+      setloading(false)
     }
   };
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-blue-500">
+         <ToastContainer position='top-center' />
+         { loading ? ( <LoadingSpinner/> ) : (
       <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-sm">
-        <ToastContainer position='top-center' />
         <h2 className="text-2xl font-bold mb-6 text-center">Seller Login</h2>
         <Form name="basic" onFinish={onFinish} autoComplete="off">
           <Form.Item name="email" rules={[{ type: "email", required: true }]}>
@@ -67,7 +74,8 @@ const Sellerlogin = () => {
             Back to home
           </Link>
         </div>
-      </div>
+      </div>  
+         )}
     </div>
   );
 };

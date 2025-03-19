@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { FaHome, FaShoppingBag, FaChevronDown, FaHeart, FaBox, FaSignInAlt, FaUser, FaTimes } from "react-icons/fa"; 
 import { useAuth } from "../Context/authcontext"; // Import authentication context
-import { use } from "react";
 import {Link} from 'react-router-dom'
 
 const Navbar = () => {
@@ -23,10 +22,6 @@ const Navbar = () => {
     }
 
   };
-
-  useEffect(() => {
-    console.log(user);  // Check the user object for debugging purposes
-  }, [user]);  // Log user whenever it changes
 
   return (
     <>

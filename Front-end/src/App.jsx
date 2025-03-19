@@ -27,7 +27,7 @@ function App() {
       element: (
         <div>
           <Navbar />
-          {user?.sellername ? <SellerHome /> : <Home />}
+          {user?.sellername ? <SellerHome/> : <Home/>}
           <Footer />
         </div>
       ),
