@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 const Homelectronic = () => {
   return (
     <div className='w-full h-174 flex flex-col md:flex-row items-stretch justify-evenly gap-3 '>
-      {/* Left Section */}
       <div className="bg-amber-100 md:w-[50%] flex-1 pb-3 mb-5 rounded-2xl">
         <h1 className="ml-5 py-5 font-bold text-2xl text-center md:text-left">
          Best of Electronics

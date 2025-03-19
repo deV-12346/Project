@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { FaHome, FaShoppingBag, FaChevronDown, FaHeart, FaBox, FaSignInAlt, FaUser, FaTimes } from "react-icons/fa"; 
 import { useAuth } from "../Context/authcontext"; // Import authentication context
+import { use } from "react";
+import {Link} from 'react-router-dom'
 
 const Navbar = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -13,7 +15,13 @@ const Navbar = () => {
   const handleLogout = () => {
     logout(); // Call logout function
     setDropdownOpen(false); // Close dropdown
-    navigate("/login"); // Redirect to login page
+    if(user.username){
+      navigate("/login"); // Redirect to login page
+    }
+    else{
+      navigate("/sellerlogin"); // Redirect to seller login page
+    }
+
   };
 
   useEffect(() => {
@@ -76,9 +84,9 @@ const Navbar = () => {
                 {/* Dropdown Logout Button */}
                 {dropdownOpen && (
                   <div className="absolute right-0 mt-2 w-42 bg-white rounded-md shadow-lg">
-                    <button onClick={handleLogout} className="block rounded bg-amber-200 w-full text-center px-4 py-2 text-gray-800 hover:bg-gray-400">
+                    <Link  to='/changepassword' className="block rounded bg-amber-200 w-full text-center px-4 py-2 text-gray-800 hover:bg-gray-400">
                       Change Password
-                    </button>
+                    </Link>
                     <button onClick={handleLogout} className="block rounded bg-amber-200 w-full text-center px-4 py-2 text-gray-800 hover:bg-gray-400">
                       Logout
                     </button>

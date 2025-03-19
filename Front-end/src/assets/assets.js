@@ -29,7 +29,28 @@ export const products = [
             image: headphone,
         },
 ]
-
+export const electroniclist = [
+    {   
+        id:4,
+        name: "Earbuds",
+        image: earbuds,
+    },
+    {   
+          id:5,
+          name: "Smartwatch",
+          image: smartwatch,
+      },
+      {   
+          id:6,
+          name: "Speakers",
+          image: speaker,
+      },
+      {   
+          id:7,
+          name: "buy wired Earphones",
+          image: earphone,
+      },
+]
 export const laptoplist = [
       {   
           id:100,
@@ -54,12 +75,12 @@ export const laptoplist = [
 ]
 export const mobilelist = [
     {   
-          id:0,
+          id:200,
           name: "buy mobile",
           image: mobile,
     },
     {   
-          id:1,
+          id:201,
           name: "buy mobile",
           image: mobile,
       },
@@ -67,30 +88,6 @@ export const mobilelist = [
 
 export const earphones = [{}]
 export const cars = [{}]
-
-
-export const electroniclist = [
-    {   
-        id:4,
-        name: "Earbuds",
-        image: earbuds,
-    },
-    {   
-          id:5,
-          name: "Smartwatch",
-          image: smartwatch,
-      },
-      {   
-          id:6,
-          name: "Speakers",
-          image: speaker,
-      },
-      {   
-          id:7,
-          name: "buy wired Earphones",
-          image: earphone,
-      },
-]
 export const earbudss = [{}]
 export const smartwatches = [{}]
 export const speakers = [{}]

@@ -17,12 +17,9 @@ import Selleregister from "./Pages/Sellerregister";
 import SellerHome from "./Pages/SellerHome";  // New page for sellers
 import LoadingSpinner from "./Components/Loadingspinner";
 import BestofElectronicsHome from "./Components/BestofElectronicsHome";
+import Chnagepassword from "./Components/Chnagepassword";
 function App() {
-  const { user,loading } = useAuth();  // Get user from context
-   
-  if (loading) {
-    return <LoadingSpinner />;  // Display the spinner while loading
-  }
+  const { user} = useAuth();  // Get user from context
     
   const router = createBrowserRouter([
     {
@@ -30,8 +27,7 @@ function App() {
       element: (
         <div>
           <Navbar />
-          {/* Conditionally render Home page based on user role */}
-          {user?.sellername ? <Navigate to="/sellerhome" /> : <Home />}
+          {user?.sellername ? <SellerHome /> : <Home />}
           <Footer />
         </div>
       ),
@@ -107,6 +103,10 @@ function App() {
     {
       path: "/sellerlogin",
       element: <Sellerlogin />,
+    },
+    {
+      path: "/changepassword",
+      element: <Chnagepassword />,
     },
     {
       path: "/sellerregister",
