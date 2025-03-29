@@ -9,7 +9,7 @@ const Sellerregister = require("../../controllers/Auth/Sellerregister.js")
 const changepassword = require("../../controllers/Auth/changingpassword.js")
 
 router.post("/register", Register);
-router.post("/login", Login)
+router.post("/login",Login)
 
 router.post("/sellerlogin", Sellerlogin)
 router.post("/sellerregister", Sellerregister)

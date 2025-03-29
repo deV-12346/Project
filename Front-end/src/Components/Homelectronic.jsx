@@ -37,9 +37,9 @@ const Homelectronic = () => {
         Top Selling Smartphones
       </h1>
       <p className="text-xl text-gray-900 font-bold mt-2">Latest Technology, Best Brands</p>
-      <button className="mt-30 text-2xl px-11 py-3 bg-transparent border-2 text-red-400 font-sans cursor-pointer  rounded-lg hover:text-red-500">
+      <Link to={'/product/1'} className="mt-30 text-2xl px-11 py-3 bg-transparent border-2 text-red-400 font-sans cursor-pointer  rounded-lg hover:text-red-500">
         Explore
-      </button>
+      </Link>
     </div>
   </div>
 </div>

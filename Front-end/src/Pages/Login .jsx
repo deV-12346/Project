@@ -23,7 +23,7 @@ const Login = () => {
         setTimeout(() => {
           login(response.data.user);
           navigate("/");
-        }, 3000);
+        }, 2000);
       }
     } catch (error) {
       console.log("Error response:", error.response?.data);

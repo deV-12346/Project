@@ -10,7 +10,7 @@ const Chnagepassword = () => {
         const onFinish = async (values) => {
             try {
               const {  old_password , new_password , confirm_password } = values;
-              const response = await axios.put("http://localhost:5001/api/auth/changepassword", { old_password , new_password , confirm_password});
+              const response = await axios.put("http://localhost:5001/api/auth/changepassword/:id", { old_password , new_password , confirm_password});
               if (response.data.success) {
                 toast.success(response.data.message);
                 message.success(response.data.message);

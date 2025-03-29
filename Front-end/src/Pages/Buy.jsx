@@ -2,7 +2,7 @@ import React from 'react'
 
 const Buy = () => {
   return (
-    <div>Buy now</div>
+    <div>Buy used products</div>
   )
 }
 

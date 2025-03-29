@@ -4,7 +4,7 @@ const Register = async (req, res, next) => {
   try {
     const registerValues = await registrationValidation.validateAsync(req.body);
     console.log(registerValues);
-    console.log("user data:", req.body);
+    console.log("User data:", req.body);
     const { username,email,mobileno ,password } = registerValues;
     const userEmail = await User.findOne({
       email,

@@ -50,7 +50,7 @@ const ProductDetail = () => {
     if (id === "2") {
       return (
         <div className="p-5">
-          <h1 className="text-2xl font-bold mb-4">Available Mobiles</h1>
+          <h1 className="text-2xl font-bold mb-4">Available Cars</h1>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {cars.map((car) => (
               <div key={car.id} className="p-4 bg-gray-100 rounded-lg shadow-md">
@@ -69,7 +69,7 @@ const ProductDetail = () => {
     if (id === "3") {
       return (
         <div className="p-5">
-          <h1 className="text-2xl font-bold mb-4">Available Mobiles</h1>
+          <h1 className="text-2xl font-bold mb-4">Available earphones</h1>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {earphones.map((earphone) => (
               <div key={earphone.id} className="p-4 bg-gray-100 rounded-lg shadow-md">
