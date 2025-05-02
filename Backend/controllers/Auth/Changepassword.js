@@ -1,3 +1,4 @@
+
 const User = require("../../Models/user.model");
 const { SendOTP } = require("../../Services/SendOTP")
 const { passwordvalidation } = require("../../Services/Validatiion_schema");
