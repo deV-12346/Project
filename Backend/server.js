@@ -3,13 +3,16 @@ const mongoose = require("mongoose");
 const chalk = require("chalk");
 const routes = require("./routes/index");
 const cors=require("cors")
+require("dotenv").config()
 const express = require("express");
+const path = require("path")
 const backend = express();
 
 // routing 3
 backend.use(express.json()); 
 
 
+backend.use('/uploads', express.static(path.join(__dirname, 'Middleware/uploads')));
 
 // CORS (Second step) 2
 backend.use(cors({
@@ -25,7 +28,7 @@ mongoose.connect("mongodb+srv://dr395108:FoPfEar405P6EmUq@cluster0.lukdk.mongodb
     console.log(`${chalk.green("✓")} ${chalk.blue("MongoDB Connected!")}`)
   )
   .then(() => {
-    const PORT = 5001;
+    const PORT = 5000;
     backend.listen(PORT, () => {
       console.log(
         `${chalk.green("✓")} ${chalk.blue(

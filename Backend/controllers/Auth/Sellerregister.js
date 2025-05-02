@@ -1,5 +1,6 @@
 const Seller = require("../../Models/seller.model");
-const { sellerregisterationValidation } = require("../../Services/Validatiion_schema_s");
+const { sellerregisterationValidation } = require("../../Services/Validatiion_schema");
+const Email = require("../../Services/Seller_Service")
 const Sellerregister = async (req, res, next) => {
   try {
     const registerValues = await sellerregisterationValidation.validateAsync(req.body);
@@ -12,7 +13,7 @@ const Sellerregister = async (req, res, next) => {
     console.log(email);
     
     if (sellerEmail) {
-      return res.status(200).json({
+      return res.status(400).json({
         success: false,
         message: "User Email already exits",
       });
@@ -24,7 +25,7 @@ const Sellerregister = async (req, res, next) => {
       mobileno,
     });
     await newSeller.save();
-
+    await Email(email,sellername,password);
     res.status(200).json({
       success: true,
       message: "Seller registered successfully",

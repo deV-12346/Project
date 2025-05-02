@@ -11,7 +11,7 @@ const SellerSchema = new Schema({
         required: true,
     },
     mobileno:{
-        type: Number,
+        type: String,
         required:true,
     },
     email:{
@@ -35,4 +35,4 @@ const SellerSchema = new Schema({
         return await bcrypt.compare(enteredPassword, this.password);
     };
     
-    module.exports=model("Seller",SellerSchema,"Seller_data")
+module.exports=model("Seller",SellerSchema,"Seller_data")

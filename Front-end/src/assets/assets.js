@@ -7,88 +7,88 @@ import earbuds from './earbuds.jpg'
 import smartwatch from './smartwatch.jpg'
 import speaker from './speaker.jpg'
 import earphone from './earphone.jpg'
-export const products = [
+import star_icon from "./star_icon.svg";
+import star_dull_icon from "./star_dull_icon.svg";
+import cart_icon from "./cart_icon.svg";
+export const assets = {
+     star_icon,
+     star_dull_icon,
+     cart_icon
+}
+export const categories = [
       {   
-          id:0,
-          name: "buy laptop",
+          text:"Laptop",
+          path: "laptop",
           image: laptop,
       },
       {   
-            id:1,
-            name: "buy mobile",
+            text:"Mobile Phone",
+            path: "mobile",
             image: mobile,
         },
         {   
-            id:2,
-            name: "buy car",
+            text:"Car",
+            path: "car",
             image: car,
         },
         {   
-            id:3,
-            name: "buy headphone",
+            text:"Headphone",
+            path: "headphone",
             image: headphone,
         },
-]
-export const electroniclist = [
     {   
-        id:4,
-        name: "Earbuds",
-        image: earbuds,
+           text:"Earbuds",
+           path: "earbuds",
+           image: earbuds,
     },
     {   
-          id:5,
-          name: "Smartwatch",
+           text:"SmartWatch",
+           path: "smartwatch",
           image: smartwatch,
       },
       {   
-          id:6,
-          name: "Speakers",
+          text:"Speaker",
+          path: "Speakers",
           image: speaker,
       },
       {   
-          id:7,
-          name: "buy wired Earphones",
+          text:"Wired Earphones",
+          path: "wiredarphones",
           image: earphone,
       },
 ]
-export const laptoplist = [
-      {   
-          id:100,
-          name: "buy laptop",
-          image: laptop,
-      },
-      {   
-            id:101,
-            name: "buy laptop",
-            image: laptop,
-        },
-        {   
-            id:102,
-            name: "buy laptop",
-            image: laptop,
-        },
-        {   
-            id:103,
-            name: "buy laptop",
-            image: laptop,
-        },
-]
-export const mobilelist = [
-    {   
-          id:200,
-          name: "buy mobile",
-          image: mobile,
+export const dummyProducts = [
+    {
+      _id: "gd46g23h",
+      name: "Lenovo thinkpad",
+      category: "Laptop",
+      price: 50000,
+      offerPrice: 2000,
+      image: laptop,
+      description: [
+        "Fresh and organic",
+        "Rich in carbohydrates",
+        "Ideal for curries and fries",
+      ],
+      createdAt: "2025-03-25T07:17:46.018Z",
+      updatedAt: "2025-03-25T07:18:13.103Z",
+      inStock: true,
     },
-    {   
-          id:201,
-          name: "buy mobile",
-          image: mobile,
-      },
+    {
+      _id: "gd47g34h",
+      name: "Iphone 16",
+      category: "Mobile",
+      price: 78000,
+      offerPrice: 5000,
+      image: mobile,
+      description: [
+        "Juicy and ripe",
+        "Rich in Vitamin C",
+        "Perfect for salads and sauces",
+        "Farm fresh quality",
+      ],
+      createdAt: "2025-03-25T07:17:46.018Z",
+      updatedAt: "2025-03-25T07:18:13.103Z",
+      inStock: true,
+    },
 ]
-
-export const earphones = [{}]
-export const cars = [{}]
-export const earbudss = [{}]
-export const smartwatches = [{}]
-export const speakers = [{}]
-export const wiredearphones= [{}]

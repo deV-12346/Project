@@ -1,7 +1,7 @@
 const Seller = require("../../Models/seller.model"); 
 const bcrypt = require("bcryptjs");
-const { sellerloginValidation } = require("../../Services/Validatiion_schema_s"); // Import your validation schema
-
+const { sellerloginValidation } = require("../../Services/Validatiion_schema"); // Import your validation schema
+const {generatetoken} = require("../../Middleware/Checkauth")
 const Sellerlogin = async (req, res, next) => {
   try {
 
@@ -23,11 +23,19 @@ const Sellerlogin = async (req, res, next) => {
         message: "Incorrect password. Please try again.",
       });
     }
-
+    const payload = {
+        id : existingSeller.id,
+        sellername:existingSeller.sellername,
+        mobileno:existingSeller.mobileno
+    }
+    console.log("payload data :",payload)
+    const token = generatetoken(payload)
     return res.status(200).json({
       success: true,
       message: "Seller Login successfully",
+      token:token,
       user: {
+        id:existingSeller.id,
         sellername: existingSeller.sellername,
         email: existingSeller.email,
       },
