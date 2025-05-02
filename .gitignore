@@ -1,2 +1,7 @@
-Backend/node_modules/:
+# Node modules
+Backend/node_modules/
 Front-end/node_modules/
+Admin-panel/node_modules/
+
+# Environment variables
+Backend/.env
