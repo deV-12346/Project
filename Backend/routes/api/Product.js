@@ -16,4 +16,10 @@ router.post("/usedproduct",OldProduct)
 
 const {UsedProduct} = require("../../controllers/Auth/GetUsedProdcuts")
 router.get("/getsellerproducts",CheckAuth,UsedProduct)
+
+const {EditUsedProduct} = require("../../controllers/Auth/EditUsedProduct")
+router.put("/editusedproduct",EditUsedProduct)
+
+const {DeleteUsedProduct} = require("../../controllers/Auth/DeleteUsedProduct")
+router.delete("/deleteusedproduct",DeleteUsedProduct)
 module.exports = router

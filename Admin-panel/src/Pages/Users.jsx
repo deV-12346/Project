@@ -22,7 +22,6 @@ const UserManagement = () => {
   const totalAdmins = users.filter((user) => user.role === 'admin').length;
   const totalUsers = users.filter((user) => user.role === 'user').length;
 
-  useEffect(() => {
     const fetchUsers = async () => {
       try {
         const response = await Axiosinstance.get(`${baseURL}/api/auth/users`);
@@ -33,8 +32,9 @@ const UserManagement = () => {
         setLoading(false);
       }
     };
+    useEffect(() => {
     fetchUsers();
-  }, []);
+    }, []);
 
   const columns = [
     { title: 'Name', dataIndex: 'username', key: 'id' },
@@ -78,6 +78,7 @@ const UserManagement = () => {
       if (response.status === 200) {
         toast.success("User removed successfully");
         setUsers(users.filter((user) => user._id !== id));
+        fetchUsers();
       }
     } catch (error) {
       toast.error(error.response?.data?.message);
@@ -91,6 +92,7 @@ const UserManagement = () => {
       if (response.status === 200) {
         toast.success("User updated successfully");
         setIsModalVisible(false);
+        fetchUsers();
       }
     } catch (error) {
       toast.error(error.response?.data?.message);
@@ -105,6 +107,7 @@ const UserManagement = () => {
         setIsModalVisibleAdd(false);
         form.resetFields();
         toast.success("User successfully added");
+        fetchUsers();
       }
     } catch (error) {
       toast.error(error?.message);
@@ -113,17 +116,12 @@ const UserManagement = () => {
 
   return (
     <Layout style={{ minHeight: '100vh' }}>
-      {/* Sidebar */}
       <SidebarMenu collapsed={collapsed} setCollapsed={setCollapsed} />
 
-      {/* Main Layout */}
       <Layout>
-        {/* Header */}
         <HeaderBar collapsed={collapsed} setCollapsed={setCollapsed} title="Admin Panel"/>
 
-        {/* Content */}
         <Content style={{ padding: 24, margin: 0, minHeight: 280  }}>
-          {/* Top Row */}
           <Row justify="space-between" align="middle" gutter={[16, 16]}>
             <Col xs={24} sm={12}>
               <h2 className='text-xl md:text-3xl '>Manage Users</h2>

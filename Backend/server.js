@@ -23,7 +23,7 @@ backend.use(cors({
 backend.use(routes)
 
 // mongoose connect 1
-mongoose.connect("mongodb+srv://dr395108:FoPfEar405P6EmUq@cluster0.lukdk.mongodb.net/")
+mongoose.connect(process.env.Connection_String)
   .then(() =>
     console.log(`${chalk.green("✓")} ${chalk.blue("MongoDB Connected!")}`)
   )

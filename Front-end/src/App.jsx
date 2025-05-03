@@ -11,7 +11,6 @@ import Footer from "./Components/Footer";
 import About from "./Components/About";
 import Sellerlogin from "./Seller_Panel/Sellerlogin";
 import Selleregister from "./Seller_Panel/Sellerregister";
-import SellerHome from "./Seller_Panel/SellerHome"; 
 import Chnagepassword from "./Components/Chnagepassword";
 import ManageOrders from "./Seller_Panel/ManageOrder";
 import UploadProducts from "./Seller_Panel/UploadProducts";
@@ -87,10 +86,6 @@ function App() {
     {
       path: "/sellerregister",
       element: <Selleregister />,
-    },
-    {
-      path:"/sellerhome",
-      element:<SellerHome/>
     },
     {
       path:"/seller/orders",
