@@ -11,7 +11,6 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
   const currentPath = location.pathname;
 
   const menuKeyMapping = {
-    '/sellerhome': '1',
     '/seller/products': '2',
     '/seller/orders': '3',
     '/seller/upload': '4',
@@ -36,9 +35,6 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
         selectedKeys={[menuKeyMapping[currentPath]]}
         style={{ height: '100%', borderRight: 0 }}
       >
-        <Menu.Item key="1" icon={<AppstoreAddOutlined />}>
-          <Link to="/sellerhome">Dashboard</Link>
-        </Menu.Item>
         <Menu.Item key="2" icon={<ShoppingCartOutlined />}>
           <Link to="/seller/products">Manage Products</Link>
         </Menu.Item>

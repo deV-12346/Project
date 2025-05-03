@@ -25,7 +25,7 @@ const Sellerlogin = () => {
         setloading(true)
         setTimeout(() => {
           login(response.data.user,response.data.token);
-          navigate('/SellerHome'); 
+          navigate('/Seller/products'); 
         }, 2000);
       } 
     } catch (error) {
