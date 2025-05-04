@@ -34,7 +34,24 @@ const sellerloginValidation = Joi.object({
     password: Joi.string().min(6).required()
   })
 
+const ProductValidation = Joi.object({
+    productName : Joi.string().max(20).required(),
+    productDescription : Joi.string().min(20).required(),
+    category : Joi.string().required(),
+    productPrice : Joi.number().required(),
+    offerPrice : Joi.number().required()
+});
+const UsedProductValidation = Joi.object({
+    id:Joi.string().required(),
+    productName:Joi.string().required(),
+    productDescription : Joi.string().min(30).required(),
+    price:Joi.number().required(),
+    category:Joi.string().required(),
+    address:Joi.string().required(),
+
+})
 module.exports = { registrationValidation ,loginValidation,
     AdduserregistrationValidation, passwordvalidation,
-    sellerloginValidation, sellerregisterationValidation
+    sellerloginValidation, sellerregisterationValidation ,ProductValidation,
+    UsedProductValidation
 };
