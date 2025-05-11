@@ -10,10 +10,11 @@ import earphone from './earphone.jpg'
 import star_icon from "./star_icon.svg";
 import star_dull_icon from "./star_dull_icon.svg";
 import cart_icon from "./cart_icon.svg";
+
 export const assets = {
      star_icon,
      star_dull_icon,
-     cart_icon
+     cart_icon,
 }
 export const categories = [
       {   

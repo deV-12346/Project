@@ -8,8 +8,8 @@ const Navbar = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [dropdownOpenL, setDropdownOpenL] = useState(false);
-  const { user, logout } = UseAppContext(); // Get user & logout function
-  const navigate = useNavigate(); // Navigation hook
+  const { user, logout ,setsearchqurey } = UseAppContext(); 
+  const navigate = useNavigate(); 
 
   const handleLogout = () => {
     logout(); // Call logout function
@@ -32,7 +32,7 @@ const Navbar = () => {
 
           {/* Logo */}
           <div>
-            <img className="h-20 w-40" src="../src/logo/logo1.png" alt="Logo" />
+            <img className="h-20 w-40" src="/logo1.png" alt="Logo" />
           </div>
 
           {/* Main Nav Links */}
@@ -43,12 +43,12 @@ const Navbar = () => {
               </NavLink>
             </li>
             <li>
-              <NavLink to="/shop" className={({ isActive }) => isActive ? "text-primary border-b-2 border-primary pb-1 flex items-center gap-2" : "hover:text-gray-300 flex items-center gap-2"}>
+              <NavLink to="/products" className={({ isActive }) => isActive ? "text-primary border-b-2 border-primary pb-1 flex items-center gap-2" : "hover:text-gray-300 flex items-center gap-2"}>
                 <FaShoppingBag className="text-xl" /> Shop
               </NavLink>
             </li>
             <li className="relative flex items-center w-70">
-              <input type="text" placeholder="Search products..." className="w-full px-5 py-2 font-normal border-gray-400 rounded-xl text-gray-500 outline-none bg-white" />
+              <input type="text" onChange={(e)=>setsearchqurey(e.target.value)} placeholder="Search products..." className="w-full px-5 py-2 font-normal border-gray-400 rounded-xl text-gray-500 outline-none bg-white" />
             </li>
             <li>
               <NavLink to="/mywishlist" className={({ isActive }) => isActive ?" text-primary border-b-2 border-primary pb-1 flex items-center gap-2" : "hover:text-gray-300 flex items-center gap-2"}>
@@ -122,7 +122,7 @@ const Navbar = () => {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/shop" onClick={() => setIsSidebarOpen(false)} className="flex items-center gap-3 hover:text-gray-400">
+            <NavLink to="/products" onClick={() => setIsSidebarOpen(false)} className="flex items-center gap-3 hover:text-gray-400">
               <FaShoppingBag /> Shop
             </NavLink>
           </li>

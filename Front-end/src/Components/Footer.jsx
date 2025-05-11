@@ -17,10 +17,10 @@ const Footer = () => {
       <div className='text-white  w-40 text-center'>
             <h1 className='text-3xl font-extrabold'>Services</h1>
             <ul className='flex flex-col text-[18px]'>
-              <Link to={`/product/0`} className=' hover:text-red-500'>Buy Laptop</Link>
-              <Link to={`/product/1`} className=' hover:text-red-500'>Buy Mobile</Link>
-              <Link to={`/product/2`} className=' hover:text-red-500'>Buy Car</Link>
-              <Link to={`/product/3`} className=' hover:text-red-500'>Buy Headphone</Link>
+              <Link to={`/products/laptop`} className=' hover:text-red-500'>Buy Laptop</Link>
+              <Link to={`/products/mobile`} className=' hover:text-red-500'>Buy Mobile</Link>
+              <Link to={`/products/oldproducts`} className=' hover:text-red-500'>Buy Car</Link>
+              <Link to={`/products/headphone`} className=' hover:text-red-500'>Buy Headphone</Link>
             </ul>
       </div>
       <div className='text-white  w-40 text-center'>

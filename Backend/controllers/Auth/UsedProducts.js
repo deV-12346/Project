@@ -1,4 +1,5 @@
 const UsedProduct =  require("../../Models/UsedProduct")
+const {UsedProductValidation} = require("../../Services/Validatiion_schema")
 const {upload} = require("../../Middleware/Multer")
 const Seller  =  require("../../Models/seller.model")
 const OldProduct = (req,res,next) =>{
@@ -15,7 +16,7 @@ const OldProduct = (req,res,next) =>{
                         })
                   }
       try {
-            const {id, productName,productDescription,price,category,address} = req.body
+            const {id, productName,productDescription,price,category,address} = await UsedProductValidation.validateAsync(req.body)
             const imgurl = req.files.map(file=>({
                   url: `uploads/${file.filename}`     
             }))
@@ -36,6 +37,7 @@ const OldProduct = (req,res,next) =>{
                   productName,
                   productDescription,
                   price,
+                  status:"pending",
                   category,
                   address,
                   uploadedBy:sname,

@@ -15,6 +15,8 @@ import Chnagepassword from "./Components/Chnagepassword";
 import ManageOrders from "./Seller_Panel/ManageOrder";
 import UploadProducts from "./Seller_Panel/UploadProducts";
 import ManageSellerProducts from "./Seller_Panel/ManageProducts";
+import ProductCategories from "./Pages/ProductCategories";
+import ProductDetails from "./Pages/ProductDetails";
 function App() {
   const router = createBrowserRouter([
     {
@@ -28,7 +30,7 @@ function App() {
       ),
     },
     {
-      path: "/shop",
+      path: "/products",
       element: (
         <div>
           <Navbar />
@@ -36,6 +38,24 @@ function App() {
           <Footer />
         </div>
       ),
+    },
+    {
+      path: "/products/:category",
+      element: (
+        <div>
+          <Navbar />
+          <ProductCategories />
+          <Footer />
+        </div>
+      ),
+    },
+    {
+      path:"/products/:category/:id",
+      element: <div>
+       <Navbar />
+        <ProductDetails />
+        <Footer />
+      </div>
     },
     {
       path: "/mywishlist",

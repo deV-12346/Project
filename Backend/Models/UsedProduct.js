@@ -20,6 +20,10 @@ const UsedProductSchema = new Schema({
             require: true,
             type: String
       },
+      status: {
+            require: true,
+            type: String
+      },
       images: [{
             url: {
                   type: String,

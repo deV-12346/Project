@@ -44,34 +44,74 @@ const ManageSellerProducts = () => {
 
   const columns = [
     { title: 'Product Name', dataIndex: 'productName', key: 'productName' },
-    { title: 'Description', dataIndex: 'productDescription', key: 'productDescription' },
     { title: 'Price', dataIndex: 'price', key: 'price' },
     { title: 'Category', dataIndex: 'category', key: 'category' },
-    { title: 'CreatedAt', dataIndex: 'createdAt', key: 'createdAt' },
     {
       title: 'Status',
       dataIndex: 'status',
       key: 'status',
-      render: (status) => (
-        <Tag color={status === 'Placed' ? 'green' : 'orange'}>
-          {status === 'Placed' ? 'Placed' : 'Pending'}
-        </Tag>
-      ),
+      // render: (status) => (
+      //   <Tag color={status === 'Placed' ? 'green' : 'orange'}>
+      //     {status === 'Placed' ? 'Placed' : 'Pending'}
+      //   </Tag>
+      // ),
     },
     {
       title: 'Action',
       key: 'action',
       render: (text, record) => (
         <>
-          <Button type="primary" onClick={() => handleEdit(record)} style={{ marginRight: '8px' }}>
+          <Button  onClick={() => handleEdit(record)} style={{ marginRight: '8px' }}>
             Edit
           </Button>
-          <Button type="primary" danger onClick={()=>handledelete(record._id)}>
+          <Button  onClick={()=>handledelete(record._id)}>
             Delete
           </Button>
         </>
       ),
     },
+    {
+              title: 'Images',
+              dataIndex: 'images',
+              render: (images) => {
+                if (!images || images.length === 0) return 'No Images';
+            
+                const maxVisible = 1;
+                const visibleImages = images.slice(0, maxVisible);
+                const remaining = images.length - maxVisible;
+            
+                return (
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    {visibleImages.map((img, index) => (
+                      <img
+                        key={index}
+                        src={`${baseURL}/${img.url}`}
+                        alt={`product-${index}`}
+                        style={{
+                          width: 50,
+                          height: 50,
+                          objectFit: 'cover',
+                          borderRadius: 4,
+                          border: '1px solid #ccc'
+                        }}
+                      />
+                    ))}
+                    {remaining > 0 && (
+                      <span style={{
+                        fontSize: 12,
+                        color: '#555',
+                        backgroundColor: '#f0f0f0',
+                        padding: '6px 10px',
+                        borderRadius: 6,
+                        fontWeight: 500
+                      }}>
+                        +{remaining} more
+                      </span>
+                    )}
+                  </div>
+                );
+              }
+    }
   ];
   const handleEdit = (record) => {
     setSelectedProduct(record);
@@ -138,10 +178,10 @@ const ManageSellerProducts = () => {
             okText="Update"
           >
             <Form form={form} layout="vertical" onFinish={handleUpdate}  initialValues={selectedProduct} >
-              <Form.Item name="productName" label="Product Name" rules={[{ required: true }]}>
+              <Form.Item name="productName" label="Product Name" rules={[{ required: true ,min:5 }]}>
                 <Input />
               </Form.Item>
-              <Form.Item name="productDescription" label="Description" rules={[{ required: true }]}>
+              <Form.Item name="productDescription" label="Description" rules={[{ required: true, min:30 }]}>
                 <Input />
               </Form.Item>
               <Form.Item name="price" label="Price" rules={[{ required: true }]}>
@@ -150,7 +190,7 @@ const ManageSellerProducts = () => {
               <Form.Item name="category" label="Category" rules={[{ required: true }]}>
                 <Input />
               </Form.Item>
-              <Form.Item name="address" label="Address" rules={[{ required: true }]}>
+              <Form.Item name="address" label="Address" rules={[{ required: true , min:20 }]}>
                 <Input />
               </Form.Item>
             </Form>

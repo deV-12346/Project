@@ -14,7 +14,7 @@ const { Option } = Select;
 const UploadProducts = () => {
   const [fileList, setFileList] = useState([]);
   const [collapsed, setCollapsed] = useState(false);
-
+  const [form] = Form.useForm()
   const handleFileChange = ({ fileList }) => {
     setFileList(fileList);
   };
@@ -27,7 +27,8 @@ const UploadProducts = () => {
     });
 
     formData.append('productName', values.productName);
-    formData.append('productDescription', values.productDescription);
+    formData.append('productDescription', values.productDescription.trim());
+    formData.append('inStock', values.inStock === 'true');;
     formData.append('category', values.category);
     formData.append('productPrice', values.productPrice);
     formData.append('offerPrice', values.offerPrice);
@@ -37,6 +38,8 @@ const UploadProducts = () => {
 
       if (response.data.success) {
         toast.success(response.data.message);
+        form.resetFields()
+        setFileList([])
       }
     } catch (error) {
       console.error(error);
@@ -52,6 +55,7 @@ const UploadProducts = () => {
         <Content style={{ margin: '24px 16px', borderRadius:'10px', padding: 24, display:'flex', justifyContent:'center',alignItems:"center", background: '#fff' }}>
           <div className="py-10 px-5 md:px-20 flex flex-col justify-between bg-gray-100 rounded-2xl">
             <Form
+              form={form}
               layout="vertical"
               onFinish={handleSubmit}
               className="md:p-10 p-4 space-y-5 max-w-lg mx-auto"
@@ -89,17 +93,27 @@ const UploadProducts = () => {
               <Form.Item
                 label="Product Description"
                 name="productDescription"
+                rules={[{ required: true,min:20, message: 'Please enter description of atleast 20 words' }]}
               >
-                <Input.TextArea placeholder="Type here" rows={4} />
+                <Input.TextArea placeholder="Type here" rows={10} />
               </Form.Item>
-
+              <Form.Item
+                label="Stock"
+                name="inStock"
+                rules={[{ required: true, message: 'Please select a category' }]}
+              >
+               <Select placeholder="Is Available">
+              <Option value="true">Yes</Option>
+              <Option value="false">No</Option>
+             </Select>
+              </Form.Item>
               <Form.Item
                 label="Category"
                 name="category"
                 rules={[{ required: true, message: 'Please select a category' }]}
               >
                 <Select placeholder="Select Category">
-                  {['Electronics', 'Clothing', 'Accessories'].map((item, index) => (
+                  {['Laptop', 'Mobile', 'Earbuds',"Headphone","SmartWatch","WiredEarphone" ,"Speakers"].map((item, index) => (
                     <Option key={index} value={item}>
                       {item}
                     </Option>

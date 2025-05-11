@@ -1,4 +1,5 @@
 const Product = require("../../Models/Products")
+const {ProductValidation} = require("../../Services/Validatiion_schema")
 const {upload} = require("../../Middleware/Multer")
 const products = (req,res,next) =>{
       upload(req, res,async (err) => {
@@ -13,8 +14,14 @@ const products = (req,res,next) =>{
                         message: "failed to upload file"
                   })
             }
+            console.log("Before validation :",req.body)
+            req.body.inStock = req.body.inStock === 'true';
+  req.body.productPrice = Number(req.body.productPrice);
+  req.body.offerPrice = Number(req.body.offerPrice);
       try{
-      const {productName , productDescription, category , productPrice, offerPrice } = req.body
+       console.log("Before validation :",req.body)
+      const {productName , productDescription,inStock, category , productPrice, offerPrice } = await ProductValidation.validateAsync(req.body)
+      console.log(req.body)
       const imgurl = req.files.map(file=>({
             url: `uploads/${file.filename}`     
       }))
@@ -24,6 +31,7 @@ const products = (req,res,next) =>{
             productName , 
             productDescription, 
             category ,
+            inStock,
             productPrice,
             offerPrice,
             uploadedBy:"Admin"

@@ -8,6 +8,10 @@ const ProductSchema  = new Schema({
             type:String,
             required:true
       },
+      inStock : {
+            type:Boolean,
+            required:true
+      },
       category : {
             type:String,
             required:true

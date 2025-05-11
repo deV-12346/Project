@@ -9,8 +9,8 @@ export const AuthProvider = ({ children }) => {
 
   const [products, setproducts] = useState([])
   const [ cartitems, setcartitems] = useState({})
-
-  //fetch all products
+  const [searchquery,setsearchqurey] = useState("")
+  
   const fetchproducts = async () => {
     try {
           const response = await axiosinstance.get(`${baseURL}/api/product/getproducts`);
@@ -89,7 +89,7 @@ export const AuthProvider = ({ children }) => {
   const value = {
     user, setUser,
     products, addtocart, updateCartitems, removecartitems,
-    cartitems, login, logout
+    cartitems, login, logout ,searchquery ,setsearchqurey
   }
   return (
     <AuthContext.Provider value={value}>

@@ -15,6 +15,7 @@ const UploadProducts = () => {
   const [collapsed, setCollapsed] = useState(false);
   const [fileList, setFileList] = useState([]);
   const { user, logout } = UseAppContext();
+  const [form] = Form.useForm()
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -55,6 +56,7 @@ const UploadProducts = () => {
       if (response.data.success) {
         message.success('Product uploaded successfully');
         toast.success(response.data.message)
+        form.resetFields()
         setFileList([]);
       }
     } catch (err) {
@@ -73,16 +75,16 @@ const UploadProducts = () => {
         {user ?( <Content style={{ padding: '24px', marginTop: '30px', minHeight: 280 }}>
           <div style={{ maxWidth: '600px', margin: '0 auto', background: '#fff', padding: '30px', borderRadius: '8px', boxShadow: '0 0 10px rgba(0,0,0,0.1)' }}>
             <h2 style={{ textAlign: 'center', marginBottom: '20px', fontSize: '24px' }}>Upload Product</h2>
-            <Form onFinish={handleSubmit} layout="vertical">
+            <Form onFinish={handleSubmit} form={form} layout="vertical">
             <Form.Item name="id" initialValue={user.id} style={{display:"none"}} >
               <Input  />
              </Form.Item>
 
-              <Form.Item label="Product Name" name="productName" rules={[{ required: true, message: 'Please input the product name!' }]}>
+              <Form.Item label="Product Name" name="productName" rules={[{ required: true,min:5 }]}>
                 <Input />
               </Form.Item>
 
-              <Form.Item label="Product Description" name="productDescription" rules={[{ required: true, message: 'Please input the product description!' }]}>
+              <Form.Item label="Product Description" name="productDescription" rules={[{ required: true, min:30 , message: 'Please input the product description! of atleast 20 words' }]}>
                 <Input.TextArea rows={4} />
               </Form.Item>
 
@@ -99,7 +101,7 @@ const UploadProducts = () => {
                 </Select>
               </Form.Item>
 
-              <Form.Item label="Address" name="address" rules={[{ required: true, message: 'Please enter address' }]}>
+              <Form.Item label="Address" name="address" rules={[{ required: true,min:20}]}>
                 <Input type="text" />
               </Form.Item>
 

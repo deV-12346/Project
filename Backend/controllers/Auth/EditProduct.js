@@ -1,7 +1,7 @@
 const Product = require("../../Models/Products")
 const EditProduct = async (req,res,next) =>{
       try{
-            const {id,productName,productDescription,productPrice,offerPrice,category} = req.body
+            const {id,productName,productDescription,productPrice,offerPrice,inStock,category} = req.body
             const productid = await Product.findById(id)
             if(!productid){
                   res.status(400).json({
@@ -16,6 +16,7 @@ const EditProduct = async (req,res,next) =>{
                         productDescription,
                         productPrice,
                         offerPrice,
+                        inStock,
                         category
                   },
                   {new : true}

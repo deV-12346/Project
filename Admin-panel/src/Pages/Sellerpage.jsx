@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Layout, Table, Button, Modal, Form, Input, Row, Col } from 'antd';
-import { EditOutlined, DeleteOutlined } from '@ant-design/icons'; // ✅ Added icons
+import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { ToastContainer, toast } from 'react-toastify';
 import HeaderBar from '../Components/Header';
 import SidebarMenu from '../Components/Sidebar';
@@ -21,7 +21,7 @@ const Seller_page = () => {
  
   const totalSellers = sellers.length;
 
-  useEffect(() => {
+  
     const fetchSellers = async () => {
       try {
         const response = await Axiosinstance.get(`${baseURL}/api/auth/sellers`);
@@ -32,6 +32,7 @@ const Seller_page = () => {
         setLoading(false);
       }
     };
+    useEffect(() => {
     fetchSellers();
   }, []);
 
@@ -50,6 +51,7 @@ const Seller_page = () => {
       if (response.status === 200) {
         toast.success('Seller Updated Successfully');
         setIsModalVisibleEdit(false);
+        fetchSellers();
       }
     } catch (error) {
       toast.error(error.response?.data?.message);
@@ -62,6 +64,7 @@ const Seller_page = () => {
       if (response.status === 200) {
         toast.success('Seller Removed Successfully');
         setSellers(sellers.filter((seller) => seller._id !== id));
+        fetchSellers();
       }
     } catch (error) {
       toast.error(error.response?.data?.message);
@@ -74,6 +77,7 @@ const Seller_page = () => {
       if (response.data.success) {
         toast.success('Seller Added Successfully');
         setIsModalVisible(false);
+        fetchSellers();
       }
     } catch (error) {
       toast.error(error?.message);

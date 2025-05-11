@@ -80,7 +80,7 @@ const ManageProducts = () => {
           render: (images) => {
             if (!images || images.length === 0) return 'No Images';
         
-            const maxVisible = 3;
+            const maxVisible = 1;
             const visibleImages = images.slice(0, maxVisible);
             const remaining = images.length - maxVisible;
         
@@ -123,6 +123,7 @@ const ManageProducts = () => {
       if(response.data.success){
         toast.success(response.data.message)
         console.log(response.data.message)
+        fetchProducts();
       }
     }
     catch(error){
@@ -139,12 +140,14 @@ const ManageProducts = () => {
   }
   const handleProductEdit = async (values)=>{
     try {
-         const {id,productName,productDescription,productPrice,offerPrice,category} = values
+         const {id,productName,productDescription,productPrice,inStock,offerPrice,category} = values
          console.log(id)
-         const response = await axiosinstance.put(`${baseURL}/api/product/editproduct`,{id,productName,productDescription,productPrice,offerPrice,category})
+         const response = await axiosinstance.put(`${baseURL}/api/product/editproduct`,{id,productName,productDescription,productPrice,inStock,offerPrice,category})
          if(response.data.success){
           console.log(response.data.message)
           toast.success(response.data.message)
+          setIsModalVisible(false)
+          fetchProducts();
          }
     }
     catch(error){
@@ -155,7 +158,7 @@ const ManageProducts = () => {
   }
 
   return (
-    <Layout style={{ minHeight: '100vh' }}>
+    <Layout style={{ minHeight: '100vh', overflow:'hidden' }}>
       <ToastContainer position='top-center' />
       <SidebarMenu collapsed={collapsed} setCollapsed={setCollapsed} />
       <Layout>
@@ -186,6 +189,7 @@ const ManageProducts = () => {
                 productDescription: selectedProduct?.productDescription,
                 productPrice: selectedProduct?.productPrice,
                 offerPrice: selectedProduct?.offerPrice,
+                inStock: selectedProduct?.inStock,
                 category: selectedProduct?.category,
               }}
               encType="multipart/form-data"
@@ -206,7 +210,16 @@ const ManageProducts = () => {
               >
                 <Input.TextArea placeholder="Type here" rows={4} />
               </Form.Item>
-
+              <Form.Item
+                label="Stock"
+                name="inStock"
+                 rules={[{ required: true, message: 'Please select a category' }]}
+              > 
+              <Select placeholder="Available">
+                 <option value="true">Yes</option>
+                 <option value="false">No</option>
+              </Select>
+              </Form.Item>
               <Form.Item
                 label="Category"
                 name="category"

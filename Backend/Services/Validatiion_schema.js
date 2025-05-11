@@ -35,8 +35,9 @@ const sellerloginValidation = Joi.object({
   })
 
 const ProductValidation = Joi.object({
-    productName : Joi.string().max(20).required(),
+    productName : Joi.string().min(10).required(),
     productDescription : Joi.string().min(20).required(),
+    inStock: Joi.boolean().truthy('true').falsy('false').required(),
     category : Joi.string().required(),
     productPrice : Joi.number().required(),
     offerPrice : Joi.number().required()
