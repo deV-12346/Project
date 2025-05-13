@@ -44,5 +44,5 @@ const {AdminLogin} = require("../../controllers/Auth/Admin_Login.js")
 router.post("/adminlogin",AdminLogin)
 
 const {GoogleLogin} = require("../../controllers/Auth/GoogleLogin.js")
-router.post("/google",GoogleLogin)
+router.get("/google",GoogleLogin)
 module.exports = router; 

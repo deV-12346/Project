@@ -1,7 +1,6 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./Pages/Home";
 import Shop from "./Pages/Shop";
-import Wishlist from "./Pages/Wishlist";
 import Orders from "./Pages/Orders";
 import Login from "./Components/Login ";
 import Signup from "./Components/Signup";
@@ -17,6 +16,7 @@ import UploadProducts from "./Seller_Panel/UploadProducts";
 import ManageSellerProducts from "./Seller_Panel/ManageProducts";
 import ProductCategories from "./Pages/ProductCategories";
 import ProductDetails from "./Pages/ProductDetails";
+import UsedProduct from "./Pages/UsedProduct";
 function App() {
   const router = createBrowserRouter([
     {
@@ -58,11 +58,11 @@ function App() {
       </div>
     },
     {
-      path: "/mywishlist",
+      path: "/oldproducts",
       element: (
         <div>
           <Navbar />
-          <Wishlist />
+          <UsedProduct />
           <Footer />
         </div>
       ),

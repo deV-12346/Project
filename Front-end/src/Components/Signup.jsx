@@ -1,10 +1,11 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import { Button, Form, Input } from "antd";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import { useGoogleLogin } from "@react-oauth/google";
+import { UseAppContext } from "../Context/AppContext";
+import { baseURL } from "../../config";
+import axios from "axios";
 
 
 const validateMessages = {
@@ -18,14 +19,14 @@ const validateMessages = {
 
 const Signup = () => {
   const navigate = useNavigate();
-
+  const {login} = UseAppContext()
   const onFinish = (values) => {
     console.log("Form Values:", values);
     axios.post("http://localhost:5000/api/auth/register", values) 
       .then((response) => {
         console.log("Response:", response);
         if (response.data.success) {
-          toast.success(response.data.message); // Success toast
+          toast.success(response.data.message); 
           setTimeout(() =>
            navigate("/login"), 3000); 
         } else {
@@ -44,13 +45,12 @@ const Signup = () => {
              console.log("auth result :",authResult)
              try{
               if(authResult.code){
-                const response = await axios.post("http://localhost:5000/api/auth/google",{
-                  code: authResult.code,
-                })
-                console.log(response)
-                console.log(response.data.token)
+                const response = await axios.get(`${baseURL}/api/auth/google?code=${authResult.code}`)
+                login(response.data.user, response.data.token);
                 toast.success(response.data.message)
-                navigate("/");
+                setInterval(()=>{
+                  navigate("/");
+                },3000)
               }
              }
              catch(error){
@@ -60,15 +60,9 @@ const Signup = () => {
       }
 
       const googleLogin = useGoogleLogin({
-        onSuccess: (authResult) => {
-            console.log("✅ Auth Result from Google:", authResult);
-            responseGoogle(authResult);
-        },
-        onError: (err) => {
-            console.error("❌ Google login error:", err);
-            toast.error("Google login failed!");
-        },
-        flow: "implicit",
+        onSuccess: responseGoogle,
+        onError: responseGoogle,
+        flow: "auth-code",
     });
  
 

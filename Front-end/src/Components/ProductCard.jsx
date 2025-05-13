@@ -4,9 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { assets } from "../assets/assets";
 import { Toaster } from "react-hot-toast";
 const ProductCard = ({product}) => {
-    console.log("Product image value:", product.images);
       const {addtocart,updateCartitems,removecartitems , cartitems,} = UseAppContext()
-      console.log("IMG URL:", product.images?.[0]?.url);
       const navigate = useNavigate()
       return product &&  (
           <div onClick={()=> navigate(`/products/${product.category}/${product._id}`)} className="border border-gray-900/20 rounded-md md:px-4 px-3 py-2 bg-white min-w-50 max-w-50 w-full">

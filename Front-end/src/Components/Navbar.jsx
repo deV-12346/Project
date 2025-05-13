@@ -15,14 +15,14 @@ const Navbar = () => {
     logout(); // Call logout function
     setDropdownOpen(false); // Close dropdown
     if(user.username){
-      navigate("/login"); // Redirect to login page
+      navigate("/login"); 
     }
    };
 
   return (
     <>
       <nav className="bg-[#263238]">
-        <div className="flex items-center justify-between p-3">
+        <div className="flex items-center justify-between p-1">
           {/* Sidebar Button */}
           <div className="md:hidden">
             <button className="text-4xl text-white cursor-pointer" onClick={() => setIsSidebarOpen(true)}>
@@ -36,7 +36,7 @@ const Navbar = () => {
           </div>
 
           {/* Main Nav Links */}
-          <ul className="md:flex items-center hidden font-medium gap-12 text-2xl text-white">
+          <ul className="md:flex items-center hidden font-medium gap-12 text-xl text-white">
             <li>
               <NavLink to="/" className={({ isActive }) => isActive ? "text-primary border-b-2 border-primary pb-1 flex items-center gap-2" : "hover:text-gray-300 flex items-center gap-2"}>
                 <FaHome className="text-2xl" /> Home
@@ -51,8 +51,8 @@ const Navbar = () => {
               <input type="text" onChange={(e)=>setsearchqurey(e.target.value)} placeholder="Search products..." className="w-full px-5 py-2 font-normal border-gray-400 rounded-xl text-gray-500 outline-none bg-white" />
             </li>
             <li>
-              <NavLink to="/mywishlist" className={({ isActive }) => isActive ?" text-primary border-b-2 border-primary pb-1 flex items-center gap-2" : "hover:text-gray-300 flex items-center gap-2"}>
-                <FaHeart className="text-xl" /> Wishlist
+              <NavLink to="/oldproducts" className={({ isActive }) => isActive ?" text-primary border-b-2 border-primary pb-1 flex items-center gap-2" : "hover:text-gray-300 flex items-center gap-2"}>
+                <FaHeart className="text-xl" />Old Products
               </NavLink>
             </li>
             <li>
@@ -127,8 +127,8 @@ const Navbar = () => {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/mywishlist" onClick={() => setIsSidebarOpen(false)} className="flex items-center gap-3 hover:text-gray-400">
-              <FaHeart /> Wishlist
+            <NavLink to="/oldproducts" onClick={() => setIsSidebarOpen(false)} className="flex items-center gap-3 hover:text-gray-400">
+              <FaHeart /> Old Products
             </NavLink>
           </li>
           <li>

@@ -6,7 +6,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import { UseAppContext } from "../Context/AppContext";  
 import LoadingSpinner from '../Components/Loadingspinner';
 import { baseURL } from '../../config';
-
+import { useGoogleLogin } from "@react-oauth/google";
+import axios from 'axios';
 const Login = () => {
   const navigate = useNavigate();
   const { login } = UseAppContext(); 
@@ -37,6 +38,29 @@ const Login = () => {
       setloading(false)
     }
   };
+   const responseGoogle = async(authResult)=>{
+               console.log("auth result :",authResult)
+               try{
+                if(authResult.code){
+                  const response = await axios.get(`http://localhost:5000/api/auth/google?code=${authResult.code}`)
+                  login(response.data.user, response.data.token);
+                  toast.success(response.data.message)
+                  setInterval(()=>{
+                    navigate("/");
+                  },3000)
+                }
+               }
+               catch(error){
+                console.log(error.response?.data?.message)
+                toast.error(error?.response?.data?.message)
+               }
+        }
+  
+        const googleLogin = useGoogleLogin({
+          onSuccess: responseGoogle,
+          onError: responseGoogle,
+          flow: "auth-code",
+      });
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-200">
@@ -59,7 +83,15 @@ const Login = () => {
             </Button>
           </Form.Item>
         </Form>  
-        
+         <div>
+        <button
+              onClick={googleLogin}
+              className="flex items-center justify-center gap-2 w-full text-[#000] bg-white border border-gray-300 rounded-md py-2 font-medium hover:bg-gray-100 transition mb-4"
+              >
+              <img src="https://developers.google.com/identity/images/g-logo.png" alt="G" className="w-5 h-5" />
+                    Continue with Google
+              </button>
+        </div>
         <div className="text-center mt-4">
           <Link to="/changepassword" className="text-blue-500 hover:underline">
             Forget Password

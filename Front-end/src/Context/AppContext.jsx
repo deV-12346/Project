@@ -29,6 +29,31 @@ export const AuthProvider = ({ children }) => {
           message.error('Failed to fetch products');
         }
   }
+  useEffect(() => {
+    fetchproducts()
+  }, [])
+
+    const [oldproducts,SetOldproduct] = useState([])
+    const oldProduct = async ()=>{
+      try {
+        const response = await axiosinstance.get(`${baseURL}/api/product//getoldproducts`)
+        if(response.data.success){
+          const modifiedoldProducts = response.data.data.map(oldproduct=>({
+            ...oldproduct,
+            images : oldproduct.images.map(img=>({
+                url: `${baseURL}/${img.url}`
+            }))
+          }))
+          SetOldproduct(modifiedoldProducts)
+          console.log("old products",modifiedoldProducts)
+        }
+      } catch (error) {
+        console.log(error?.response?.data?.message)
+      }
+    }
+  useEffect(()=>{
+    oldProduct()
+  },[])
 
   //add to cart
   const addtocart = (itemId) => {
@@ -42,7 +67,7 @@ export const AuthProvider = ({ children }) => {
     setcartitems(cartData)
     toast.success("Added to cart")
   }
-  // update card itme quantity
+  // update card item quantity
   const updateCartitems = (itemId, quantity) => {
     let cartData = structuredClone(cartitems)
     cartData[itemId] = quantity
@@ -61,9 +86,6 @@ export const AuthProvider = ({ children }) => {
     toast.success("Removed from cart")
     setcartitems(cartData)
   }
-  useEffect(() => {
-    fetchproducts()
-  }, [])
 
 
 
@@ -88,7 +110,7 @@ export const AuthProvider = ({ children }) => {
   };
   const value = {
     user, setUser,
-    products, addtocart, updateCartitems, removecartitems,
+    products, oldproducts , addtocart, updateCartitems, removecartitems,
     cartitems, login, logout ,searchquery ,setsearchqurey
   }
   return (

@@ -22,4 +22,7 @@ router.put("/editusedproduct",EditUsedProduct)
 
 const {DeleteUsedProduct} = require("../../controllers/Auth/DeleteUsedProduct")
 router.delete("/deleteusedproduct",DeleteUsedProduct)
+
+const {AllOldProducts} = require("../../controllers/Auth/GetAllUsedProducts")
+router.get("/getoldproducts",AllOldProducts)
 module.exports = router
