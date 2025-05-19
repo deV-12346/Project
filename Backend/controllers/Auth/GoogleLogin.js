@@ -1,7 +1,7 @@
 const axios = require('axios');
-const jwt = require('jsonwebtoken');
 const { oauth2Client } = require('../../Utils/GoogleClient');
 const User = require('../../Models/Google.user.model');
+const {generatetoken} = require("../../Middleware/Checkauth")
 
 const GoogleLogin = async (req, res, next) => {
   try {
@@ -27,12 +27,11 @@ const GoogleLogin = async (req, res, next) => {
         image: picture 
       });
     }
-
-    const token = jwt.sign(
-      { _id: user._id, email },
-       process.env.JWT_SECRET,
-      { expiresIn: process.env.JWT_EXPIRES_IN}
-    );
+    const payload = {
+          id: user.id,
+          email: user.email,
+         }
+    const token = generatetoken(payload)
 
     res.status(200).json({
       success: true,

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { FaHome, FaShoppingBag, FaChevronDown, FaHeart, FaBox, FaSignInAlt, FaUser, FaTimes } from "react-icons/fa"; 
+import { FaHome, FaShoppingBag, FaChevronDown, FaHeart, FaBox, FaSignInAlt, FaUser, FaTimes, FaCartPlus } from "react-icons/fa"; 
 import { UseAppContext } from "../Context/AppContext"; // Import authentication context
 import {Link} from 'react-router-dom'
 import Getoffers from "./Getoffers";
@@ -14,9 +14,7 @@ const Navbar = () => {
   const handleLogout = () => {
     logout(); // Call logout function
     setDropdownOpen(false); // Close dropdown
-    if(user.username){
       navigate("/login"); 
-    }
    };
 
   return (
@@ -36,7 +34,7 @@ const Navbar = () => {
           </div>
 
           {/* Main Nav Links */}
-          <ul className="md:flex items-center hidden font-medium gap-12 text-xl text-white">
+          <ul className="md:flex items-center hidden font-medium gap-8 text-xl text-white">
             <li>
               <NavLink to="/" className={({ isActive }) => isActive ? "text-primary border-b-2 border-primary pb-1 flex items-center gap-2" : "hover:text-gray-300 flex items-center gap-2"}>
                 <FaHome className="text-2xl" /> Home
@@ -47,12 +45,17 @@ const Navbar = () => {
                 <FaShoppingBag className="text-xl" /> Shop
               </NavLink>
             </li>
-            <li className="relative flex items-center w-70">
+             <li>
+              <NavLink to="/cart" className={({ isActive }) => isActive ? "text-primary border-b-2 border-primary pb-1 flex items-center gap-2" : "hover:text-gray-300 flex items-center gap-2"}>
+                <FaCartPlus className="text-xl" /> Cart
+              </NavLink>
+            </li>
+            <li className="relative flex items-center w-60">
               <input type="text" onChange={(e)=>setsearchqurey(e.target.value)} placeholder="Search products..." className="w-full px-5 py-2 font-normal border-gray-400 rounded-xl text-gray-500 outline-none bg-white" />
             </li>
             <li>
               <NavLink to="/oldproducts" className={({ isActive }) => isActive ?" text-primary border-b-2 border-primary pb-1 flex items-center gap-2" : "hover:text-gray-300 flex items-center gap-2"}>
-                <FaHeart className="text-xl" />Old Products
+                <FaShoppingBag className="text-xl" />Old Products
               </NavLink>
             </li>
             <li>
@@ -129,6 +132,11 @@ const Navbar = () => {
           <li>
             <NavLink to="/oldproducts" onClick={() => setIsSidebarOpen(false)} className="flex items-center gap-3 hover:text-gray-400">
               <FaHeart /> Old Products
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/cart" onClick={() => setIsSidebarOpen(false)} className="flex items-center gap-3 hover:text-gray-400">
+              <FaBox /> Cart
             </NavLink>
           </li>
           <li>

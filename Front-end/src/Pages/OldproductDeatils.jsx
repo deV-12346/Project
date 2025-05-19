@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { UseAppContext } from '../Context/AppContext';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { assets } from '../assets/assets';
 import ProductCard1 from '../Components/ProductCard1';
-import { FaLocationArrow, FaMobile, FaPhoneAlt, FaUser } from 'react-icons/fa';
+import { FaLocationArrow,  FaPhoneAlt, FaUser } from 'react-icons/fa';
 
 const OldproductDetails = () => {
     const { oldproducts } = UseAppContext()

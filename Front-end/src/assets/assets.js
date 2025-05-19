@@ -10,11 +10,16 @@ import earphone from './earphone.jpg'
 import star_icon from "./star_icon.svg";
 import star_dull_icon from "./star_dull_icon.svg";
 import cart_icon from "./cart_icon.svg";
-
+import arrow_right_icon_colored from "./arrow_right_icon_colored.svg";
+import remove_icon from "./remove_icon.svg";
+import add_address_iamge from "./add_address_image.svg";
 export const assets = {
      star_icon,
      star_dull_icon,
      cart_icon,
+     remove_icon,
+     arrow_right_icon_colored,
+     add_address_iamge
 }
 export const categories = [
       {   
@@ -26,11 +31,6 @@ export const categories = [
             text:"Mobile Phone",
             path: "mobile",
             image: mobile,
-        },
-        {   
-            text:"Car",
-            path: "car",
-            image: car,
         },
         {   
             text:"Headphone",
@@ -58,6 +58,47 @@ export const categories = [
           image: earphone,
       },
 ]
+export const productcategoriescategories = [
+      {   
+          text:"Laptop",
+          path: "laptop",
+          image: laptop,
+      },
+      {   
+            text:"Mobile Phone",
+            path: "mobile",
+            image: mobile,
+        },
+]
+export const dummyAddress = [
+  {
+    _id: "67b5b9e54ea97f71bbc196a0",
+    userId: "67b5880e4d09769c5ca61644",
+    firstName: "Great",
+    lastName: "Stack",
+    email: "user.greatstack@gmail.com",
+    street: "Street 123",
+    city: "Main City",
+    state: "New State",
+    zipcode: 123456,
+    country: "IN",
+    phone: "1234567890",
+  },
+  {
+    _id: "67b5b9e54ea97f71bbc196a9",
+    userId: "67b5880e4d09769c5ca61644",
+    firstName: "G",
+    lastName: "Stack",
+    email: "user.greatstack@gmail.com",
+    street: "Street 123",
+    city: "Main City",
+    state: "New Ssdfdgdg",
+    zipcode: 123456,
+    country: "IN",
+    phone: "1234567890",
+  },
+];
+
 export const dummyProducts = [
     {
       _id: "gd46g23h",

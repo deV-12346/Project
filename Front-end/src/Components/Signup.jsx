@@ -48,9 +48,7 @@ const Signup = () => {
                 const response = await axios.get(`${baseURL}/api/auth/google?code=${authResult.code}`)
                 login(response.data.user, response.data.token);
                 toast.success(response.data.message)
-                setInterval(()=>{
-                  navigate("/");
-                },3000)
+                navigate("/")
               }
              }
              catch(error){
@@ -105,7 +103,6 @@ const Signup = () => {
           >
             <Input.Password placeholder="Create password" />
           </Form.Item>
-
           <Form.Item>
             <Button
               type="primary"

@@ -14,13 +14,13 @@ const ProductDetails = () => {
 
     const product = products.find((item) => item._id === id)
 
-    useEffect(() => {
-        if (products.length > 0) {
-            let productCopy = products.slice()
-            productCopy = productCopy.filter((item) => product.category === item.category)
-            setrelatedproducts(productCopy.slice(0, 5))
-        }
-    }, [products])
+  useEffect(() => {
+    if (products.length > 0 && product) {
+        let productCopy = products.slice()
+        productCopy = productCopy.filter((item) => product.category === item.category)
+        setrelatedproducts(productCopy.slice(0, 5))
+    }
+}, [products, product])
 
     useEffect(() => {
         setThumbnail(product?.images?.[0]?.url || null)
@@ -31,7 +31,7 @@ const ProductDetails = () => {
             <p>
                 <Link to={"/"}>Home</Link>/
                 <Link to={"/products"}>Products</Link> /
-                <Link to={`/products/${product.category.toLowerCase()}`}>{product.category}</Link>  /
+                <Link to={`/products/${product.category.toLowerCase()}`}>{product.category}</Link>  
                 <span className="text-indigo-500"> {product.productName}</span>
             </p>
 

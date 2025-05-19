@@ -17,6 +17,10 @@ import ManageSellerProducts from "./Seller_Panel/ManageProducts";
 import ProductCategories from "./Pages/ProductCategories";
 import ProductDetails from "./Pages/ProductDetails";
 import UsedProduct from "./Pages/UsedProduct";
+import OldproductDeatils from "./Pages/OldproductDeatils";
+import Card from "antd/es/card/Card";
+import Cart from "./Pages/Cart";
+import AddAddress from "./Components/AddAddress";
 function App() {
   const router = createBrowserRouter([
     {
@@ -67,12 +71,48 @@ function App() {
         </div>
       ),
     },
+      {
+      path: "/oldproducts/:category",
+      element: (
+        <div>
+          <Navbar />
+          <ProductCategories />
+          <Footer />
+        </div>
+      ),
+    },
+    {
+      path:"/oldproducts/:category/:id",
+      element: <div>
+       <Navbar />
+        <OldproductDeatils />
+        <Footer />
+      </div>
+    },
+    {
+      path:"/cart",
+      element: <div>
+        <Navbar/>
+        <Cart />
+        <Footer/>
+      </div>
+    },
     {
       path: "/myorders",
       element: (
         <div>
           <Navbar />
           <Orders />
+          <Footer />
+        </div>
+      ),
+    },
+     {
+      path: "/address",
+      element: (
+        <div>
+          <Navbar />
+          <AddAddress />
           <Footer />
         </div>
       ),

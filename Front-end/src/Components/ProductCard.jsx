@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { assets } from "../assets/assets";
 import { Toaster } from "react-hot-toast";
 const ProductCard = ({product}) => {
+    
       const {addtocart,updateCartitems,removecartitems , cartitems,} = UseAppContext()
       const navigate = useNavigate()
       return product &&  (
