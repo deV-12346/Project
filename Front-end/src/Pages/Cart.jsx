@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { UseAppContext } from '../Context/AppContext';
-import { assets, dummyAddress } from '../assets/assets';
+import { assets} from '../assets/assets';
 import { useNavigate } from 'react-router-dom';
 
 const Cart = () => {
@@ -12,12 +12,14 @@ const Cart = () => {
     removecartitems,
     getcartamount,
     getcartcount,
+    addresses,
+    selectedAddress,
+    setselectedAddress,
+    fetchaddress
   } = UseAppContext();
 
   const [cartArray, setcartarray] = useState([]);
-  const [addresses, setaddress] = useState(dummyAddress);
   const [showAddress, setShowAddress] = useState(false);
-  const [selectedAddress, setselectedAddress] = useState(dummyAddress[0]);
   const [paymentOption, setPaymentOption] = useState('COD');
 
   const getcart = () => {
@@ -164,12 +166,12 @@ const Cart = () => {
                 ? `${selectedAddress.street} ${selectedAddress.city} ${selectedAddress.state}`
                 : 'No Address Found'}
             </p>
-            <button
-              onClick={() => setShowAddress(!showAddress)}
+           <button 
+              onClick={() =>{ setShowAddress(!showAddress)}}
               className="text-indigo-500 hover:underline cursor-pointer"
             >
               Change
-            </button>
+            </button> 
             {showAddress && (
               <div className="absolute top-12 py-1 bg-white border border-gray-300 text-sm w-full z-10">
                 {addresses.map((address, index) => (

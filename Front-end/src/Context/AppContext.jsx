@@ -3,11 +3,15 @@ import axiosinstance from "../../Axiosinstance"
 import {baseURL} from "../../config"
 import toast from "react-hot-toast"
 
+
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [products, setproducts] = useState([])
+  const [addresses, setAddresses] = useState([]);
+  const [selectedAddress, setselectedAddress] = useState(null);
+
   const [cartitems, setcartitems] = useState(() => {
   return JSON.parse(localStorage.getItem("cartitems") || "{}");
    });
@@ -57,6 +61,31 @@ export const AuthProvider = ({ children }) => {
   useEffect(()=>{
     oldProduct()
   },[])
+
+   const fetchaddress = async (user)=>{
+    try{ 
+      const userId = user._id
+      console.log(userId)
+      const response = await axiosinstance.get(`${baseURL}/api/product/getaddress`,{params:{userId}})
+      if(response.data.success){
+        console.log("address fetched")
+        setAddresses(response.data.address)
+        setselectedAddress(response.data.address[0])
+        console.log(response.data.address)
+      }
+     
+    }
+    catch(err){
+           console.log(err)
+    }
+   }
+  useEffect(() => {
+    const storedUser = JSON.parse(localStorage.getItem("user"));
+    if (storedUser) {
+    fetchaddress(storedUser);
+  }
+  }, [])
+  
 
   //add to cart
   const addtocart = (itemId) => {
@@ -138,6 +167,7 @@ export const AuthProvider = ({ children }) => {
     user, setUser,
     products, oldproducts , addtocart, updateCartitems, removecartitems,
     cartitems, login, logout ,searchquery ,setsearchqurey, getcartcount,getcartamount
+    ,addresses,selectedAddress ,setselectedAddress ,fetchaddress
   }
   return (
     <AuthContext.Provider value={value}>

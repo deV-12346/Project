@@ -25,4 +25,10 @@ router.delete("/deleteusedproduct",DeleteUsedProduct)
 
 const {AllOldProducts} = require("../../controllers/Auth/GetAllUsedProducts")
 router.get("/getoldproducts",AllOldProducts)
+
+const {UserAddress} = require("../../controllers/Auth/Address")
+router.post("/address",UserAddress)
+
+const {FetchAddress} = require("../../controllers/Auth/AddressGet")
+router.get("/getaddress",FetchAddress)
 module.exports = router

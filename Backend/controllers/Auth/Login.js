@@ -32,7 +32,7 @@ const Login = async (req, res, next) => {
       message: "Login successfully",
       token:token,
       user: {
-        id: existingUser.id,
+        _id: existingUser.id,
         email: existingUser.email,
         username: existingUser.username,
       },
