@@ -8,7 +8,14 @@ const Navbar = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [dropdownOpenL, setDropdownOpenL] = useState(false);
-  const { user, logout ,setsearchqurey } = UseAppContext(); 
+  
+  
+  const context = UseAppContext();
+  if (!context) {
+    return <div className="loading">Loading...</div>;
+  }
+  const { user,logout ,setsearchqurey  } = context;
+  // const { user, logout ,setsearchqurey } = UseAppContext(); 
   const navigate = useNavigate(); 
 
   const handleLogout = () => {
@@ -64,12 +71,9 @@ const Navbar = () => {
               </NavLink>
             </li>
           </ul>
-
-          {/* User Section */}
           <div className="relative text-white">
             {user ? (
               <div className="relative">
-                {/* Clickable User Icon with Username */}
                 <button onClick={() => setDropdownOpen(!dropdownOpen)} className="cursor-pointer font-semibold flex items-center gap-2 hover:underline">
                   <FaUser className="text-xl" /> { user.username}  {/* Display sellername or username */}
                   <FaChevronDown />
@@ -80,6 +84,9 @@ const Navbar = () => {
                   <div className="absolute right-0 mt-2 w-42 bg-gray-100 rounded-md shadow-lg">
                     <Link  to='/changepassword' className="block rounded  w-full text-center px-4 py-2 text-gray-800 hover:bg-gray-300">
                       Change Password
+                    </Link>
+                    <Link  to='/wishlist' className="block rounded  w-full text-center px-4 py-2 text-gray-800 hover:bg-gray-300">
+                      My Wish List
                     </Link>
                     <button onClick={handleLogout} className="block rounded w-full text-center px-4 py-2 text-gray-800 hover:bg-gray-300">
                       Logout

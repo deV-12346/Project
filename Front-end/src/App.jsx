@@ -21,6 +21,7 @@ import OldproductDeatils from "./Pages/OldproductDeatils";
 import Card from "antd/es/card/Card";
 import Cart from "./Pages/Cart";
 import AddAddress from "./Components/AddAddress";
+import WishList from "./Pages/WishList";
 function App() {
   const router = createBrowserRouter([
     {
@@ -103,6 +104,16 @@ function App() {
         <div>
           <Navbar />
           <Orders />
+          <Footer />
+        </div>
+      ),
+    },
+    {
+      path: "/wishlist",
+      element: (
+        <div>
+          <Navbar />
+          <WishList />
           <Footer />
         </div>
       ),

@@ -15,7 +15,6 @@ const Cart = () => {
     addresses,
     selectedAddress,
     setselectedAddress,
-    fetchaddress
   } = UseAppContext();
 
   const [cartArray, setcartarray] = useState([]);

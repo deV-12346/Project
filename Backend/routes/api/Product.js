@@ -31,4 +31,5 @@ router.post("/address",UserAddress)
 
 const {FetchAddress} = require("../../controllers/Auth/AddressGet")
 router.get("/getaddress",FetchAddress)
+
 module.exports = router
