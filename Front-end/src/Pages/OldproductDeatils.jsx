@@ -79,7 +79,7 @@ const OldproductDetails = () => {
                         <FaLocationArrow  /><span className=' text-xl font-sans'>{product.address}</span>
                     </div>
                     <div className="flex items-center mt-10 gap-4 text-base">
-                        <button onClick={() => { addtocart(product._id); navigate("/cart") }} className="w-50 py-3.5 cursor-pointer font-medium bg-indigo-500 text-white hover:bg-indigo-600 transition" >
+                        <button onClick={() => {navigate("/cart") }} className="w-50 py-3.5 cursor-pointer font-medium bg-indigo-500 text-white hover:bg-indigo-600 transition" >
                             Buy now
                         </button>
                     </div>

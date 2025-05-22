@@ -12,9 +12,7 @@ export const AuthProvider = ({ children }) => {
   const [addresses, setAddresses] = useState([]);
   const [selectedAddress, setselectedAddress] = useState(null);
   const [wishlistItems, setWishlistItems] = useState([]);
-  const [cartitems, setcartitems] = useState(() => {
-    return JSON.parse(localStorage.getItem("cartitems") || "{}");
-  });
+  const [cartitems, setcartitems] = useState([])
 
   const [searchquery, setsearchqurey] = useState("")
 
@@ -38,6 +36,7 @@ export const AuthProvider = ({ children }) => {
   }
   useEffect(() => {
     fetchproducts()
+    oldProduct()
   }, [])
 
   const [oldproducts, SetOldproduct] = useState([])
@@ -58,9 +57,6 @@ export const AuthProvider = ({ children }) => {
       console.log(error?.response?.data?.message)
     }
   }
-  useEffect(() => {
-    oldProduct()
-  }, [])
 
   const fetchaddress = async (user) => {
     try {
@@ -79,44 +75,98 @@ export const AuthProvider = ({ children }) => {
       console.log(err)
     }
   }
-  useEffect(() => {
-    const storedUser = JSON.parse(localStorage.getItem("user"));
-    if (storedUser) {
-      fetchaddress(storedUser);
-    }
-  }, [])
 
 
   //add to cart
-  const addtocart = (itemId) => {
-    const cartData = structuredClone(cartitems)
-    if (cartData[itemId]) {
-      cartData[itemId] += 1
+  const addtocart = async (productId) => {
+    try {
+      const response = await axiosinstance.post(`${baseURL}/api/cart/addtocart`, { productId })
+      if (response.data.success) {
+        toast.success(response.data.message)
+        console.log(response.data.message)
+        setcartitems(prev => ({
+          ...prev,
+          [productId]: (prev[productId] || 0) + 1
+        }));
+      }
+    } catch (error) {
+      console.log(error?.message)
+      toast.error(error?.message)
     }
-    else {
-      cartData[itemId] = 1
-    }
-    setcartitems(cartData)
-    toast.success("Added to cart")
   }
+
+
   // update card item quantity
-  const updateCartitems = (itemId, quantity) => {
-    let cartData = structuredClone(cartitems)
-    cartData[itemId] = quantity
-    setcartitems(cartData)
-    toast.success("Cart updated")
+  const updateCartitems = async(productId, quantity) => {
+    try{
+      const response = await axiosinstance.post(`${baseURL}/api/cart/updatecart`,{productId,quantity})
+    if(response.data.success){
+       toast.success(response.data.message)
+       setcartitems(prev => ({
+          ...prev,
+          [productId]:  quantity  
+        }))
+    }
   }
+  catch(err){
+      console.log(err?.message)
+    }
+  }
+
   // remove from cart 
-  const removecartitems = (itemId) => {
-    let cartData = structuredClone(cartitems)
-    if (cartData[itemId]) {
-      cartData[itemId] -= 1
+  const removecartitems = async (productId) => {
+    console.log(productId)
+    try {
+      const response = await axiosinstance.put(`${baseURL}/api/cart/removefromcart`, { productId})
+      if (response.data.success) {
+        toast.success(response.data.message)
+        console.log(response.data.message)
+         setcartitems(prev => ({
+          ...prev,
+        [productId]: (prev[productId] || 1) - 1
+        }));
+        getmycart()
+      }
+    } catch (error) {
+      console.log(error?.message)
     }
-    if (cartData[itemId] === 0) {
-      delete cartData[itemId]
+  }
+  //fetch cart
+  const getmycart = async () => {
+    try {
+      const response = await axiosinstance.get(`${baseURL}/api/cart/getmycart`)
+      if (response.data.success) {
+        console.log(response.data.message)
+        const backendCart = {};
+        response.data.product.forEach(item => {
+          backendCart[item.productId] = item.quantity;
+        });
+        setcartitems(backendCart);
+      }
     }
-    toast.success("Removed from cart")
-    setcartitems(cartData)
+    catch (err) {
+      console.log(err?.message)
+    }
+  }
+
+  //clear cart selected by user 
+  const clearcart = async(productId)=>{
+    try{
+      const response = await axiosinstance.delete(`${baseURL}/api/cart/clearcart`,{data:{productId}})
+     if(response.data.success){
+      toast.success(response.data.message)
+      const remainingItems = response.data.remainingItems;
+      const updatedCartItems = {};
+      remainingItems.forEach(item => {
+        updatedCartItems[item.productId] = item.quantity;
+      });
+
+      setcartitems(updatedCartItems);
+     }
+    }
+    catch(err){
+      toast.error(err?.message)
+    }
   }
   //get the cart items count
   const getcartcount = () => {
@@ -126,6 +176,7 @@ export const AuthProvider = ({ children }) => {
     }
     return totalcartcount
   }
+  
   // get cart items amount 
   const getcartamount = () => {
     let totalamount = 0
@@ -138,15 +189,14 @@ export const AuthProvider = ({ children }) => {
     return Math.floor(totalamount * 100) / 100
   }
 
-  useEffect(() => {
-    localStorage.setItem("cartitems", JSON.stringify(cartitems));
-  }, [cartitems]);
 
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");
+    const storedUser = JSON.parse(localStorage.getItem("user"));
     const token = localStorage.getItem("token");
     if (storedUser && token) {
-      setUser(JSON.parse(storedUser));
+      setUser(storedUser);
+      fetchaddress(storedUser);
+      getmycart()
     }
   }, []);
 
@@ -157,7 +207,7 @@ export const AuthProvider = ({ children }) => {
     localStorage.setItem("token", token);
     setUser(user);
     FetchmywishList()
-    
+    getmycart()
   };
 
   const logout = () => {
@@ -168,7 +218,6 @@ export const AuthProvider = ({ children }) => {
 
   //my wishlist
   const toggleWishlistItem = async (productId) => {
-    console.log("Produt id front-end", productId)
     try {
       const response = await axiosinstance.post(`${baseURL}/api/wishlist/mywishlist`, { productId })
       if (response.data.success) {
@@ -181,38 +230,40 @@ export const AuthProvider = ({ children }) => {
             return [...prevItems, productId];
           }
         });
-        await  FetchmywishList ()
+        await FetchmywishList()
       }
     } catch (error) {
-      toast.error(error.response.data.message)
+      toast.error(error?.message)
       console.log(error?.message)
     }
   }
-    const FetchmywishList = async () => {
-      try {
-        const response = await axiosinstance.get(`${baseURL}/api/wishlist/fetchmywishlist`)
-        if (response.data.success) {
-          console.log(response.data.message)
-          console.log(response.data.product)
-          const wishlistIds = response.data.product.map(item => item.product._id.toString());
-          setWishlistItems(wishlistIds);
-        }
-      }
-      catch (err) {
-        console.log(err?.message)
+  const FetchmywishList = async () => {
+    try {
+      const response = await axiosinstance.get(`${baseURL}/api/wishlist/fetchmywishlist`)
+      if (response.data.success) {
+        console.log(response.data.message)
+        console.log(response.data.product)
+        const wishlistIds = response.data.product.map(item => item.product._id.toString());
+        setWishlistItems(wishlistIds);
       }
     }
+    catch (err) {
+      console.log(err?.message)
+    }
+  }
 
   useEffect(() => {
-  if (user) {
-    FetchmywishList();
-  } else {
-    setWishlistItems([]); 
-  }
-}, [user]);
+    if (user) {
+      FetchmywishList();
+      getmycart()
+    } else {
+      setWishlistItems([]);
+      setcartitems([])
+    }
+  }, [user]);
   const value = {
     user, setUser,
-    products, oldproducts, addtocart, updateCartitems, removecartitems,
+    products, oldproducts, addtocart, updateCartitems, removecartitems, clearcart,
     cartitems, login, logout, searchquery, setsearchqurey, getcartcount, getcartamount
     , addresses, selectedAddress, setselectedAddress, fetchaddress, toggleWishlistItem, wishlistItems
   }

@@ -4,7 +4,7 @@ const CheckAuth = (req, res, next) => {
   const authorization = req.headers.authorization
   if (!authorization) {
     return res.status(401).json({
-      message: "Token not found" 
+      message: "Token not found please login" 
     })
   }
   const token = req.headers.authorization.split(" ")[1]
@@ -22,7 +22,7 @@ const CheckAuth = (req, res, next) => {
   } catch (error) {
     if (error.name === "TokenExpiredError") {
       return res.status(401).json({
-        message: "Token has expired",
+        message: "Token has expired please login",
       });
     }
     return res.status(401).json({ message: "Token is not valid" });

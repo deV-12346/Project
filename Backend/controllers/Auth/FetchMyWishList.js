@@ -7,7 +7,7 @@ const FetchMyWishList = async(req,res,next)=>{
       if(Product.length===0){
             return res.status(400).json({
                   success:false,
-                  message:"Product Not FOund"
+                  message:"Product Not Found"
             })
       }
       return res.status(200).json({

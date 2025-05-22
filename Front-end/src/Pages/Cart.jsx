@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { UseAppContext } from '../Context/AppContext';
 import { assets} from '../assets/assets';
 import { useNavigate } from 'react-router-dom';
+import { Toaster } from 'react-hot-toast';
 
 const Cart = () => {
   const navigate = useNavigate();
@@ -9,7 +10,7 @@ const Cart = () => {
     products,
     cartitems,
     updateCartitems,
-    removecartitems,
+    clearcart,
     getcartamount,
     getcartcount,
     addresses,
@@ -20,7 +21,7 @@ const Cart = () => {
   const [cartArray, setcartarray] = useState([]);
   const [showAddress, setShowAddress] = useState(false);
   const [paymentOption, setPaymentOption] = useState('COD');
-
+  const removevalue  = Number
   const getcart = () => {
     let tempArray = [];
     for (const key in cartitems) {
@@ -37,7 +38,7 @@ const Cart = () => {
 
   useEffect(() => {
     if (products.length > 0 && cartitems) {
-      getcart();
+    getcart();
     }
   }, [products, cartitems]);
 
@@ -71,6 +72,7 @@ const Cart = () => {
 
   return products.length > 0 && cartitems ? (
     <div className="flex flex-col md:flex-row mt-16 m-10">
+      <Toaster  />
       <div className="flex-1 max-w-4xl">
         <h1 className="text-3xl font-medium mb-6">
           Shopping Cart{' '}
@@ -131,7 +133,7 @@ const Cart = () => {
             </p>
             <button className="cursor-pointer mx-auto">
               <img
-                onClick={() => removecartitems(product._id)}
+                onClick={() => clearcart(product._id)}
                 src={assets.remove_icon}
                 alt=""
                 className="inline-block w-6 h-6"
