@@ -14,6 +14,7 @@ const Cart = () => {
     getcartamount,
     getcartcount,
     addresses,
+    DeleteAddress,
     selectedAddress,
     setselectedAddress,
   } = UseAppContext();
@@ -21,7 +22,8 @@ const Cart = () => {
   const [cartArray, setcartarray] = useState([]);
   const [showAddress, setShowAddress] = useState(false);
   const [paymentOption, setPaymentOption] = useState('COD');
-  const removevalue  = Number
+  
+
   const getcart = () => {
     let tempArray = [];
     for (const key in cartitems) {
@@ -176,6 +178,7 @@ const Cart = () => {
             {showAddress && (
               <div className="absolute top-12 py-1 bg-white border border-gray-300 text-sm w-full z-10">
                 {addresses.map((address, index) => (
+                  <div className='flex'>
                   <p
                     key={index}
                     onClick={() => {
@@ -183,9 +186,11 @@ const Cart = () => {
                       setShowAddress(false);
                     }}
                     className="text-gray-500 p-2 hover:bg-gray-100 cursor-pointer"
-                  >
+                   >
                     {address.street}, {address.city}, {address.state}
                   </p>
+                     <button onClick={()=>DeleteAddress(address._id)} className="text-blue-500 text-sm hover:underline">Delete</button>
+                    </div> 
                 ))}
                 <p
                   onClick={() => navigate('/address')}

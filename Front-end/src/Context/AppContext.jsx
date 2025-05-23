@@ -4,6 +4,7 @@ import { baseURL } from "../../config"
 import toast from "react-hot-toast"
 
 
+
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
@@ -62,7 +63,7 @@ export const AuthProvider = ({ children }) => {
     try {
       const userId = user._id
       console.log(userId)
-      const response = await axiosinstance.get(`${baseURL}/api/product/getaddress`, { params: { userId } })
+      const response = await axiosinstance.get(`${baseURL}/api/Address/getaddress`, { params: { userId } })
       if (response.data.success) {
         console.log("address fetched")
         setAddresses(response.data.address)
@@ -75,7 +76,20 @@ export const AuthProvider = ({ children }) => {
       console.log(err)
     }
   }
-
+   const DeleteAddress = async(id)=>{
+     try{
+        const response  = await axiosinstance.delete(`${baseURL}/api/Address/deletedaddress`,{data:{id}})
+        if(response.data.success){
+          toast.success(response.data.message)
+          console.log(response.data.message)
+        }
+        await fetchaddress(user);
+     }
+     catch(err){
+      toast.error(err?.message)
+      console.log(err?.message)
+     }
+  }
 
   //add to cart
   const addtocart = async (productId) => {
@@ -195,8 +209,8 @@ export const AuthProvider = ({ children }) => {
     const token = localStorage.getItem("token");
     if (storedUser && token) {
       setUser(storedUser);
-      fetchaddress(storedUser);
       getmycart()
+      fetchaddress(storedUser)
     }
   }, []);
 
@@ -206,8 +220,6 @@ export const AuthProvider = ({ children }) => {
     localStorage.setItem("user", JSON.stringify(user));
     localStorage.setItem("token", token);
     setUser(user);
-    FetchmywishList()
-    getmycart()
   };
 
   const logout = () => {
@@ -256,16 +268,19 @@ export const AuthProvider = ({ children }) => {
     if (user) {
       FetchmywishList();
       getmycart()
+      fetchaddress(user)
     } else {
       setWishlistItems([]);
       setcartitems([])
+      setAddresses([])
     }
   }, [user]);
   const value = {
     user, setUser,
     products, oldproducts, addtocart, updateCartitems, removecartitems, clearcart,
     cartitems, login, logout, searchquery, setsearchqurey, getcartcount, getcartamount
-    , addresses, selectedAddress, setselectedAddress, fetchaddress, toggleWishlistItem, wishlistItems
+    , addresses, selectedAddress, setselectedAddress, fetchaddress,DeleteAddress, toggleWishlistItem,
+     wishlistItems
   }
   return (
     <AuthContext.Provider value={value}>

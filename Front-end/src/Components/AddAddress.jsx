@@ -16,7 +16,7 @@ const InputField = ({ type, placeholder, name, handlechange, address }) => (
 )
 
 const AddAddress = () => {
-      const {fetchaddress} = UseAppContext()
+      const {user,fetchaddress} = UseAppContext()
       const [address, setaddress] = useState({
             firstName: "",
             lastName: "",
@@ -55,11 +55,11 @@ const AddAddress = () => {
                   console.log(localStorage.getItem("user"));
                   console.log("UserId:", userId);
                   const dataToSend = { ...address, userId };
-                  const response = await axiosinstance.post(`${baseURL}/api/product/address`, dataToSend)
+                  const response = await axiosinstance.post(`${baseURL}/api/Address/address`, dataToSend)
                   if (response.data.success) {
                         console.log("Adress addedd")
                         toast.success("Address Added Sucessfully")
-                        fetchaddress()
+                        await fetchaddress(user);
                   }
             }
             catch (err) {
