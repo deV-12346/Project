@@ -7,7 +7,7 @@ require("dotenv").config()
 const express = require("express");
 const path = require("path")
 const backend = express();
-
+const createdefaultadmin = require("./controllers/Auth/DefaultAdmin")
 // routing 3
 backend.use(express.json()); 
 
@@ -24,9 +24,10 @@ backend.use(routes)
 
 // mongoose connect 1
 mongoose.connect(process.env.Connection_String)
-  .then(() =>
-    console.log(`${chalk.green("✓")} ${chalk.blue("MongoDB Connected!")}`)
-  )
+   .then(async () => {
+    console.log(`${chalk.green("✓")} ${chalk.blue("MongoDB Connected!")}`);
+    await createdefaultadmin();
+  })
   .then(() => {
     const PORT = 5000;
     backend.listen(PORT, () => {
