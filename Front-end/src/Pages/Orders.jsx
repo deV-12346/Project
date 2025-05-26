@@ -1,10 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import { baseURL } from "../../config";
 import { UseAppContext } from "../Context/AppContext";
-
+import { Toaster } from "react-hot-toast";
 const MyOrders = () => {
-  const { myOrders } = UseAppContext();
+  const { myOrders, cancelOrder } = UseAppContext();
   const navigate = useNavigate()
+  
     if(myOrders.length === 0){
      return (
       <div className="text-center py-20 text-gray-500 text-lg">
@@ -16,6 +17,7 @@ const MyOrders = () => {
       
   return (
     <div className="px-10 py-10 md:px-10">
+      <Toaster position="top-center" />
       <div className="mb-8">
         <p className="text-3xl font-semibold uppercase ">My Orders</p>
         <div className="w-20 h-1 bg-primary rounded-full mt-1"></div>
@@ -69,6 +71,13 @@ const MyOrders = () => {
               </div>
             </div>
           ))}
+        <div className="flex justify-end">
+        {order.status !== "Cancelled"  ?  
+          <button onClick={()=>cancelOrder(order._id,"Cancelled")}
+            className="bg-primary text-white px-4 py-3 hover:bg-primary/20 cursor-pointer ">Cancel Order</button>
+            :
+            " " }
+          </div>
         </div>
       ))}
     </div>

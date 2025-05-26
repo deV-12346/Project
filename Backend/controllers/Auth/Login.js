@@ -24,6 +24,8 @@ const Login = async (req, res, next) => {
      const payload = {
       id: existingUser.id,
       email: existingUser.email,
+      username:existingUser.username,
+      mobileno:existingUser.mobileno
      }
     console.log(payload)
     const token = generatetoken(payload)

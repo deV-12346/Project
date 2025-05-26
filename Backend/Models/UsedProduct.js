@@ -22,7 +22,8 @@ const UsedProductSchema = new Schema({
       },
       status: {
             require: true,
-            type: String
+            type: String,
+            
       },
       images: [{
             url: {

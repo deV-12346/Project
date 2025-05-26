@@ -316,6 +316,18 @@ export const AuthProvider = ({ children }) => {
       console.log(err?.message)
     }
    }
+  //cancel order 
+   const cancelOrder = async (orderId, status) => {
+        try {
+          const response = await axiosinstance.put(`${baseURL}/api/order/updatestatus`, {orderId, status });
+          if (response.data.success) {
+            toast.success("Order successfully cancalled")
+            fetchOrders()
+          }
+        } catch (err) {
+           console.log(err?.message)
+        }
+      };
   useEffect(() => {
     if (user) {
       FetchmywishList();
@@ -333,7 +345,7 @@ export const AuthProvider = ({ children }) => {
     products, oldproducts, addtocart, updateCartitems, removecartitems, clearcart,
     cartitems, login, logout, searchquery, setsearchqurey, getcartcount, getcartamount
     , addresses, selectedAddress, setselectedAddress, fetchaddress,DeleteAddress, toggleWishlistItem,
-     wishlistItems ,placeOrder ,myOrders
+     wishlistItems ,placeOrder ,myOrders ,cancelOrder
   }
   return (
     <AuthContext.Provider value={value}>

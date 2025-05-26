@@ -1,9 +1,15 @@
 const Order = require("../../Models/Order")
 const Cart = require("../../Models/Cart")
+const OrderMail = require("../../Services/Order")
 const Myorder = async (req,res,next)=>{
       try{
       const {items, address, payment } = req.body
+
       const userId = req.user?.id
+      const username = req.user?.username
+
+      const email = req.user?.email
+
       console.log(userId)
       if(!items || items.length===0){
             return res.status(400).json({
@@ -16,14 +22,24 @@ const Myorder = async (req,res,next)=>{
      }, 0);
      const user = await Cart.findOneAndDelete({ userId })
 
+      const orderItems = items.map(item => ({
+       ...item,
+       username,
+       email
+        }));
       const neworder = new Order({
           userId,
-          items,
+          items:orderItems,
           address,
           payment,
           totalAmount,
       })
       await neworder.save()
+
+      const productNames = items.map(item => item.productName).join(", ");
+      console.log(username,email,productNames)
+      OrderMail(username,email,productNames)
+
       return res.status(200).json({
             success:true,
             message:"Prduct has been ordered",

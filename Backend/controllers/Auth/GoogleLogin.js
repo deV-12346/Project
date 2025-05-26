@@ -29,6 +29,8 @@ const GoogleLogin = async (req, res, next) => {
     }
     const payload = {
           id: user.id,
+          username:user.username,
+          mobileno:user.mobileno,
           email: user.email,
          }
     const token = generatetoken(payload)

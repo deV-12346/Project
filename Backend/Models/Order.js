@@ -7,9 +7,18 @@ const OrderSchema  =  new Schema({
   },
   items: [
     {
+         
       productId: {
         type: Schema.Types.ObjectId,
         ref: 'Product',
+        required: true
+      },
+       productName: {
+        type: String,
+        required: true
+      },
+      category: {
+        type: String,
         required: true
       },
       quantity: {
@@ -18,6 +27,14 @@ const OrderSchema  =  new Schema({
       },
       price: {
         type: Number,
+        required: true
+      },
+      username: {
+        type: String,
+        required: true
+      },
+      email: {
+        type: String,
         required: true
       }
     }
