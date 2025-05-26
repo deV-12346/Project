@@ -34,7 +34,7 @@ const Allproducts = () => {
        
       { !showfilterfrom ? 
        <button onClick={()=>setshowfilterform(true)} className="bg-primary ml-5  px-4 py-2 cursor-pointer text-white hover:bg-primary/50">Apply Filter</button>
-        :
+        : 
         <button onClick={()=>setshowfilterform(false)} className="bg-primary ml-5  px-4 py-2 cursor-pointer text-white hover:bg-primary/50">Hide Filter</button>
       }
          { showfilterfrom && (

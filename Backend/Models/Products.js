@@ -39,4 +39,4 @@ const ProductSchema  = new Schema({
             default:Date.now
       }
 })
-module.exports = model("Products",ProductSchema)
+module.exports = model("Product",ProductSchema)

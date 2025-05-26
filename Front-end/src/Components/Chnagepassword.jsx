@@ -13,9 +13,7 @@ const ChangePassword = () => {
       const { email, new_password, confirm_password, otp} = values;
       const token = localStorage.getItem("token")
       if (!otpSent) {
-        const response = await axios.post("http://localhost:5000/api/auth/generateotp", { email, new_password, confirm_password,otp}
-          ,{ headers: { Authorization: `Bearer ${token}` } }
-        );
+        const response = await axios.post("http://localhost:5000/api/auth/generateotp", { email, new_password, confirm_password,otp}      );
         if (response.data.success) {
           toast.success(response.data.message);
           console.log(response.data.message);

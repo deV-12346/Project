@@ -14,7 +14,7 @@ export const AuthProvider = ({ children }) => {
   const [selectedAddress, setselectedAddress] = useState(null);
   const [wishlistItems, setWishlistItems] = useState([]);
   const [cartitems, setcartitems] = useState([])
-
+  const [myOrders,setmyOrders] = useState([])
   const [searchquery, setsearchqurey] = useState("")
 
   const fetchproducts = async () => {
@@ -102,6 +102,7 @@ export const AuthProvider = ({ children }) => {
           ...prev,
           [productId]: (prev[productId] || 0) + 1
         }));
+        getmycart()
       }
     } catch (error) {
       console.log(error?.message)
@@ -264,11 +265,63 @@ export const AuthProvider = ({ children }) => {
     }
   }
 
+  //order 
+   const placeOrder = async (paymentOption,cartArray) => {
+    if(!selectedAddress){
+      toast.error("Please enter a address")
+      return
+    }
+    if(!cartArray || cartArray.length===0){
+       toast.error("Your cart is empty")
+    }
+    const orderData =  {
+      items: cartArray.map(item=>({
+        productId: item._id,
+        productName : item.productName,
+        category:item.category,
+        quantity: item.quantity,
+        price: item.offerPrice
+      })),
+      address: selectedAddress,
+      payment: paymentOption,
+    };
+    console.log('Placing order...',orderData)
+    try{
+      const response  = await axiosinstance.post(`${baseURL}/api/order/order`,orderData)
+        if(response.data.success){
+          toast.success(response.data.message)
+           fetchOrders()
+           getmycart()
+          setInterval(()=>{
+             setcartitems([])
+          },3000)
+        }
+      }
+       catch(err){
+          toast.error(err?.message)
+          console.log(err?.message)
+       }
+}
+
+// fetchMyorders 
+   const fetchOrders = async ()=>{
+    try{
+      const response = await axiosinstance.get(`${baseURL}/api/order/myorders`)
+      if(response.data.success){
+        console.log(response.data.message)
+        setmyOrders(response.data.orders)
+      }
+    }
+    catch(err){
+      console.log(err?.message)
+    }
+   }
   useEffect(() => {
     if (user) {
       FetchmywishList();
       getmycart()
       fetchaddress(user)
+      fetchOrders()
     } else {
       setWishlistItems([]);
       setcartitems([])
@@ -280,7 +333,7 @@ export const AuthProvider = ({ children }) => {
     products, oldproducts, addtocart, updateCartitems, removecartitems, clearcart,
     cartitems, login, logout, searchquery, setsearchqurey, getcartcount, getcartamount
     , addresses, selectedAddress, setselectedAddress, fetchaddress,DeleteAddress, toggleWishlistItem,
-     wishlistItems
+     wishlistItems ,placeOrder ,myOrders
   }
   return (
     <AuthContext.Provider value={value}>

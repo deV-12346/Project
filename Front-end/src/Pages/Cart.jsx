@@ -17,6 +17,7 @@ const Cart = () => {
     DeleteAddress,
     selectedAddress,
     setselectedAddress,
+    placeOrder,
   } = UseAppContext();
 
   const [cartArray, setcartarray] = useState([]);
@@ -44,13 +45,7 @@ const Cart = () => {
     }
   }, [products, cartitems]);
 
-  const placeOrder = async () => {
-    console.log('Placing order...', {
-      items: cartArray,
-      address: selectedAddress,
-      payment: paymentOption,
-    });
-  };
+ 
 
   if (products.length > 0 && Object.keys(cartitems).length === 0) {
     return (
@@ -233,12 +228,17 @@ const Cart = () => {
           </p>
         </div>
 
-        <button
-          onClick={placeOrder}
+       {paymentOption === 'COD' ? <button
+          onClick={()=>placeOrder(paymentOption,cartArray)}
           className="w-full py-3 mt-6 cursor-pointer bg-indigo-500 text-white font-medium hover:bg-indigo-600 transition"
         >
-          {paymentOption === 'COD' ? 'Place Order' : 'Proceed to Checkout'}
-        </button>
+        Place Order
+        </button> :  <button
+          onClick={()=>placeOrder(cartArray,paymentOption)}
+          className="w-full py-3 mt-6 cursor-pointer bg-indigo-500 text-white font-medium hover:bg-indigo-600 transition"
+        >
+        Proceed to Checkout
+        </button> }
       </div>
     </div>
   ) : null;
