@@ -2,7 +2,7 @@ const User = require("../../Models/user.model")
 const Seller = require("../../Models/seller.model")
 const Product = require("../../Models/UsedProduct")
 const Orders = require("../../Models/OldproductOrder.model")
-
+const GoogleUser = require("../../Models/Google.user.model")
 const Order = async (req,res,next)=>{
       try{
          const userId = req.user?.id
@@ -10,6 +10,7 @@ const Order = async (req,res,next)=>{
          const status ="Ordered"
           
          const user = await User.findById(userId)
+         const googleUser = await GoogleUser.findById(userId)
          const seller  = await Seller.findById(sellerId)
          const product = await Product.findById(productId)
          if(!product){
@@ -18,7 +19,13 @@ const Order = async (req,res,next)=>{
                   message:"Product not found"
             })
          }
-         userName= user.username
+         if (!user && !googleUser) {
+         return res.status(401).json({
+         success: false,
+         message: "User not found"
+         });
+         }
+         userName= user ?  user.username  : googleUser.username
          productName = product.productName
          sellerName = seller.sellername
 
