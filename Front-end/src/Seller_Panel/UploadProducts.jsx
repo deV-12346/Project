@@ -100,7 +100,6 @@ const UploadProducts = () => {
                   <Option value="bike">Bike</Option>
                 </Select>
               </Form.Item>
-
               <Form.Item label="Address" name="address" rules={[{ required: true,min:20}]}>
                 <Input type="text" />
               </Form.Item>

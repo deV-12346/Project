@@ -37,7 +37,6 @@ const Myorder = async (req,res,next)=>{
       await neworder.save()
 
       const productNames = items.map(item => item.productName).join(", ");
-      console.log(username,email,productNames)
       OrderMail(username,email,productNames)
 
       return res.status(200).json({

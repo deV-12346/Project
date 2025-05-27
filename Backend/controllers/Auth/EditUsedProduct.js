@@ -1,7 +1,7 @@
 const Product = require("../../Models/UsedProduct")
 const EditUsedProduct  = async (req,res,next)=>{
       try{
-            const {id,productName,productDescription,price,category,address} = req.body
+            const {id,productName,productDescription,price,category,address,status} = req.body
             console.log(id)
             const product = await Product.findById(id)
             if(!product){
@@ -18,6 +18,7 @@ const EditUsedProduct  = async (req,res,next)=>{
                   price,
                   category,
                   address,
+                  status,
                   },
                   {new:true}
             )

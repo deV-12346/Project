@@ -2,6 +2,7 @@ import React, { createContext, useState, useEffect } from "react";
 import axiosinstance from "../../Axiosinstance"
 import { baseURL } from "../../config"
 import toast from "react-hot-toast"
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -16,7 +17,6 @@ export const AuthProvider = ({ children }) => {
   const [cartitems, setcartitems] = useState([])
   const [myOrders,setmyOrders] = useState([])
   const [searchquery, setsearchqurey] = useState("")
-
   const fetchproducts = async () => {
     try {
       const response = await axiosinstance.get(`${baseURL}/api/product/getproducts`);
@@ -328,12 +328,59 @@ export const AuthProvider = ({ children }) => {
            console.log(err?.message)
         }
       };
+
+  // old product order 
+   const handleOldproductOrder = async (productId,sellerId)=>{
+     try{
+        console.log("product", productId)
+        console.log("seller",sellerId)
+          const response = await axiosinstance.post(`${baseURL}/api/oldproductorder/order`,{productId,sellerId})
+          if(response.data.success){
+            toast.success(response.data.message)
+             getmyorder()
+          }
+        }
+       catch(err){
+       toast.error(err?.message)
+     }
+   } 
+  //oldproduct my orders 
+  const [oldproductorders,SetOldproductOrders] = useState([])
+  const getmyorder = async()=>{
+    try{
+      const response = await axiosinstance.get(`${baseURL}/api/oldproductorder/myorders`)
+      if(response.data.success){
+      console.log(response.data.message)
+      SetOldproductOrders(response.data.orders)
+      oldProduct()
+      }
+    }
+    catch(err){
+      console.log(err?.message)
+    }
+  }
+  //canceloldproductOrder
+  const canceloldproductOrder = async(orderId,productId,status)=>{
+    console.log(orderId,productId,status)
+    try{
+      const response = await axiosinstance.put(`${baseURL}/api/oldproductorder/cancelorder`,{orderId,productId,status})
+      if(response.data.success){
+        toast.success(response.data.message)
+        getmyorder()
+        oldProduct()
+      }
+    }
+    catch(err){
+      toast.error(err?.message)
+    }
+  }
   useEffect(() => {
     if (user) {
       FetchmywishList();
       getmycart()
       fetchaddress(user)
       fetchOrders()
+      getmyorder()
     } else {
       setWishlistItems([]);
       setcartitems([])
@@ -345,7 +392,8 @@ export const AuthProvider = ({ children }) => {
     products, oldproducts, addtocart, updateCartitems, removecartitems, clearcart,
     cartitems, login, logout, searchquery, setsearchqurey, getcartcount, getcartamount
     , addresses, selectedAddress, setselectedAddress, fetchaddress,DeleteAddress, toggleWishlistItem,
-     wishlistItems ,placeOrder ,myOrders ,cancelOrder
+     wishlistItems ,placeOrder ,myOrders ,cancelOrder ,handleOldproductOrder , getmyorder ,oldproductorders,
+      canceloldproductOrder
   }
   return (
     <AuthContext.Provider value={value}>

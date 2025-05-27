@@ -23,6 +23,8 @@ const UsedProductSchema = new Schema({
       status: {
             require: true,
             type: String,
+            enum:["Pending","Ordered","Delivered","Cancelled"],
+            default:"Pending"
             
       },
       images: [{

@@ -10,7 +10,6 @@ const FetchOrder = async (req,res,next) =>{
                   })
             }
             const orders  = await Orders.find({userId}).populate('items.productId') .sort({ createdAt: -1 }); 
-            console.log(JSON.stringify("data",orders, null, 2));
             if(!orders){
                   return res.status(400).json({
                         sccuess:false,

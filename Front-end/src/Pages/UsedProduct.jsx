@@ -7,18 +7,19 @@ const Usedproducts = () => {
   const [filteredproducts, setfilteredproducts] = useState([])
 
   useEffect(() => {
+    const showproducts = oldproducts.filter(product => product.status === "Pending" || product.status === "Cancelled");
     if (searchquery.length > 0) {
       setfilteredproducts(
-        oldproducts.filter((product) =>
+        showproducts.filter((product) =>
          (product.productName || "").toLowerCase().includes(searchquery.toLowerCase())
         )
       )
     } else {
-      setfilteredproducts(oldproducts)
+      setfilteredproducts(showproducts)
     }
   }, [oldproducts, searchquery])
 
-  return (
+  return  (
     <div className='mt-16 mx-10 my-10 flex flex-col'>
       <div className='flex flex-col items-end w-max'>
         <p className='text-2xl font-medium uppercase'>All Products</p>

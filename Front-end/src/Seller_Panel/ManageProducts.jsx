@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Layout, Table, Button, Tag, Row, Col, Modal, Form, Input } from 'antd';
+import { Layout, Table, Button, Tag, Row, Col, Modal, Form, Input ,Select } from 'antd';
 import { UseAppContext } from '../Context/AppContext';
 import SidebarMenuSeller from './Sidebar';
 import HeaderBarSeller from './Header';
@@ -50,11 +50,6 @@ const ManageSellerProducts = () => {
       title: 'Status',
       dataIndex: 'status',
       key: 'status',
-      // render: (status) => (
-      //   <Tag color={status === 'Placed' ? 'green' : 'orange'}>
-      //     {status === 'Placed' ? 'Placed' : 'Pending'}
-      //   </Tag>
-      // ),
     },
     {
       title: 'Action',
@@ -192,6 +187,19 @@ const ManageSellerProducts = () => {
               </Form.Item>
               <Form.Item name="address" label="Address" rules={[{ required: true , min:20 }]}>
                 <Input />
+              </Form.Item>
+              <Form.Item
+                label="Status"
+                name="status"
+                rules={[{ required: true, message: 'Please select a status' }]}
+              >
+                <Select placeholder="Select Category">
+                  {["Pending","Delivered"].map((item, index) => (
+                    <Option key={index} value={item}>
+                      {item}
+                    </Option>
+                  ))}
+                </Select>
               </Form.Item>
             </Form>
           </Modal>

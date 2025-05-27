@@ -5,10 +5,10 @@ import ProductCard1 from '../Components/ProductCard1';
 import { FaLocationArrow,  FaPhoneAlt, FaUser } from 'react-icons/fa';
 
 const OldproductDetails = () => {
-    const { oldproducts } = UseAppContext()
+    const { oldproducts ,handleOldproductOrder } = UseAppContext()
     const navigate = useNavigate()
     const { id } = useParams()
-
+    const [placeOrder,setPlaceOrder] = useState(false)
     const [relatedproducts, setrelatedproducts] = useState([]);
     const [thumbnail, setThumbnail] = useState(null);
 
@@ -78,11 +78,27 @@ const OldproductDetails = () => {
                      <div className="flex justify-start items-center gap-3 mt-5">
                         <FaLocationArrow  /><span className=' text-xl font-sans'>{product.address}</span>
                     </div>
-                    <div className="flex items-center mt-10 gap-4 text-base">
-                        <button onClick={() => {navigate("/cart") }} className="w-50 py-3.5 cursor-pointer font-medium bg-indigo-500 text-white hover:bg-indigo-600 transition" >
+                    { placeOrder ?
+                     (
+                        <div className="flex items-center mt-10 gap-4 text-base">
+                        <button onClick={() => {handleOldproductOrder(product._id,product.id)
+                            ,navigate("/myorders")
+                         }} className="w-50 py-3.5 cursor-pointer font-medium bg-indigo-500 text-white hover:bg-indigo-600 transition" >
+                            Confirm Order
+                        </button>
+    
+                         <button onClick={() => setPlaceOrder(false) } className="w-30 py-3.5 cursor-pointer font-medium bg-indigo-500 text-white hover:bg-indigo-600 transition" >
+                            Not Yet 
+                        </button>
+                        </div>
+                     )  
+
+                    :   ( <div className="flex items-center mt-10 gap-4 text-base">
+                        <button onClick={() => setPlaceOrder(true) } className="w-50 py-3.5 cursor-pointer font-medium bg-indigo-500 text-white hover:bg-indigo-600 transition" >
                             Buy now
                         </button>
-                    </div>
+                        </div>  )
+                    }
                 </div>
             </div>
             <div className='flex flex-col items-center mt-16'>
