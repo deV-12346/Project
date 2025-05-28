@@ -93,14 +93,14 @@ const MyOrders = () => {
             </div>
           ))}
           <div className="flex justify-end">
-            {order.status !== "Cancelled" &&
+            {order.status !== "Cancelled" && order.status !== "Delivered" ?
               <button
                 onClick={() => cancelOrder(order._id, "Cancelled")}
                 className="bg-primary text-white px-4 py-3 hover:bg-primary/20 cursor-pointer "
               >
                 Cancel Order
               </button>
-            }
+            : " "}
           </div>
         </div>
       ))}
@@ -174,7 +174,7 @@ const MyOrders = () => {
               </div>
                <div className="flex justify-end">
                   {
-                    order.productId.status !=="Cancelled" &&
+                    order.productId.status =="Ordered" &&
                     <button onClick={()=>canceloldproductOrder(order._id,order.productId,"Cancelled")}
                      className="bg-primary text-white px-4 py-3 hover:bg-primary/20 cursor-pointer">
                       Cancel Order

@@ -46,7 +46,8 @@ const ManageOrders = () => {
     { title: 'Order ID', dataIndex: '_id', key: '_id' },
     { title: 'Product Name', dataIndex: 'productName', key: 'productName' },
     { title: 'Price', dataIndex: 'price', key: 'price' },
-    { title: 'Category', dataIndex: 'category', key: 'category' },
+    { title: 'Name', dataIndex: 'userName', key: 'username' },
+    { title: 'Contact No', dataIndex: 'mobileno', key: 'mobileno' },
     {
       title: 'Status',
       dataIndex: 'status',

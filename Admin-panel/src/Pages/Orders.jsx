@@ -59,11 +59,10 @@ const Orders = () => {
       key: '_id',
     },
     {
-      title: 'User',
-      dataIndex: 'userId',
-      key: 'userId',
-      render: user => user?.username || "N/A",
-    },
+     title: 'User',
+    key: 'username',
+    render: (_, record) => record.items.map(i => i.username || "N/A").join(", ")
+    },  
     {
       title: 'Total',
       dataIndex: 'totalAmount',
@@ -171,21 +170,21 @@ const Orders = () => {
       >
         {selectedOrder && (
           <div>
-            <p><strong>User:</strong> {selectedOrder?.userId?.username || "N/A"}</p>
 
-            <h4>Shipping Address</h4>
+            <h4 className='text-red-600 font-extrabold '>Shipping Address</h4>
             <p>{selectedOrder?.address?.firstName} {selectedOrder?.address?.lastName}</p>
             <p>{selectedOrder?.address?.street}, {selectedOrder?.address?.city}, {selectedOrder?.address?.state}, {selectedOrder?.address?.pincode}, {selectedOrder?.address?.country}</p>
             <p><strong>Phone:</strong> {selectedOrder?.address?.phone}</p>
 
-            <h4>Items</h4>
+            <h4 className='text-red-600 font-extrabold '>Items</h4>
             <ul>
               {selectedOrder.items.map(item => (
                 <li key={item._id || item.productId?._id} style={{ marginBottom: '10px' }}>
-                  <strong>Product:</strong> {item.productId?.productName || "N/A"} <br />
-                  <strong>Category:</strong> {item.productId?.category || "N/A"} <br />
-                  <strong>Quantity:</strong> {item.quantity} <br />
-                  <strong>Price:</strong> ₹{item.price}
+                  <p><strong>User:</strong>{item?.username || "N/A"} </p>
+                  <strong>Product:</strong> {item?.productName || "N/A"} <br />
+                  <strong>Category:</strong> {item?.category || "N/A"} <br />
+                  <strong>Quantity:</strong> {item?.quantity} <br />
+                  <strong>Price:</strong> ₹{item?.price}
                 </li>
               ))}
             </ul>
@@ -193,7 +192,7 @@ const Orders = () => {
             <p><strong>Total:</strong> ₹{selectedOrder.totalAmount}</p>
             <p><strong>Payment:</strong> {selectedOrder.payment}</p>
 
-            <p><strong>Status:</strong></p>
+            <p className='text-red-600 font-extrabold '><strong>Status:</strong></p>
             <Select
               value={newStatus}
               onChange={(value) => setNewStatus(value)}

@@ -188,19 +188,6 @@ const ManageSellerProducts = () => {
               <Form.Item name="address" label="Address" rules={[{ required: true , min:20 }]}>
                 <Input />
               </Form.Item>
-              <Form.Item
-                label="Status"
-                name="status"
-                rules={[{ required: true, message: 'Please select a status' }]}
-              >
-                <Select placeholder="Select Category">
-                  {["Pending","Delivered"].map((item, index) => (
-                    <Option key={index} value={item}>
-                      {item}
-                    </Option>
-                  ))}
-                </Select>
-              </Form.Item>
             </Form>
           </Modal>
         </Content>

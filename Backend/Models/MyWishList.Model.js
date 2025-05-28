@@ -9,7 +9,7 @@ const myWishListSchema = new Schema(
     },
     product: {
       type: Schema.Types.ObjectId,
-      ref: "Products",
+      ref: "Product",
       required: true,
     },
   },

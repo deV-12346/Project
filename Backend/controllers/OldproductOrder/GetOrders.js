@@ -3,7 +3,7 @@ const Orders = require("../../Models/OldproductOrder.model")
 const GetOrders = async (req, res, next) => {
       try {
             const sellerid = req.user?.id
-            const sellerorders = await Orders.find({sellerId: sellerid}).populate('productId').populate('sellerId');
+            const sellerorders = await Orders.find({sellerId: sellerid}).populate('userId').populate('productId').populate('sellerId');
             if (!sellerorders) {
                   return res.status(400).json({
                         success: false,
@@ -19,6 +19,9 @@ const GetOrders = async (req, res, next) => {
             const orderProduct = sellerorders.map(order => ({
                   ...order._doc,
                   productId: order.productId?._id,
+                  username:order.userId?.username,
+                  mobileno:order.userId?.mobileno,
+                  email:order.userId?.email,
                   productName: order.productId?.productName,
                   category: order.productId?.category,
                   productDescription: order.productId?.productDescription,

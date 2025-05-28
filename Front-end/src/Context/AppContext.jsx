@@ -2,8 +2,6 @@ import React, { createContext, useState, useEffect } from "react";
 import axiosinstance from "../../Axiosinstance"
 import { baseURL } from "../../config"
 import toast from "react-hot-toast"
-import { useNavigate } from "react-router-dom";
-
 
 
 const AuthContext = createContext();
@@ -210,7 +208,6 @@ export const AuthProvider = ({ children }) => {
     const token = localStorage.getItem("token");
     if (storedUser && token) {
       setUser(storedUser);
-      getmycart()
       fetchaddress(storedUser)
     }
   }, []);

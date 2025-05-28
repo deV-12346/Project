@@ -3,15 +3,16 @@ import { Button, Form, Input, message } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
+import { UseAppContext } from '../Context/AppContext';
 
 const ChangePassword = () => {
   const navigate = useNavigate();
+  const {logout} = UseAppContext()
   const [otpSent, setOtpSent] = useState(false); 
   const  [timeRemaining,settimeRemaining] = useState(60) 
   const onFinish = async (values) => {
     try {
       const { email, new_password, confirm_password, otp} = values;
-      const token = localStorage.getItem("token")
       if (!otpSent) {
         const response = await axios.post("http://localhost:5000/api/auth/generateotp", { email, new_password, confirm_password,otp}      );
         if (response.data.success) {
@@ -36,6 +37,7 @@ const ChangePassword = () => {
           console.log(response.data.message);
           setTimeout(() => {
             navigate('/login');
+            logout()
           }, 3000);
         }
       }
