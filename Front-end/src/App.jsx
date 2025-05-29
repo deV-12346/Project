@@ -22,6 +22,7 @@ import Card from "antd/es/card/Card";
 import Cart from "./Pages/Cart";
 import AddAddress from "./Components/AddAddress";
 import WishList from "./Pages/WishList";
+import ChangePassword from "./Seller_Panel/ChangePassword";
 function App() {
   const router = createBrowserRouter([
     {
@@ -157,6 +158,10 @@ function App() {
     {
       path: "/sellerregister",
       element: <Selleregister />,
+    },
+    {
+      path:"/changesellerpassword",
+      element:<ChangePassword/>
     },
     {
       path:"/seller/orders",

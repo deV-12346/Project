@@ -60,6 +60,9 @@ const Sellerlogin = () => {
         </Form>
 
         <div className="text-center mt-4">
+          <Link to="/changesellerpassword" className="text-blue-500 hover:underline">
+                        Forget Password
+                      </Link> <br />
           <span className="text-gray-600">Don't have seller account? </span>
           <Link to="/Sellerregister" className="text-blue-500 hover:underline">
            Register

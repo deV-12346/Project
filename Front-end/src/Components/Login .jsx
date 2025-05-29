@@ -44,6 +44,7 @@ const Login = () => {
       if (authResult.code) {
         const response = await axios.get(`http://localhost:5000/api/auth/google?code=${authResult.code}`)
         toast.success(response.data.message)
+        setloading(true)
         setTimeout(() => {
           login(response.data.user, response.data.token);
           navigate("/");

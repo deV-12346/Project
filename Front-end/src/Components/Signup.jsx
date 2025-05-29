@@ -6,7 +6,8 @@ import { useGoogleLogin } from "@react-oauth/google";
 import { UseAppContext } from "../Context/AppContext";
 import { baseURL } from "../../config";
 import axios from "axios";
-
+import LoadingSpinner from "./Loadingspinner";
+import { useState } from "react";
 
 const validateMessages = {
   required: "${label} is required!",
@@ -18,6 +19,7 @@ const validateMessages = {
 };
 
 const Signup = () => {
+  const [loading,setloading] = useState(false)
   const navigate = useNavigate();
   const {login} = UseAppContext()
   const onFinish = (values) => {
@@ -47,8 +49,11 @@ const Signup = () => {
               if(authResult.code){
                 const response = await axios.get(`${baseURL}/api/auth/google?code=${authResult.code}`)
                 login(response.data.user, response.data.token);
-                toast.success(response.data.message)
-                navigate("/")
+                setloading(true)
+                setInterval(() => {
+                   toast.success(response.data.message)
+                   navigate("/")
+                },5000)
               }
              }
              catch(error){
@@ -66,6 +71,7 @@ const Signup = () => {
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-500">
+       {loading ? (<LoadingSpinner/>): (
       <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-sm">
         <h2 className="text-2xl font-bold mb-6 text-center">Sign Up</h2>
         <Form
@@ -134,10 +140,11 @@ const Signup = () => {
             Register
           </Link>
         </div>
+        <ToastContainer position="top-center"/>
       </div>
-      <ToastContainer position="top-center"/>
+      )}
     </div>
-  );
+   );
 };
 
 export default Signup;
