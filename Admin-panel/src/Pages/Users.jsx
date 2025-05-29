@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Layout, Table, Button, Modal, Form, Input, Select, Row, Col } from 'antd';
-import { EditOutlined, DeleteOutlined } from '@ant-design/icons'; 
+import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { ToastContainer, toast } from 'react-toastify';
-import HeaderBar from '../Components/Header';  
+import HeaderBar from '../Components/Header';
 import SidebarMenu from '../Components/Sidebar';
 import Axiosinstance from '../../Axiosinstance';
 import { baseURL } from '../../config';
@@ -13,29 +13,46 @@ const { Option } = Select;
 const UserManagement = () => {
   const [collapsed, setCollapsed] = useState(false);
   const [users, setUsers] = useState([]);
+  const [googleUser, setGoogleUser] = useState([])
   const [loading, setLoading] = useState(true);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isModalVisibleAdd, setIsModalVisibleAdd] = useState(false);
   const [form] = Form.useForm();
   const [showForm, setShowForm] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
-  const totalAdmins = users.filter((user) => user.role === 'admin').length;
-  const totalUsers = users.filter((user) => user.role === 'user').length;
+  const totalAdmins = Array.isArray(users) ? users.filter((user) => user.role === 'admin').length : 0 ;
+  const totalUsers =  Array.isArray(users) ? users.filter((user) => user.role === 'user').length : 0;
+  const totalGoogleUser = Array.isArray(googleUser) ? googleUser.length : 0
 
-    const fetchUsers = async () => {
-      try {
-        const response = await Axiosinstance.get(`${baseURL}/api/auth/users`);
-        setUsers(response.data);
-        setLoading(false);
-      } catch (error) {
-        console.error("Error fetching users:", error?.message);
-        setLoading(false);
-      }
-    };
-    useEffect(() => {
+  const fetchUsers = async () => {
+    try {
+      const response = await Axiosinstance.get(`${baseURL}/api/auth/users`);
+      setUsers(response.data);
+      setLoading(false);
+    } catch (error) {
+      console.error("Error fetching users:", error?.message);
+      setLoading(false);
+    }
+  };
+  useEffect(() => {
     fetchUsers();
-    }, []);
+  }, []);
 
+  const fetchGoogleUser = async () => {
+    try {
+      const response = await Axiosinstance.get(`${baseURL}/api/auth/getggogleuser`)
+      if (response.data.success) {
+        console.log(response.data.message)
+        setGoogleUser(response.data.googleuser)
+      }
+    }
+    catch (err) {
+      console.log(err?.message)
+    }
+  }
+  useEffect(()=>{
+    fetchGoogleUser()
+  },[])
   const columns = [
     { title: 'Name', dataIndex: 'username', key: 'id' },
     { title: 'Email', dataIndex: 'email', key: 'id' },
@@ -46,17 +63,17 @@ const UserManagement = () => {
       key: 'Actions',
       render: (text, record) => (
         <div>
-          <Button 
-            type="link" 
-            icon={<EditOutlined />} 
+          <Button
+            type="link"
+            icon={<EditOutlined />}
             onClick={() => handleEdit(record)}
           >
             Edit
           </Button>
-          <Button 
-            type="link" 
-            danger 
-            icon={<DeleteOutlined />} 
+          <Button
+            type="link"
+            danger
+            icon={<DeleteOutlined />}
             onClick={() => handleDelete(record._id)}
           >
             Remove
@@ -65,7 +82,24 @@ const UserManagement = () => {
       ),
     },
   ];
-
+  const googleColumns = [
+    { title: 'Name', dataIndex: 'username', key: 'username' },
+    { title: 'Email', dataIndex: 'email', key: 'email' },
+    {
+      title: 'Actions',
+      key: 'actions',
+      render: (_, record) => (
+        <Button
+          type="link"
+          danger
+          icon={<DeleteOutlined />}
+          onClick={() => handleDeleteGoogleUser(record._id)}
+        >
+          Remove
+        </Button>
+      )
+    }
+  ];
   const handleEdit = (user) => {
     setSelectedUser(user);
     setShowForm(true);
@@ -113,15 +147,27 @@ const UserManagement = () => {
       toast.error(error?.message);
     }
   };
-
+  const handleDeleteGoogleUser = async(id) =>{
+    try{
+      const response = await Axiosinstance.delete(`${baseURL}/api/auth/deletedgoogleuser/${id}`)
+      if(response.data.success){
+        toast.success(response.data.message)
+        fetchGoogleUser()
+      }
+    }
+    catch(err){
+      toast.error(err?.response?.data?.message)
+      console.log(err?.message)
+    }
+  }
   return (
     <Layout style={{ minHeight: '100vh' }}>
       <SidebarMenu collapsed={collapsed} setCollapsed={setCollapsed} />
 
       <Layout>
-        <HeaderBar collapsed={collapsed} setCollapsed={setCollapsed} title="Admin Panel"/>
+        <HeaderBar collapsed={collapsed} setCollapsed={setCollapsed} title="Admin Panel" />
 
-        <Content style={{ padding: 24, margin: 0, minHeight: 280  }}>
+        <Content style={{ padding: 24, margin: 0, minHeight: 280 }}>
           <Row justify="space-between" align="middle" gutter={[16, 16]}>
             <Col xs={24} sm={12}>
               <h2 className='text-xl md:text-3xl '>Manage Users</h2>
@@ -155,6 +201,22 @@ const UserManagement = () => {
             scroll={{ x: 800 }}
           />
 
+          <h2 className='text-xl md:text-3xl mt-10 '>Manage Google Users</h2>
+            <Row gutter={[16, 16]} style={{ marginTop: "20px", marginBottom: "20px" }}>
+            <Col xs={24} sm={12} md={6}>
+              <div style={{ background: '#f0f2f5', padding: '20px', borderRadius: '10px', textAlign: 'center' }}>
+                <h3>Total Google Users</h3>
+                <p style={{ fontSize: '24px', fontWeight: 'bold' }}>{totalGoogleUser}</p>
+              </div>
+            </Col>
+          </Row>
+          <Table
+            columns={googleColumns}
+            dataSource={googleUser}
+            loading={loading}
+            rowKey="_id"
+            scroll={{ x: 800 }}
+          />
           {/* Add User Modal */}
           <Modal
             title="Add New User"
@@ -183,15 +245,15 @@ const UserManagement = () => {
               width={window.innerWidth < 600 ? '90%' : '40%'}
             >
               <Form form={form}
-               layout="vertical" 
-               onFinish={handleEditUser}
-               initialValues={{
-                id: selectedUser?._id,
-                username: selectedUser?.username,
-                email: selectedUser?.email,
-                mobileno: selectedUser?.mobileno,
-                role: selectedUser?.role,
-              }}>
+                layout="vertical"
+                onFinish={handleEditUser}
+                initialValues={{
+                  id: selectedUser?._id,
+                  username: selectedUser?.username,
+                  email: selectedUser?.email,
+                  mobileno: selectedUser?.mobileno,
+                  role: selectedUser?.role,
+                }}>
                 <Form.Item name="id" style={{ display: "none" }}><Input /></Form.Item>
                 <Form.Item name="username" label="Username" rules={[{ required: true }]}><Input /></Form.Item>
                 <Form.Item name="email" label="Email" rules={[{ type: "email", required: true }]}><Input disabled /></Form.Item>

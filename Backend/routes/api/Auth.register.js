@@ -45,4 +45,11 @@ router.post("/adminlogin",AdminLogin)
 
 const {GoogleLogin} = require("../../controllers/Auth/GoogleLogin.js")
 router.get("/google",GoogleLogin)
+
+const {GetGoogleUser} = require("../../controllers/Auth/GetGoogleuser.js")
+router.get("/getggogleuser",GetGoogleUser)
+
+const  DeleteGoogleUser = require("../../controllers/Auth/DeleteGoogleUser.js")
+router.delete("/deletedgoogleuser/:id", DeleteGoogleUser)
+
 module.exports = router; 
