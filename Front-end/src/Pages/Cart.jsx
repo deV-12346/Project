@@ -1,10 +1,29 @@
 import { useEffect, useState } from 'react';
 import { UseAppContext } from '../Context/AppContext';
-import { assets} from '../assets/assets';
+import { assets } from '../assets/assets';
 import { useNavigate } from 'react-router-dom';
-import { Toaster } from 'react-hot-toast';
+import { Toaster, toast } from 'react-hot-toast';
+import axiosInstance from '../../Axiosinstance';
+import { baseURL } from '../../config';
 
 const Cart = () => {
+  const loadScript = (src) => {
+    return new Promise((resolve) => {
+      const existingScript = document.querySelector(`script[src="${src}"]`);
+      if (existingScript) return resolve(true);
+
+      const script = document.createElement("script");
+      script.src = src;
+      script.onload = () => resolve(true);
+      script.onerror = () => resolve(false);
+      document.body.appendChild(script);
+    });
+  };
+
+  useEffect(() => {
+    loadScript('https://checkout.razorpay.com/v1/checkout.js');
+  }, []);
+
   const navigate = useNavigate();
   const {
     products,
@@ -23,10 +42,9 @@ const Cart = () => {
   const [cartArray, setcartarray] = useState([]);
   const [showAddress, setShowAddress] = useState(false);
   const [paymentOption, setPaymentOption] = useState('COD');
-  
 
   const getcart = () => {
-    let tempArray = [];
+    const tempArray = [];
     for (const key in cartitems) {
       const product = products.find((item) => item._id === key);
       if (product) {
@@ -41,11 +59,67 @@ const Cart = () => {
 
   useEffect(() => {
     if (products.length > 0 && cartitems) {
-    getcart();
+      getcart();
     }
   }, [products, cartitems]);
 
- 
+  const onPayment = async () => {
+    if (!selectedAddress) {
+      toast.error("Please select an address");
+      return;
+    }
+
+    const amount = getcartamount() * 100; // amount in paise
+
+    try {
+      const { data } = await axiosInstance.post(`${baseURL}/api/payment/createorder`, {
+        amount,
+      });
+
+      if (!data || !data.order) {
+        toast.error("Failed to create Razorpay order");
+        return;
+      }
+
+      const options = {
+        key: "rzp_test_aXxBrljwkpXALd",
+        currency: "INR",
+        name: "ReMarket",
+        description: "Payment for your cart",
+        order_id: data.order.id,
+        handler: async function (response) {
+          try {
+            const verifyRes = await axiosInstance.post(`${baseURL}/api/payment/verifypayment`, {
+              order_id: response.razorpay_order_id,
+              payment_id: response.razorpay_payment_id,
+              signature: response.razorpay_signature,
+            });
+
+            if (verifyRes.data.success) {
+              placeOrder("Online", cartArray);
+              toast.success("Payment Successful");
+            } else {
+              toast.error("Payment verification failed");
+            }
+          } catch (err) {
+            console.error("Verification error", err);
+            toast.error("Verification failed");
+          }
+        },
+        theme: { color: "#6366F1" },
+      };
+
+      if (window.Razorpay) {
+        const rzp = new window.Razorpay(options);
+        rzp.open();
+      } else {
+        toast.error("Razorpay SDK not loaded");
+      }
+    } catch (err) {
+      console.error("Payment initiation failed:", err);
+      toast.error("Something went wrong with the payment");
+    }
+  };
 
   if (products.length > 0 && Object.keys(cartitems).length === 0) {
     return (
@@ -55,7 +129,7 @@ const Cart = () => {
           className="text-indigo-600 cursor-pointer flex justify-center"
           onClick={() => navigate('/')}
         >
-            <img
+          <img
             className="group-hover:-translate-x-1 transition"
             src={assets.arrow_right_icon_colored}
             alt=""
@@ -69,7 +143,7 @@ const Cart = () => {
 
   return products.length > 0 && cartitems ? (
     <div className="flex flex-col md:flex-row mt-16 m-10">
-      <Toaster  />
+      <Toaster />
       <div className="flex-1 max-w-4xl">
         <h1 className="text-3xl font-medium mb-6">
           Shopping Cart{' '}
@@ -96,7 +170,7 @@ const Cart = () => {
               >
                 <img
                   className="max-w-full h-full object-cover"
-                   src={product.images?.[0]?.url}
+                  src={product.images?.[0]?.url}
                   alt={product.name}
                 />
               </div>
@@ -164,28 +238,32 @@ const Cart = () => {
                 ? `${selectedAddress.street} ${selectedAddress.city} ${selectedAddress.state}`
                 : 'No Address Found'}
             </p>
-           <button 
-              onClick={() =>{ setShowAddress(!showAddress)}}
+            <button
+              onClick={() => setShowAddress(!showAddress)}
               className="text-indigo-500 hover:underline cursor-pointer"
             >
               Change
-            </button> 
+            </button>
             {showAddress && (
               <div className="absolute top-12 py-1 bg-white border border-gray-300 text-sm w-full z-10">
                 {addresses.map((address, index) => (
-                  <div className='flex'>
-                  <p
-                    key={index}
-                    onClick={() => {
-                      setselectedAddress(address);
-                      setShowAddress(false);
-                    }}
-                    className="text-gray-500 p-2 hover:bg-gray-100 cursor-pointer"
-                   >
-                    {address.street}, {address.city}, {address.state}
-                  </p>
-                     <button onClick={()=>DeleteAddress(address._id)} className="text-blue-500 text-sm hover:underline">Delete</button>
-                    </div> 
+                  <div key={index} className="flex justify-between items-center px-2">
+                    <p
+                      onClick={() => {
+                        setselectedAddress(address);
+                        setShowAddress(false);
+                      }}
+                      className="text-gray-500 p-2 hover:bg-gray-100 cursor-pointer"
+                    >
+                      {address.street}, {address.city}, {address.state}
+                    </p>
+                    <button
+                      onClick={() => DeleteAddress(address._id)}
+                      className="text-red-500 text-xs hover:underline"
+                    >
+                      Delete
+                    </button>
+                  </div>
                 ))}
                 <p
                   onClick={() => navigate('/address')}
@@ -201,6 +279,7 @@ const Cart = () => {
           <select
             onChange={(e) => setPaymentOption(e.target.value)}
             className="w-full border border-gray-300 bg-white px-3 py-2 mt-2 outline-none"
+            value={paymentOption}
           >
             <option value="COD">Cash On Delivery</option>
             <option value="Online">Online Payment</option>
@@ -211,34 +290,37 @@ const Cart = () => {
 
         <div className="text-gray-500 mt-4 space-y-2">
           <p className="flex justify-between">
-            <span>Price</span>
+            <span>Subtotal</span>
             <span>Rs {getcartamount()}</span>
           </p>
           <p className="flex justify-between">
-            <span>Shipping Fee</span>
-            <span className="text-green-600">Free</span>
+            <span>Shipping</span>
+            <span>Free</span>
           </p>
-          <p className="flex justify-between">
-            <span>Tax (2%)</span>
-            <span>Rs {getcartamount() * 0.02}</span>
-          </p>
-          <p className="flex justify-between text-lg font-medium mt-3">
-            <span>Total Amount:</span>
-            <span>Rs {getcartamount() * 1.02}</span>
+          <p className="flex justify-between text-indigo-600 font-medium">
+            <span>Total</span>
+            <span>Rs {getcartamount()}</span>
           </p>
         </div>
 
-       {paymentOption === 'COD' ? <button
-          onClick={()=>placeOrder(paymentOption,cartArray)}
-          className="w-full py-3 mt-6 cursor-pointer bg-indigo-500 text-white font-medium hover:bg-indigo-600 transition"
+        <button
+          disabled={getcartcount() === 0}
+          onClick={() => {
+            if (paymentOption === 'COD') {
+              if (!selectedAddress) {
+                toast.error("Please select an address");
+                return;
+              }
+              placeOrder('COD', cartArray);
+              toast.success("Order placed successfully!");
+            } else {
+              onPayment();
+            }
+          }}
+          className="bg-indigo-600 disabled:bg-indigo-300 rounded px-3 py-2 mt-6 text-white w-full"
         >
-        Place Order
-        </button> :  <button
-          onClick={()=>placeOrder(cartArray,paymentOption)}
-          className="w-full py-3 mt-6 cursor-pointer bg-indigo-500 text-white font-medium hover:bg-indigo-600 transition"
-        >
-        Proceed to Checkout
-        </button> }
+          Place Order
+        </button>
       </div>
     </div>
   ) : null;

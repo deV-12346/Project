@@ -7,6 +7,7 @@ const cart = require("./Cart.js")
 const order = require("./Order.js")
 const oldproductorder = require("./Oldproductorder.js")
 const seller = require("./Seller.js")
+const payment = require("./Payment.js")
 
 router.use("/product",products)
 router.use("/Auth",authroutes)
@@ -16,6 +17,7 @@ router.use("/Address",address)
 router.use("/order",order)
 router.use("/oldproductorder",oldproductorder)
 router.use("/seller",seller)
+router.use("/payment",payment)
 
 router.get("/ping",(req,res)=>{
       res.json({success:"true",message:"sucessful request"})
