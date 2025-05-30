@@ -11,8 +11,7 @@ const verifyOTP =  async (req,res,next)=>{
             message:"OTP not found"
          })
          }
-         const {otp:OTP ,timestamp} = selleremail
-         if(otp !==OTP){
+         if(otp !==selleremail.otp){
              return res.status(400).json({
             success:false,
             message:"OTP Invalid"
@@ -20,7 +19,7 @@ const verifyOTP =  async (req,res,next)=>{
          }
          const expirationTime = 60000
          const currentTime = Date.now()
-         const timeDifference = currentTime-timestamp
+         const timeDifference = currentTime-selleremail.timestamp
          if(timeDifference > expirationTime){
             await User.deleteOne({email})
             return res.status(400).json({
