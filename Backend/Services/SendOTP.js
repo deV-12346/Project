@@ -2,8 +2,7 @@ const nodemailer = require("nodemailer")
 const OTP = require("../Models/Otp.Model")
 const SendOTP = async (email) =>{
       try {
-            const Otp = Math.floor(Math.random() * 1000000);
-            const timestamp = Date.now();
+            const otp = Math.floor(Math.random() * 1000000);
             let transporter = nodemailer.createTransport({
               service: 'gmail',
               auth: {
@@ -13,15 +12,14 @@ const SendOTP = async (email) =>{
             });
             const storedata = new OTP({
               email,
-              otp:Otp,
-              timestamp
+              otp,
             })
             await storedata.save()
             let message = {
               from: `"ReMarket"<${process.env.Email}>`,
               to: email,
               subject: 'Your OTP for password change',
-              text: `Your OTP for changing the password is: ${Otp}`
+              text: `Your OTP for changing the password is: ${otp}`
             };
         
             await transporter.sendMail(message);
