@@ -1,8 +1,7 @@
 import laptop from './laptop.jpg'
 import mobile from './mobile.jpg'
-import car from './car.jpg'
+
 import headphone from './headphone.jpg'
-import phone from './phone.png'
 import earbuds from './earbuds.jpg'
 import smartwatch from './smartwatch.jpg'
 import speaker from './speaker.jpg'
