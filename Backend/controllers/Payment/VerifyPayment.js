@@ -15,7 +15,7 @@ const verifyPayment = async(req,res,next)=>{
             if(generatedSignature === signature){
                   return res.status(200).json({
                         success:true,
-                        message:"Payment verifed"
+                        message:"Payment success"
                   })
             }else{
                  return res.status(400).json({
@@ -24,7 +24,10 @@ const verifyPayment = async(req,res,next)=>{
                   }) 
             }
       }catch(err){
-            next(err)
+            return res.status(400).json({
+                   success:false,
+                   meassge:"payment falied"
+            })
       }
 }
 module.exports = {verifyPayment}

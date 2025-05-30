@@ -21,8 +21,13 @@ const Cart = () => {
   };
 
   useEffect(() => {
-    loadScript('https://checkout.razorpay.com/v1/checkout.js');
+  const loaded =  loadScript('https://checkout.razorpay.com/v1/checkout.js');
+    if (!loaded) {
+    toast.error("Failed to load Razorpay SDK");
+     return;
+  }
   }, []);
+
 
   const navigate = useNavigate();
   const {
@@ -72,11 +77,9 @@ const Cart = () => {
     const amount = getcartamount() * 100; // amount in paise
 
     try {
-      const { data } = await axiosInstance.post(`${baseURL}/api/payment/createorder`, {
-        amount,
-      });
+      const response = await axiosInstance.post(`${baseURL}/api/payment/createorder`,{amount} );
 
-      if (!data || !data.order) {
+      if (!response || !response.data.order) {
         toast.error("Failed to create Razorpay order");
         return;
       }
@@ -86,38 +89,35 @@ const Cart = () => {
         currency: "INR",
         name: "ReMarket",
         description: "Payment for your cart",
-        order_id: data.order.id,
+        order_id: response.data.order.id,
         handler: async function (response) {
           try {
-            const verifyRes = await axiosInstance.post(`${baseURL}/api/payment/verifypayment`, {
+            const verifyResponse = await axiosInstance.post(`${baseURL}/api/payment/verifypayment`, {
               order_id: response.razorpay_order_id,
               payment_id: response.razorpay_payment_id,
               signature: response.razorpay_signature,
             });
 
-            if (verifyRes.data.success) {
+            if (verifyResponse.data.success) {
               placeOrder("Online", cartArray);
-              toast.success("Payment Successful");
-            } else {
-              toast.error("Payment verification failed");
+              toast.success(verifyResponse.data.message); 
+              setInterval(() => {
+                navigate ("/myorders")
+              },3000);
             }
           } catch (err) {
-            console.error("Verification error", err);
-            toast.error("Verification failed");
+            toast.error(err?.message);
           }
         },
-        theme: { color: "#6366F1" },
       };
 
       if (window.Razorpay) {
         const rzp = new window.Razorpay(options);
         rzp.open();
-      } else {
-        toast.error("Razorpay SDK not loaded");
       }
     } catch (err) {
-      console.error("Payment initiation failed:", err);
-      toast.error("Something went wrong with the payment");
+      console.error(err?.message);
+      toast.error(err?.message);
     }
   };
 
@@ -281,8 +281,8 @@ const Cart = () => {
             className="w-full border border-gray-300 bg-white px-3 py-2 mt-2 outline-none"
             value={paymentOption}
           >
-            <option value="COD">Cash On Delivery</option>
             <option value="Online">Online Payment</option>
+            <option value="COD">Cash On Delivery</option>
           </select>
         </div>
 
@@ -307,12 +307,7 @@ const Cart = () => {
           disabled={getcartcount() === 0}
           onClick={() => {
             if (paymentOption === 'COD') {
-              if (!selectedAddress) {
-                toast.error("Please select an address");
-                return;
-              }
               placeOrder('COD', cartArray);
-              toast.success("Order placed successfully!");
             } else {
               onPayment();
             }
