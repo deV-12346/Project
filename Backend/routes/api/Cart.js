@@ -1,5 +1,5 @@
 const router  =  require("express").Router()
-const {CheckAuth} = require("../../Middleware/CheckAuth")
+const {CheckAuth} = require("../../Middleware/Checkauth")
 
 const {AddToCart} = require("../../controllers/Cart/AddToCart")
 const {RemoveFromCart} = require("../../controllers/Cart/RemoveFromCart")
