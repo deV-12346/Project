@@ -5,7 +5,7 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import { UseAppContext } from "../Context/AppContext";  
 import LoadingSpinner from '../Components/Loadingspinner';
-
+import baseURL from "../../config"
 const Sellerlogin = () => {
   const navigate = useNavigate();
   const { login } = UseAppContext(); 
@@ -14,7 +14,7 @@ const Sellerlogin = () => {
   const onFinish = async (values) => {
     try {
       const { email, password } = values;
-      const response = await axios.post("http://localhost:5000/api/auth/sellerlogin", { email, password });
+      const response = await axios.post(`${baseURL}/api/auth/sellerlogin`, { email, password });
 
       if (response.data.success) {
         toast.success(response.data.message);

@@ -4,6 +4,7 @@ import { Button, Form, Input } from "antd";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
+import { baseURL } from "../../config";
 
 
 const validateMessages = {
@@ -23,7 +24,7 @@ const Selleregister = () => {
 
     // Make API call
     axios
-      .post("http://localhost:5000/api/auth/sellerregister", values) // Corrected endpoint
+      .post(`${baseURL}/api/auth/sellerregister`, values) // Corrected endpoint
       .then((response) => {
         console.log("Response:", response);
 

@@ -42,7 +42,7 @@ const Login = () => {
     console.log("auth result :", authResult)
     try {
       if (authResult.code) {
-        const response = await axios.get(`http://localhost:5000/api/auth/google?code=${authResult.code}`)
+        const response = await axios.get(`${baseURL}/api/auth/google?code=${authResult.code}`)
         toast.success(response.data.message)
         setloading(true)
         setTimeout(() => {

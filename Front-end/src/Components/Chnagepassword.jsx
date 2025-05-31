@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
 import { UseAppContext } from '../Context/AppContext';
+import { baseURL } from '../../config';
 
 const ChangePassword = () => {
   const navigate = useNavigate();
@@ -14,7 +15,7 @@ const ChangePassword = () => {
     try {
       const { email, new_password, confirm_password, otp} = values;
       if (!otpSent) {
-        const response = await axios.post("http://localhost:5000/api/auth/generateotp", { email, new_password, confirm_password,otp}      );
+        const response = await axios.post(`${baseURL}/api/auth/generateotp`, { email, new_password, confirm_password,otp}      );
         if (response.data.success) {
           toast.success(response.data.message);
           console.log(response.data.message);
@@ -31,7 +32,7 @@ const ChangePassword = () => {
 
         }
       } else {
-        const response = await axios.put("http://localhost:5000/api/auth/changepassword", { email , new_password, confirm_password, otp });
+        const response = await axios.put(`${baseURL}/api/auth/changepassword`, { email , new_password, confirm_password, otp });
         if (response.data.success){
           toast.success(response.data.message);
           console.log(response.data.message);

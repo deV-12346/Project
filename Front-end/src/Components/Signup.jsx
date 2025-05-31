@@ -24,7 +24,7 @@ const Signup = () => {
   const {login} = UseAppContext()
   const onFinish = (values) => {
     console.log("Form Values:", values);
-    axios.post("http://localhost:5000/api/auth/register", values) 
+    axios.post(`${baseURL}/api/auth/register`, values) 
       .then((response) => {
         console.log("Response:", response);
         if (response.data.success) {

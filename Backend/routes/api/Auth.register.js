@@ -38,7 +38,7 @@ const {Deleteseller} = require("../../controllers/Auth/DeleteSeller.js")
 router.delete("/removeseller",CheckAuth,Deleteseller)
 
 const {products } = require("../../controllers/Auth/Products.js")
-router.post("/uploadfile",CheckAuth,products)
+router.post("/uploadfile",products)
 
 const {AdminLogin} = require("../../controllers/Auth/Admin_Login.js")
 router.post("/adminlogin",AdminLogin)

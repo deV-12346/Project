@@ -7,7 +7,7 @@ import { UseAppContext } from '../Context/AppContext';
 import SidebarMenuSeller from './Sidebar';
 import HeaderBarSeller from './Header';
 import { ToastContainer, toast } from 'react-toastify';
-
+import baseURL from "../../config"
 const { Content } = Layout;
 const { Option } = Select;
 
@@ -51,7 +51,7 @@ const UploadProducts = () => {
         }
       });
 
-      const response = await axios.post('http://localhost:5000/api/product/usedproduct', formData);
+      const response = await axios.post(`${baseURL}/api/product/usedproduct`, formData);
 
       if (response.data.success) {
         message.success('Product uploaded successfully');
