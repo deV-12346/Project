@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Layout, Form, Input, Button, Upload, Select, message } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import axiosinstance from "../../Axiosinstance"
 import { UseAppContext } from '../Context/AppContext';
 import SidebarMenuSeller from './Sidebar';
 import HeaderBarSeller from './Header';
@@ -51,7 +51,7 @@ const UploadProducts = () => {
         }
       });
 
-      const response = await axios.post(`${baseURL}/api/product/usedproduct`, formData);
+      const response = await axiosinstance.post(`${baseURL}/api/product/usedproduct`, formData);
 
       if (response.data.success) {
         message.success('Product uploaded successfully');

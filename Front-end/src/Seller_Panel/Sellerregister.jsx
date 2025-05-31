@@ -1,11 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Button, Form, Input } from "antd";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import { baseURL } from "../../config";
-
+import axiosinstance from "../../Axiosinstance"
 
 const validateMessages = {
   required: "${label} is required!",
@@ -23,7 +22,7 @@ const Selleregister = () => {
     console.log("Form Values:", values);
 
     // Make API call
-    axios
+    axiosinstance
       .post(`${baseURL}/api/auth/sellerregister`, values) // Corrected endpoint
       .then((response) => {
         console.log("Response:", response);
