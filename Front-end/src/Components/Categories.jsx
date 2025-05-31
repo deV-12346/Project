@@ -7,7 +7,7 @@ const Categories = () => {
   return (
     <div className='mt-16'>
       <p className='text-2xl md:text-3xl font-medium'>Categories</p>
-      <div className='grid grid-cols-2  sm:grid-cols-3 md:grid-cols-4 lg:grid-col-4  mt-6 gap-8'>
+      <div className='grid grid-cols-2  sm:grid-cols-1 md:grid-cols-4 lg:grid-col-4  mt-6 gap-8'>
       {categories.map((category,index)=>(
       <div key={index} className='gruop cursor-pointer py-5 px-3 gap-2 rounded-lg flex flex-col 
       justify-center items-center h-40 w-60 bg-gray-100' style={{backgroundColor:category.bgColor}}

@@ -5,7 +5,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import { useGoogleLogin } from "@react-oauth/google";
 import { UseAppContext } from "../Context/AppContext";
 import { baseURL } from "../../config";
-import axios from "axios";
+import  axioinstance from "../../Axiosinstance"
 import LoadingSpinner from "./Loadingspinner";
 import { useState } from "react";
 
@@ -24,7 +24,7 @@ const Signup = () => {
   const {login} = UseAppContext()
   const onFinish = (values) => {
     console.log("Form Values:", values);
-    axios.post(`${baseURL}/api/auth/register`, values) 
+     axioinstance.post(`${baseURL}/api/auth/register`, values) 
       .then((response) => {
         console.log("Response:", response);
         if (response.data.success) {
@@ -47,7 +47,7 @@ const Signup = () => {
              console.log("auth result :",authResult)
              try{
               if(authResult.code){
-                const response = await axios.get(`${baseURL}/api/auth/google?code=${authResult.code}`)
+                const response = await  axioinstance.get(`${baseURL}/api/auth/google?code=${authResult.code}`)
                 login(response.data.user, response.data.token);
                 setloading(true)
                 setInterval(() => {

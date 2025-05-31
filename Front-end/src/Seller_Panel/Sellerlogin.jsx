@@ -5,7 +5,7 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import { UseAppContext } from "../Context/AppContext";  
 import LoadingSpinner from '../Components/Loadingspinner';
-import baseURL from "../../config"
+import { baseURL } from "../../config"
 const Sellerlogin = () => {
   const navigate = useNavigate();
   const { login } = UseAppContext(); 

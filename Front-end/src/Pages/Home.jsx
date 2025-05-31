@@ -12,14 +12,14 @@ const Home = () => {
   const navigate = useNavigate()
   return (
        <div className='my-5 mx-5 md:my-10 md:mx-15'>
-       <div className="mx-18 my-5 w-80 md:hidden"> 
+       {/* <div className="mx-18 my-5 w-80 md:hidden"> 
         <input
               type="text"
               onChange={(e)=>setsearchqurey(e.target.value)}
               placeholder="Search products..."
               className="w-full px-5 py-2  font-mono border-2 rounded-3xl text-black outline-none bg-green-100"
             /> 
-        </div>
+        </div> */}
         <div className='flex items-center justify-evenly border-b-1-blue-700 m-2 p-3 bg-gradient-to-r from-violet-500 via-[#9938CA] to-[#E0724A] text-black'>
             <button className='cursor-pointer hover:underline' onClick={()=> {navigate(`/Products/laptop`)}}><Link >Buy Laptop</Link></button>
             <button className='cursor-pointer hover:underline'><Link to="/Products/mobile" >Buy Phone</Link></button>

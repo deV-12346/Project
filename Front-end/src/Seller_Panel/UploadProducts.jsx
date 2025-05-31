@@ -7,7 +7,7 @@ import { UseAppContext } from '../Context/AppContext';
 import SidebarMenuSeller from './Sidebar';
 import HeaderBarSeller from './Header';
 import { ToastContainer, toast } from 'react-toastify';
-import baseURL from "../../config"
+import { baseURL } from "../../config"
 const { Content } = Layout;
 const { Option } = Select;
 
