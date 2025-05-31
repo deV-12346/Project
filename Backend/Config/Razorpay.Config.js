@@ -1,5 +1,5 @@
 require("dotenv").config()
-const razorpay = require("razorPay")
+const razorpay = require("razorpay")
 exports.createRazorpayInstance = () =>{
       return new razorpay({
             key_id : process.env.RAZORPAY_ID_KEY,
