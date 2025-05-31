@@ -19,12 +19,13 @@ const verifyPayment = async(req,res,next)=>{
                         message:"Payment success"
                   })
             }else
-            {     const payment = new payment{
-                       order_id,
-                       payment_id,
-                       signature,
-                       amount,
-                  }
+            {     const payment = new Payment({
+                        amount,
+                        razorpay_order_id:order_id,
+                        razorpay_payment_id:payment_id,
+                        razorpay_signature:signature,
+                  })
+                  await payment.save()
                  return res.status(400).json({
                         success:false,
                         message:"Payment not verifed"

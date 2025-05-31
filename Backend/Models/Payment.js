@@ -1,9 +1,5 @@
 const {model,Schema} = require("mongoose")
 const paymentSchema  = new Schema ({
-      order_id:{
-            type:Schema.Types.ObjectId,
-            ref:"Order"
-      },
       amount:{
             type:Number,
             required:true,
