@@ -1,8 +1,9 @@
 require("dotenv").config()
 const crypto = require("crypto")
+const Payment = require("../../Models/Payment.js")
 const verifyPayment = async(req,res,next)=>{
       try{
-            const {order_id,payment_id,signature} = req.body
+            const {order_id,payment_id,signature,amount} = req.body
             const secret = process.env.RAZORPAY_SECRET_KEY
 
             //create hmam object
@@ -17,7 +18,13 @@ const verifyPayment = async(req,res,next)=>{
                         success:true,
                         message:"Payment success"
                   })
-            }else{
+            }else
+            {     const payment = new payment{
+                       order_id,
+                       payment_id,
+                       signature,
+                       amount,
+                  }
                  return res.status(400).json({
                         success:false,
                         message:"Payment not verifed"

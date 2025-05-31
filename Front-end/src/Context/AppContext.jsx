@@ -263,7 +263,7 @@ export const AuthProvider = ({ children }) => {
   }
 
   //order 
-   const placeOrder = async (paymentOption,cartArray) => {
+   const placeOrder = async (paymentOption,cartArray,payment_id) => {
     if(!selectedAddress){
       toast.error("Please enter a address")
       return
@@ -281,6 +281,7 @@ export const AuthProvider = ({ children }) => {
       })),
       address: selectedAddress,
       payment: paymentOption,
+      ...(payment_id && { payment_id })
     };
     console.log('Placing order...',orderData)
     try{

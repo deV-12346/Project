@@ -3,7 +3,7 @@ const Cart = require("../../Models/Cart")
 const OrderMail = require("../../Services/Order")
 const Myorder = async (req,res,next)=>{
       try{
-      const {items, address, payment } = req.body
+      const {items, address, payment ,payment_id} = req.body
 
       const userId = req.user?.id
       const username = req.user?.username
@@ -33,6 +33,7 @@ const Myorder = async (req,res,next)=>{
           address,
           payment,
           totalAmount,
+          payment_id,
       })
       await neworder.save()
 

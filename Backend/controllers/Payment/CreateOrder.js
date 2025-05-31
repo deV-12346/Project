@@ -2,7 +2,7 @@ const Product = require("../../Models/Cart")
 const {createRazorpayInstance} = require("../../Config/Razorpay.Config")
 const razorPayInstance = createRazorpayInstance  ()
 const createOrder = async(req,res)=>{
-       try{
+      try{
       const {amount} = req.body
       const user_Id = req?.user.id
       const cart = await Product.findOne({userId:user_Id})

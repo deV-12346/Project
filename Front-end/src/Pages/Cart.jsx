@@ -96,10 +96,11 @@ const Cart = () => {
               order_id: response.razorpay_order_id,
               payment_id: response.razorpay_payment_id,
               signature: response.razorpay_signature,
+              amount,
             });
 
             if (verifyResponse.data.success) {
-              placeOrder("Online", cartArray);
+              placeOrder("Online", cartArray,payment_id);
               toast.success(verifyResponse.data.message); 
               setInterval(() => {
                 navigate ("/myorders")

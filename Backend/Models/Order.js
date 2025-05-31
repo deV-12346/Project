@@ -86,6 +86,11 @@ const OrderSchema  =  new Schema({
   totalAmount: {
     type: Number,
     required: true
-  }
+  },
+  payment_id: {
+    type: Schema.Types.ObjectId,
+    ref: 'Payment',
+    required: false
+  },
 }, { timestamps: true });
 module.exports = model("Order",OrderSchema)
