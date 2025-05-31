@@ -29,7 +29,7 @@ mongoose.connect(process.env.Connection_String)
     await createdefaultadmin();
   })
   .then(() => {
-    const PORT = 5000;
+    const PORT = process.env.PORT || 5000;
     backend.listen(PORT, () => {
       console.log(
         `${chalk.green("✓")} ${chalk.blue(

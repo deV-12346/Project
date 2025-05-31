@@ -1,4 +1,4 @@
-const MyWishListModel = require("../../Models/MyWishList.model")
+const MyWishListModel = require("../../Models/MyWishList.Model")
 const FetchMyWishList = async(req,res,next)=>{
       try{
       const userId = req.user?.id;
