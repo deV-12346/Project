@@ -14,22 +14,23 @@ const verifyPayment = async(req,res,next)=>{
             const generatedSignature = hmac.digest("hex")
 
             if(generatedSignature === signature){
-                  return res.status(200).json({
-                        success:true,
-                        message:"Payment success"
-                  })
-            }else
-            {     const payment = new Payment({
+                  const payment = new Payment({
                         amount,
                         razorpay_order_id:order_id,
                         razorpay_payment_id:payment_id,
                         razorpay_signature:signature,
                   })
                   await payment.save()
+                  return res.status(200).json({
+                        success:true,
+                        message:"Payment success",
+                        payment
+                  })
+            }else
+            {
                  return res.status(400).json({
                         success:false,
                         message:"Payment not verifed",
-                        payment
                   }) 
             }
       }catch(err){
