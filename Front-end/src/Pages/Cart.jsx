@@ -85,7 +85,7 @@ const Cart = () => {
       }
 
       const options = {
-        key: "rzp_test_aXxBrljwkpXALd",
+        key: "rzp_live_IllUX1yyH9wTfC",
         currency: "INR",
         name: "ReMarket",
         description: "Payment for your cart",
