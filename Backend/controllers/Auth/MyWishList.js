@@ -2,7 +2,7 @@ const Product = require("../../Models/Products")
 const OldProduct = require("../../Models/UsedProduct")
 const User = require("../../Models/user.model")
 const GoogleUser = require("../../Models/Google.user.model")
-const MyWishListModel = require("../../Models/MyWishList.model")
+const MyWishListModel = require("../../Models/MyWishList.Model")
 const MyWishList = async (req, res, next) => {
       try {
             const { productId } = req.body
