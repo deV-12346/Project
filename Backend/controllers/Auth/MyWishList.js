@@ -7,7 +7,6 @@ const MyWishList = async (req, res, next) => {
       try {
             const { productId } = req.body
             const userId = req.user?.id;
-            console.log(userId)
             const user = await User.findById(userId)
             const googleuser = await GoogleUser.findById(userId) 
             if (!user && !googleuser) {
