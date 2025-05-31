@@ -100,7 +100,7 @@ const Cart = () => {
             });
 
             if (verifyResponse.data.success) {
-              placeOrder("Online", cartArray,payment_id);
+              placeOrder("Online", cartArray,response.data.payment.razorpay_payment_id);
               toast.success(verifyResponse.data.message); 
               setInterval(() => {
                 navigate ("/myorders")
