@@ -3,6 +3,7 @@ import {  FaMapMarkerAlt } from 'react-icons/fa';
 import Categories from '../Components/Categories';
 import { Link, useNavigate } from "react-router-dom";
 import Newslatter from '../Components/Newslatter';
+import OurPolicy from '../Components/OurPolicy';
 import BestSellers from '../Components/BestSellers';
 import { UseAppContext } from '../Context/AppContext';
 
@@ -28,6 +29,7 @@ const Home = () => {
         </div>
         <Categories />
          <BestSellers />
+        <OurPolicy/> 
         <Newslatter/>
       </div>
 

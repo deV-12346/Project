@@ -26,7 +26,7 @@ const ProductCategories = () => {
       )}
 
       {filteredProducts.length > 0 ? (
-        <div className='grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 mt-6 md:gap-6'>
+        <div className="grid ml-10  grid-cols-1 sm:grid-cols-2 md:grid-cols-3 md:0 lg:grid-cols-5 xl:grid-cols-5 gap-4 mt-8">
           {filteredProducts.map((product) => (
             <ProductCard key={product._id} product={product} />
           ))}

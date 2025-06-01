@@ -24,7 +24,7 @@ const WishList = () => {
           Your wishlist is empty.
         </div>
       ) : (
-       <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 md:gap-6 mt-5'>
+       <div className="grid ml-10  grid-cols-1 sm:grid-cols-2 md:grid-cols-3 md:0 lg:grid-cols-5 xl:grid-cols-5 gap-4 mt-8">
           {NewProductwishlist.map(product => (
             <ProductCard key={product._id} product={product} />
           ))}
@@ -40,7 +40,7 @@ const WishList = () => {
           Your wishlist is empty.
         </div>
       ) : (
-         <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 md:gap-6 mt-5'>
+          <div className="grid ml-10  grid-cols-1 sm:grid-cols-2 md:grid-cols-3 md:0 lg:grid-cols-5 xl:grid-cols-5 gap-4 mt-8">
           {OldproductsWishList.map(product => (
             <ProductCard1 key={product._id} product={product} />
           ))}

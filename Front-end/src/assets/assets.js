@@ -1,4 +1,4 @@
-import laptop from './laptop.jpg'
+import laptop from './laptop.png'
 import mobile from './mobile.jpg'
 import headphone from './headphone.jpg'
 import earbuds from './EarbudsC.jpg'
@@ -11,7 +11,13 @@ import cart_icon from "./cart_icon.svg";
 import arrow_right_icon_colored from "./arrow_right_icon_colored.svg";
 import remove_icon from "./remove_icon.svg";
 import add_address_iamge from "./add_address_image.svg";
+import support_img from "./support_img.png"
+import quality_icon from "./quality_icon.png"
+import exchange_icon from "./exchange_icon.png"
 export const assets = {
+     exchange_icon,
+     quality_icon,
+     support_img,
      star_icon,
      star_dull_icon,
      cart_icon,
@@ -48,12 +54,12 @@ export const categories = [
       {   
           text:"Speaker",
           path: "Speakers",
-          image: speaker,
+          // image: speaker,
       },
       {   
           text:"Wired Earphones",
           path: "wiredarphones",
-          image: earphone,
+          // image: earphone,
       },
 ]
 export const productcategoriescategories = [

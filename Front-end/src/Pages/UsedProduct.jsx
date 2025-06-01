@@ -25,7 +25,7 @@ const Usedproducts = () => {
         <p className='text-2xl font-medium uppercase'>All Products</p>
         <div className='w-16 h-0.5 bg-primary rounded-full'></div>
       </div>
-      <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 md:gap-6 mt-5'>
+       <div className="grid ml-10 grid-cols-1 sm:grid-cols-2 md:grid-cols-3  md:ml-0 lg:grid-cols-5 xl:grid-cols-5 gap-4 mt-8 ">
         {filteredproducts
           .filter((product) => product)
           .map((product) => (
