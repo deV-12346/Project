@@ -5,7 +5,7 @@ import Login from "./Components/Login"
 import AdminPanel from "./Pages/Users";
 import Products from "./Pages/Products";
 import Orders from "./Pages/Orders";
-
+import Payment from "./pages/Payment"
 function App() {  
   return (
     <div>
@@ -16,6 +16,7 @@ function App() {
           <Route path="/admin/upload"  element={<UploadProducts/>}/>
           <Route path="/admin/products" element={<Products/>}/>
           <Route path="/admin/orders" element={<Orders/>}/>
+          <Route path="/admin/payments" element={<Payment/>}/>
           </Routes>
     </div>
   )

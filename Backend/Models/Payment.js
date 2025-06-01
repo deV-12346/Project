@@ -15,6 +15,11 @@ const paymentSchema  = new Schema ({
       razorpay_signature:{
             type:String,
             required:true
+      },
+      status:{
+            type:String,
+            enun:["Paid","Refund"],
+            default:"Paid"
       }
 },{ timestamps: true })
 module.exports = model("Payment",paymentSchema)

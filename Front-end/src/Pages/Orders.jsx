@@ -5,7 +5,7 @@ import { Toaster } from "react-hot-toast";
 import { Phone, Mail } from "lucide-react";
 
 const MyOrders = () => {
-  const { myOrders, cancelOrder, oldproductorders ,canceloldproductOrder} = UseAppContext();
+  const { myOrders, cancelOrder, refundPayment, oldproductorders ,canceloldproductOrder} = UseAppContext();
   const navigate = useNavigate();
 
   if (myOrders.length === 0) {
@@ -95,7 +95,10 @@ const MyOrders = () => {
           <div className="flex justify-end">
             {order.status !== "Cancelled" && order.status !== "Delivered" ?
               <button
-                onClick={() => cancelOrder(order._id, "Cancelled")}
+                onClick={async () => {
+                   await refundPayment(order.payment_id);
+                   cancelOrder(order._id, "Cancelled");
+                  }}
                 className="bg-primary text-white px-4 py-3 hover:bg-primary/20 cursor-pointer "
               >
                 Cancel Order

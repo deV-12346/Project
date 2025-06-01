@@ -281,7 +281,7 @@ export const AuthProvider = ({ children }) => {
       })),
       address: selectedAddress,
       payment: paymentOption,
-      ...(payment_id && { payment_id })
+      payment_id: payment_id 
     };
     console.log('Placing order...',orderData)
     try{
@@ -290,9 +290,9 @@ export const AuthProvider = ({ children }) => {
           toast.success(response.data.message)
            fetchOrders()
            getmycart()
-          setInterval(()=>{
-             setcartitems([])
-          },3000)
+           setTimeout(()=>{
+            setcartitems([])
+          },5000)
         }
       }
        catch(err){
@@ -326,6 +326,18 @@ export const AuthProvider = ({ children }) => {
            console.log(err?.message)
         }
       };
+  const refundPayment = async (payment_id)=>{
+    console.log(payment_id)
+        try{
+           const response = await axiosinstance.put(`${baseURL}/api/payment/refund/${payment_id}`)
+           if(response.data.success){
+            toast.success(response.data.message)
+            console.log(response.data.message)
+           }
+        }catch(err){
+            console.log(err?.message)
+        }
+  }
 
   // old product order 
    const handleOldproductOrder = async (productId,sellerId)=>{
@@ -390,7 +402,7 @@ export const AuthProvider = ({ children }) => {
     products, oldproducts, addtocart, updateCartitems, removecartitems, clearcart,
     cartitems, login, logout, searchquery, setsearchqurey, getcartcount, getcartamount
     , addresses, selectedAddress, setselectedAddress, fetchaddress,DeleteAddress, toggleWishlistItem,
-     wishlistItems ,placeOrder ,myOrders ,cancelOrder ,handleOldproductOrder , getmyorder ,oldproductorders,
+     wishlistItems ,placeOrder ,myOrders ,cancelOrder , refundPayment, handleOldproductOrder , getmyorder ,oldproductorders,
       canceloldproductOrder
   }
   return (

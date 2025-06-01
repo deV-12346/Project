@@ -1,14 +1,14 @@
 import React from 'react';
 import { Layout, Menu } from 'antd';
-import { Link, useLocation } from 'react-router-dom'; // ✅ import useLocation
-import { UserOutlined, TeamOutlined, ShoppingCartOutlined, AppstoreAddOutlined, FileSearchOutlined } from '@ant-design/icons';
+import { Link, useLocation } from 'react-router-dom'; 
+import { UserOutlined, TeamOutlined, ShoppingCartOutlined, AppstoreAddOutlined, FileSearchOutlined ,CreditCardOutlined} from '@ant-design/icons';
 import logo from '../logo/logo.png';
 
 const { Sider } = Layout;
 
 const SidebarMenu = ({ collapsed, setCollapsed }) => {
-  const location = useLocation(); // ✅ get current URL
-  const currentPath = location.pathname; // ✅
+  const location = useLocation();
+  const currentPath = location.pathname; 
 
   // Mapping routes to menu keys
   const menuKeyMapping = {
@@ -17,6 +17,7 @@ const SidebarMenu = ({ collapsed, setCollapsed }) => {
     '/admin/products': '3',
     '/admin/upload': '4',
     '/admin/orders': '5',
+    '/admin/payments': '6',
   };
 
   return (
@@ -51,6 +52,9 @@ const SidebarMenu = ({ collapsed, setCollapsed }) => {
         </Menu.Item>
         <Menu.Item key="5" icon={<FileSearchOutlined />}>
           <Link to="/admin/orders">Manage Orders</Link>
+        </Menu.Item>
+        <Menu.Item key="6" icon={<CreditCardOutlined />}>
+        <Link to="/admin/payments">Manage Payments</Link>
         </Menu.Item>
       </Menu>
     </Sider>

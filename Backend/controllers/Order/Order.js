@@ -4,7 +4,7 @@ const OrderMail = require("../../Services/Order")
 const Myorder = async (req,res,next)=>{
       try{
       const {items, address, payment ,payment_id} = req.body
-
+      console.log(payment_id)
       const userId = req.user?.id
       const username = req.user?.username
 

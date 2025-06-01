@@ -46,7 +46,7 @@ const Cart = () => {
 
   const [cartArray, setcartarray] = useState([]);
   const [showAddress, setShowAddress] = useState(false);
-  const [paymentOption, setPaymentOption] = useState('COD');
+  const [paymentOption, setPaymentOption] = useState('Online');
 
   const getcart = () => {
     const tempArray = [];
@@ -85,7 +85,7 @@ const Cart = () => {
       }
 
       const options = {
-        key: "rzp_live_IllUX1yyH9wTfC",
+        key: "rzp_test_aXxBrljwkpXALd",
         currency: "INR",
         name: "ReMarket",
         description: "Payment for your cart",
@@ -100,14 +100,16 @@ const Cart = () => {
             });
 
             if (verifyResponse.data.success) {
-              placeOrder("Online", cartArray,response.data.payment._id);
+              const paymentId = verifyResponse.data.paymentId;
+              placeOrder("Online", cartArray, paymentId);
               toast.success(verifyResponse.data.message); 
-              setInterval(() => {
+              setTimeout(() => {
                 navigate ("/myorders")
-              },3000);
+              },5000);
             }
           } catch (err) {
             toast.error(err?.message);
+            console.log(err?.message)
           }
         },
       };
