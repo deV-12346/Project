@@ -96,7 +96,7 @@ const Navbar = () => {
               </div>
             ) : (
               <div className="relative">
-                <NavLink onClick={() => setDropdownOpenL(!dropdownOpenL)} className="flex items-center gap-2 text-2xl px-6 py-[6px] rounded-xl  bg-primary   hover:bg-primary-dull">
+                <NavLink onClick={() => setDropdownOpenL(!dropdownOpenL)} className="flex items-center gap-1 bg-blue-300 mr-2 w-full sm:w-auto px-4 py-2 text-white rounded hover:bg-primary/70 transition">
                   <FaSignInAlt className="text-xl" /> Login
                 </NavLink>
                 
@@ -118,7 +118,7 @@ const Navbar = () => {
       </nav>
 
       {/* Sidebar for Small Screens */}
-      <div className={`fixed top-0 left-0 h-full w-64 bg-gray-800 text-white transition-transform transform ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"} md:hidden`}>
+      <div className={`fixed top-0 left-0 h-full w-64 bg-gray-800 text-white transition-transform transform z-50 ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"} md:hidden`}>
         <div className="flex justify-between items-center p-4 border-b border-gray-700">
           <span className="text-xl font-semibold">Menu</span>
           <button className="text-2xl" onClick={() => setIsSidebarOpen(false)}>
@@ -157,7 +157,7 @@ const Navbar = () => {
                 <FaSignInAlt /> Logout
               </button>
             ) : (
-              <NavLink to="/login" onClick={() => setIsSidebarOpen(false)} className="flex items-center gap-3 bg-amber-400 px-3 py-2 rounded-lg text-black hover:bg-amber-300">
+              <NavLink to="/login" onClick={() => setIsSidebarOpen(false)} className="flex items-center gap-1 bg-blue-300 mr-2 w-full sm:w-auto px-4 py-1 text-white rounded hover:bg-primary/70 transition">
                 <FaSignInAlt /> Login
               </NavLink>
             )}
