@@ -106,7 +106,7 @@ const OldproductDetails = () => {
                     <p className='text-3xl font-medium'>Related Products</p>
                     <div className='w-20 h-0.5 bg-primary rounded-full mt-2'></div>
                 </div>
-                <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 md:gap-6 lg:grid-cols-5  mt-6 w-full'>
+                 <div className="grid  grid-cols-1 sm:grid-cols-2 md:grid-cols-3  lg:grid-cols-5 xl:grid-cols-5 gap-4 mt-8 ">
                     {relatedproducts.filter((product) => product).map((product, index) =>
                         (<ProductCard1 key={index} product={product} />))}
                 </div>
