@@ -26,4 +26,4 @@ const OrderMail =  async(username,email,productName)=>{
             console.log("error sending email :",err)
       }
 }
-module.exports = OrderMail
+module.exports = {OrderMail}

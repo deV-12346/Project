@@ -97,7 +97,7 @@ const ProductDetails = () => {
                     {relatedproducts.filter((product) => product).map((product, index) =>
                         (<ProductCard key={index} product={product} />))}
                 </div>
-                <button className='mx-auto px-12 my-16 py-2.5 border rounded text-primary  cursor-pointer hover:bg-primary/10 transition' onClick={() => { navigate("/products"); scrollTo(0, 0) }}>See More</button>
+                <button className='mx-auto px-12 my-16 py-2. 5 border rounded text-primary  cursor-pointer hover:bg-primary/10 transition' onClick={() => { navigate("/products"); scrollTo(0, 0) }}>See More</button>
             </div>
         </div>
     );

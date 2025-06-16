@@ -24,7 +24,7 @@ const Allproducts = () => {
     if (selectedCategory) {
       let filterproduct = products;
       filterproduct = filterproduct.filter((product) => product.category === selectedCategory);
-      filterproduct = filterproduct.filter((product) => product.offerPrice <= priceMax);
+      filterproduct = filterproduct.filter((product) => product.offerPrice > priceMax);
       setfilteredproducts(filterproduct);
     }
   }, [products, searchquery, selectedCategory, priceMax]);

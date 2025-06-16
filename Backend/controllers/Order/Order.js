@@ -1,6 +1,6 @@
 const Order = require("../../Models/Order")
 const Cart = require("../../Models/Cart")
-const OrderMail = require("../../Services/Order")
+const {OrderMail} = require("../../Services/Order")
 const Myorder = async (req,res,next)=>{
       try{
       const {items, address, payment ,payment_id} = req.body
@@ -38,7 +38,7 @@ const Myorder = async (req,res,next)=>{
       await neworder.save()
 
       const productNames = items.map(item => item.productName).join(", ");
-      OrderMail(username,email,productNames)
+      await OrderMail(username,email,productNames)
 
       return res.status(200).json({
             success:true,
