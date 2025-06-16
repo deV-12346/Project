@@ -38,7 +38,7 @@ const Signup = () => {
       })
       .catch((error) => {
         console.error("Error:", error);
-        const errorMessage = error.message || "Registration failed! Please try again.";
+        const errorMessage = error.response?.data?.message || error.message || "Registration failed!";
         toast.error(errorMessage); // Show actual error message from backend
       });
     };
