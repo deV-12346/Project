@@ -3,11 +3,14 @@ import { baseURL } from "../../config";
 import { UseAppContext } from "../Context/AppContext";
 import { Toaster } from "react-hot-toast";
 import { Phone, Mail } from "lucide-react";
+import { useEffect } from "react";
 
 const MyOrders = () => {
-  const { myOrders, cancelOrder, refundPayment, oldproductorders ,canceloldproductOrder} = UseAppContext();
+  const { myOrders, fetchOrders,cancelOrder, refundPayment, oldproductorders ,canceloldproductOrder} = UseAppContext();
   const navigate = useNavigate();
-
+  useEffect(()=>{
+    fetchOrders()
+  },[myOrders])
   if (myOrders.length === 0) {
     return (
       <div className="text-center py-20 text-gray-500 text-lg">

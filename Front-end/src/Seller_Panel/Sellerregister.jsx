@@ -36,8 +36,7 @@ const Selleregister = () => {
       })
       .catch((error) => {
         console.error("Error:", error);
-        const errorMessage = error.response?.data?.message || "Registration failed! Please try again.";
-        toast.error(errorMessage); // Show actual error message from backend
+        toast.error(error.message); // Show actual error message from backend
       });
   };
 

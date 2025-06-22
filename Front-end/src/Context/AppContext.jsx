@@ -36,7 +36,7 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     fetchproducts()
     oldProduct()
-  }, [])
+  },[])
 
   const [oldproducts, SetOldproduct] = useState([])
   const oldProduct = async () => {
@@ -403,7 +403,7 @@ export const AuthProvider = ({ children }) => {
     cartitems, login, logout, searchquery, setsearchqurey, getcartcount, getcartamount
     , addresses, selectedAddress, setselectedAddress, fetchaddress,DeleteAddress, toggleWishlistItem,
      wishlistItems ,placeOrder ,myOrders ,cancelOrder , refundPayment, handleOldproductOrder , getmyorder ,oldproductorders,
-      canceloldproductOrder
+      canceloldproductOrder ,fetchOrders
   }
   return (
     <AuthContext.Provider value={value}>

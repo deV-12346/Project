@@ -32,7 +32,7 @@ const Sellerlogin = () => {
     } catch (error) {
       console.log("Error response:", error.response?.data);
       const errorMessage = error.response?.data?.message || "Login failed";
-      toast.error(errorMessage);
+      toast.error(error.message);
       message.error(errorMessage);
       setloading(false)
     }

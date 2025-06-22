@@ -6,8 +6,6 @@ const Sellerlogin = async (req, res, next) => {
   try {
 
     const { email, password } = await sellerloginValidation.validateAsync(req.body);
-     console.log(req.body)
-     console.log("Successfully loggin !")
     const existingSeller = await Seller.findOne({ email })
     if (!existingSeller) {
       return res.status(400).json({

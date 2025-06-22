@@ -20,13 +20,12 @@ const Allproducts = () => {
     } else {
       setfilteredproducts(products);
     }
-
+    let filterproduct = products;
     if (selectedCategory) {
-      let filterproduct = products;
       filterproduct = filterproduct.filter((product) => product.category === selectedCategory);
-      filterproduct = filterproduct.filter((product) => product.offerPrice > priceMax);
-      setfilteredproducts(filterproduct);
     }
+     filterproduct = filterproduct.filter((product) => Number(product.offerPrice) <= priceMax);
+    setfilteredproducts(filterproduct);
   }, [products, searchquery, selectedCategory, priceMax]);
 
   return (
