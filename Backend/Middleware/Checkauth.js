@@ -1,17 +1,17 @@
 const jwt = require("jsonwebtoken");
+const AppError = require("../Utils/AppError");
 
 const CheckAuth = (req, res, next) => {
   const authorization = req.headers.authorization
+  
   if (!authorization) {
-    return res.status(401).json({
-      message: "Token not found please login" 
-    })
+    return next(new AppError("Token not found. Please login", 401));
   }
+  
   const token = req.headers.authorization.split(" ")[1]
+  
   if (!token) {
-    return res.status(401).json({
-     message: "No token, authorization denied"
-     });
+    return next(new AppError("No token, authorization denied", 401));
   }
 
   try {
@@ -20,15 +20,13 @@ const CheckAuth = (req, res, next) => {
     console.log(decoded)
     next();
   } catch (error) {
-    if (error.name === "TokenExpiredError") {
-      return res.status(401).json({
-        message: "Token has expired please login",
-      });
-    }
-    return res.status(401).json({ message: "Token is not valid" });
+    // Let the global error handler deal with JWT errors
+    next(error);
   }
 };
+
 const generatetoken = (userdata) => {
   return jwt.sign(userdata, process.env.JWT_SECRET, { expiresIn: "1h" })
 }
+
 module.exports = { CheckAuth, generatetoken };

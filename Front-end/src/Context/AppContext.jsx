@@ -211,9 +211,21 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = () => {
+    // Clear localStorage
     localStorage.removeItem("user");
     localStorage.removeItem("token");
+    
+    // Clear all state
     setUser(null);
+    setcartitems([]);
+    setWishlistItems([]);
+    setAddresses([]);
+    setselectedAddress(null);
+    setmyOrders([]);
+    SetOldproductOrders([]);
+    
+    // Show notification
+    toast.success("Logged out successfully");
   };
 
   //my wishlist

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Form, Input, message } from 'antd';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import Axiosinstance from '../../Axiosinstance';
 import { ToastContainer, toast } from 'react-toastify';
 import { UseAppContext } from "../Context/AppContext";
@@ -8,10 +8,15 @@ import LoadingSpinner from '../Components/Loadingspinner';
 import { baseURL } from '../../config';
 import { useGoogleLogin } from "@react-oauth/google";
 import axios from 'axios';
+
 const Login = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { login } = UseAppContext();
   const [loading, setloading] = useState(false)
+
+  // Get the redirect path from location state, default to home
+  const from = location.state?.from?.pathname || "/";
 
   const onFinish = async (values) => {
     try {
@@ -29,8 +34,9 @@ const Login = () => {
         setloading(true)
         setTimeout(() => {
           login(response.data.user, response.data.token);
-          navigate("/");
-        }, 4000);
+          // Redirect to the original destination or home
+          navigate(from, { replace: true });
+        }, 2000);
       }
     } catch (error) {
       console.error("Error details:", error);
@@ -38,6 +44,7 @@ const Login = () => {
       setloading(false)
     }
   };
+
   const responseGoogle = async (authResult) => {
     console.log("auth result :", authResult)
     try {
@@ -47,14 +54,16 @@ const Login = () => {
         setloading(true)
         setTimeout(() => {
           login(response.data.user, response.data.token);
-          navigate("/");
-        }, 4000);
+          // Redirect to the original destination or home
+          navigate(from, { replace: true });
+        }, 2000);
 
       }
     }
     catch (error) {
       console.log(error.response?.data?.message)
       toast.error(error?.response?.data?.message)
+      setloading(false)
     }
   }
 

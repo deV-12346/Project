@@ -18,13 +18,17 @@ import ProductCategories from "./Pages/ProductCategories";
 import ProductDetails from "./Pages/ProductDetails";
 import UsedProduct from "./Pages/UsedProduct";
 import OldproductDeatils from "./Pages/OldproductDeatils";
-import Card from "antd/es/card/Card";
 import Cart from "./Pages/Cart";
 import AddAddress from "./Components/AddAddress";
 import WishList from "./Pages/WishList";
 import ChangePassword from "./Seller_Panel/ChangePassword";
+import ProtectedRoute from "./Components/ProtectedRoute";
+import PublicRoute from "./Components/PublicRoute";
+import SellerProtectedRoute from "./Components/SellerProtectedRoute";
+
 function App() {
   const router = createBrowserRouter([
+    // Public Routes (accessible to all)
     {
       path: "/",
       element: (
@@ -57,11 +61,13 @@ function App() {
     },
     {
       path:"/products/:category/:id",
-      element: <div>
-       <Navbar />
-        <ProductDetails />
-        <Footer />
-      </div>
+      element: (
+        <div>
+          <Navbar />
+          <ProductDetails />
+          <Footer />
+        </div>
+      )
     },
     {
       path: "/oldproducts",
@@ -73,7 +79,7 @@ function App() {
         </div>
       ),
     },
-      {
+    {
       path: "/oldproducts/:category",
       element: (
         <div>
@@ -85,49 +91,13 @@ function App() {
     },
     {
       path:"/oldproducts/:category/:id",
-      element: <div>
-       <Navbar />
-        <OldproductDeatils />
-        <Footer />
-      </div>
-    },
-    {
-      path:"/cart",
-      element: <div>
-        <Navbar/>
-        <Cart />
-        <Footer/>
-      </div>
-    },
-    {
-      path: "/myorders",
       element: (
         <div>
           <Navbar />
-          <Orders />
+          <OldproductDeatils />
           <Footer />
         </div>
-      ),
-    },
-    {
-      path: "/wishlist",
-      element: (
-        <div>
-          <Navbar />
-          <WishList />
-          <Footer />
-        </div>
-      ),
-    },
-     {
-      path: "/address",
-      element: (
-        <div>
-          <Navbar />
-          <AddAddress />
-          <Footer />
-        </div>
-      ),
+      )
     },
     {
       path: "/about",
@@ -139,42 +109,130 @@ function App() {
         </div>
       ),
     },
+
+    // Auth Routes (accessible only to non-authenticated users)
     {
       path: "/login",
-      element: <Login />,
+      element: (
+        <PublicRoute>
+          <Login />
+        </PublicRoute>
+      ),
     },
     {
       path: "/signup",
-      element: <Signup />,
+      element: (
+        <PublicRoute>
+          <Signup />
+        </PublicRoute>
+      ),
     },
     {
       path: "/sellerlogin",
-      element: <Sellerlogin />,
+      element: (
+        <PublicRoute>
+          <Sellerlogin />
+        </PublicRoute>
+      ),
+    },
+    {
+      path: "/sellerregister",
+      element: (
+        <PublicRoute>
+          <Selleregister />
+        </PublicRoute>
+      ),
     },
     {
       path: "/changepassword",
       element: <Chnagepassword />,
     },
+
+    // Protected User Routes (requires authentication)
     {
-      path: "/sellerregister",
-      element: <Selleregister />,
+      path:"/cart",
+      element: (
+        <ProtectedRoute>
+          <div>
+            <Navbar/>
+            <Cart />
+            <Footer/>
+          </div>
+        </ProtectedRoute>
+      )
     },
     {
+      path: "/myorders",
+      element: (
+        <ProtectedRoute>
+          <div>
+            <Navbar />
+            <Orders />
+            <Footer />
+          </div>
+        </ProtectedRoute>
+      ),
+    },
+    {
+      path: "/wishlist",
+      element: (
+        <ProtectedRoute>
+          <div>
+            <Navbar />
+            <WishList />
+            <Footer />
+          </div>
+        </ProtectedRoute>
+      ),
+    },
+    {
+      path: "/address",
+      element: (
+        <ProtectedRoute>
+          <div>
+            <Navbar />
+            <AddAddress />
+            <Footer />
+          </div>
+        </ProtectedRoute>
+      ),
+    },
+
+    // Protected Seller Routes (requires seller authentication)
+    {
       path:"/changesellerpassword",
-      element:<ChangePassword/>
+      element: (
+        <SellerProtectedRoute>
+          <ChangePassword/>
+        </SellerProtectedRoute>
+      )
     },
     {
       path:"/seller/orders",
-      element:<ManageOrders/>
+      element: (
+        <SellerProtectedRoute>
+          <ManageOrders/>
+        </SellerProtectedRoute>
+      )
     },
     {
       path:"/seller/upload",
-      element:<UploadProducts/>
+      element: (
+        <SellerProtectedRoute>
+          <UploadProducts/>
+        </SellerProtectedRoute>
+      )
     },
     {
       path:"/seller/products",
-      element:<ManageSellerProducts/>
+      element: (
+        <SellerProtectedRoute>
+          <ManageSellerProducts/>
+        </SellerProtectedRoute>
+      )
     },
+
+    // 404 Not Found
     {
       path: "*",
       element: (

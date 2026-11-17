@@ -20,12 +20,12 @@ const Usedproducts = () => {
   }, [oldproducts, searchquery])
 
   return  (
-    <div className='mt-16 mx-10 my-10 flex flex-col'>
+    <div className='mt-16 mx-4 sm:mx-6 md:mx-10 my-10 flex flex-col'>
       <div className='flex flex-col items-end w-max'>
         <p className='text-2xl font-medium uppercase'>All Products</p>
         <div className='w-16 h-0.5 bg-primary rounded-full'></div>
       </div>
-       <div className="grid ml-10 grid-cols-1 sm:grid-cols-2 md:grid-cols-3  md:ml-0 lg:grid-cols-5 xl:grid-cols-5 gap-4 mt-8 ">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 mt-8">
         {filteredproducts
           .filter((product) => product)
           .map((product) => (

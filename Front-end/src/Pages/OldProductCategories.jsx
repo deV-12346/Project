@@ -17,7 +17,7 @@ const ProductCategories = () => {
   )
 
   return (
-    <div className='mt-16 mx-10 my-10'>
+    <div className='mt-16 mx-4 sm:mx-6 md:mx-10 my-10'>
       {searchcategory && (
         <div className='flex flex-col items-end w-max'>
           <p className='text-2xl font-medium'>{searchcategory.text.toUpperCase()}</p>
@@ -26,7 +26,7 @@ const ProductCategories = () => {
       )}
 
       {filteredProducts.length > 0 ? (
-        <div className='grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 mt-6 md:gap-6'>
+        <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 mt-8'>
           {filteredProducts.map((product) => (
             <ProductCard1 key={product._id} product={product} />
           ))}
