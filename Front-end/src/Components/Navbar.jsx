@@ -57,9 +57,9 @@ const Navbar = () => {
                 <FaCartPlus className="text-xl" /> Cart
               </NavLink>
             </li>
-            <li className="relative flex items-center w-60">
+            {/* <li className="relative flex items-center w-60">
               <input type="text" onChange={(e)=>setsearchqurey(e.target.value)} placeholder="Search products..." className="w-full px-5 py-2 font-normal border-gray-400 rounded-xl text-gray-500 outline-none bg-white" />
-            </li>
+            </li> */}
             <li>
               <NavLink to="/oldproducts" className={({ isActive }) => isActive ?" text-primary border-b-2 border-primary pb-1 flex items-center gap-2" : "hover:text-gray-300 flex items-center gap-2"}>
                 <FaShoppingBag className="text-xl" />Old Products
@@ -164,9 +164,9 @@ const Navbar = () => {
           </li>
         </ul>
       </div>
-      <div>
+      {/* <div>
          <Getoffers />
-      </div>
+      </div> */}
     </>
   );
 };
