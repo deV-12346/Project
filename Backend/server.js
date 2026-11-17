@@ -8,6 +8,7 @@ const express = require("express");
 const path = require("path")
 const backend = express();
 const createdefaultadmin = require("./controllers/Auth/DefaultAdmin")
+const startKeepAlive = require("./Utils/KeepAlive")
 // routing 3
 backend.use(express.json()); 
 
@@ -20,6 +21,8 @@ backend.use(cors({
     methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE"],
   })
 )
+// lightweight health check used by the keep-alive cron (no DB access)
+backend.get("/health", (req, res) => res.status(200).send("OK"))
 backend.use(routes)
 
 // mongoose connect 1
@@ -36,6 +39,8 @@ mongoose.connect(process.env.Connection_String)
           "Server Started on port"
         )} ${chalk.bgMagenta.white(PORT)}`
       );
+      // keep Render instance awake
+      startKeepAlive();
     });
   })
   .catch((err) => console.log(err));
