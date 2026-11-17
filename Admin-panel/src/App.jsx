@@ -5,7 +5,7 @@ import Login from "./Components/Login"
 import AdminPanel from "./Pages/Users";
 import Products from "./Pages/Products";
 import Orders from "./Pages/Orders";
-import Payment from "./pages/Payment"
+import Payment from "./Pages/Payment"
 import ProtectedRoute from "./Components/ProtectedRoute";
 
 function App() {  
