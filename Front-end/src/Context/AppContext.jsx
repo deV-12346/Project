@@ -19,14 +19,9 @@ export const AuthProvider = ({ children }) => {
     try {
       const response = await axiosinstance.get(`${baseURL}/api/product/getproducts`);
       if (response.data.success) {
-        const modifiedProducts = response.data.data.map(product => ({
-          ...product,
-          images: product.images.map(img => ({
-            url: `${baseURL}/${img.url}`
-          }))
-        }));
-        setproducts(modifiedProducts);
-        console.log("Fetched Products:", modifiedProducts);
+        // Images now come directly from Cloudinary - no need to prepend baseURL
+        setproducts(response.data.data);
+        console.log("Fetched Products:", response.data.data);
       }
     } catch (error) {
       console.error(error);
@@ -43,14 +38,9 @@ export const AuthProvider = ({ children }) => {
     try {
       const response = await axiosinstance.get(`${baseURL}/api/product/getoldproducts`)
       if (response.data.success) {
-        const modifiedoldProducts = response.data.data.map(oldproduct => ({
-          ...oldproduct,
-          images: oldproduct.images.map(img => ({
-            url: `${baseURL}/${img.url}`
-          }))
-        }))
-        SetOldproduct(modifiedoldProducts)
-        console.log("old products", modifiedoldProducts)
+        // Images now come directly from Cloudinary - no need to prepend baseURL
+        SetOldproduct(response.data.data)
+        console.log("old products", response.data.data)
       }
     } catch (error) {
       console.log(error?.response?.data?.message)

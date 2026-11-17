@@ -85,7 +85,7 @@ const ManageOrders = () => {
             {visibleImages.map((img, index) => (
               <img
                 key={index}
-                src={`${baseURL}/${img.url}`}
+                src={img.url}
                 alt={`product-${index}`}
                 style={{
                   width: 50,

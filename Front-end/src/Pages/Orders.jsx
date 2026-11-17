@@ -58,7 +58,7 @@ const MyOrders = () => {
             >
               <div className="flex items-start md:items-center gap-4 w-full md:w-1/2">
                 <img
-                  src={`${baseURL}/${item.productId?.images?.[0]?.url}`}
+                  src={item.productId?.images?.[0]?.url}
                   alt="Product"
                   className="w-32 h-32 object-cover border rounded-md"
                 />
@@ -137,7 +137,7 @@ const MyOrders = () => {
               <div className="flex flex-col md:flex-row items-center md:items-center justify-between gap-4 py-4">
                 <div className="flex items-start md:items-center gap-4 w-full md:w-1/2">
                   <img
-                    src={`${baseURL}/${order.productId?.images?.[0]?.url}`}
+                    src={order.productId?.images?.[0]?.url}
                     alt="Product"
                     className="w-32 h-32 object-cover border rounded-md"
                   />
