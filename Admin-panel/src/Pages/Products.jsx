@@ -3,7 +3,7 @@ import { Layout,Modal,Input,Select, Table,Form, message,Button,Row,Col } from 'a
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons'; 
 import HeaderBar from '../Components/Header';
 import SidebarMenu from '../Components/Sidebar';
-import axiosinstance from "../../Axiosinstance";
+import axiosinstance from "../../axiosinstance";
 import {baseURL} from "../../config";
 import { toast, ToastContainer } from 'react-toastify';
 

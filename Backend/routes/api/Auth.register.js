@@ -2,6 +2,7 @@ const router = require("express").Router();
 const Register = require("../../controllers/Auth/Register.js")
 const {Login} = require("../../controllers/Auth/Login.js")
 const {CheckAuth} = require("../../Middleware/Checkauth.js")
+const {IsAdmin} = require("../../Middleware/IsAdmin.js")
 const {Sellerlogin} = require("../../controllers/Auth/Sellerlogin.js")
 const Sellerregister = require("../../controllers/Auth/Sellerregister.js")
 const {Adduser} = require("../../controllers/Auth/Adduser.js")
@@ -17,25 +18,25 @@ router.put("/changepassword",Changepassword)
 const {getotp} = require("../../controllers/Auth/Changepassword.js")
 router.post("/generateotp" ,getotp)
 
-router.post("/addusers",CheckAuth,Adduser)
+router.post("/addusers",CheckAuth,IsAdmin,Adduser)
 
 const { getAllUsers } = require("../../controllers/Auth/Getusers.js")
-router.get("/users",CheckAuth,getAllUsers)
+router.get("/users",CheckAuth,IsAdmin,getAllUsers)
 
 const {GetallSellers} = require("../../controllers/Auth/GetSellers.js")
-router.get("/sellers",CheckAuth,GetallSellers)
+router.get("/sellers",CheckAuth,IsAdmin,GetallSellers)
 
 const {EditUser} = require("../../controllers/Auth/EditUser.js")
-router.put("/Edituser",CheckAuth,EditUser)
+router.put("/Edituser",CheckAuth,IsAdmin,EditUser)
 
 const {Removeuser} = require("../../controllers/Auth/Deleteuser.js")
-router.delete("/Removeuser",CheckAuth,Removeuser)
+router.delete("/Removeuser",CheckAuth,IsAdmin,Removeuser)
 
 const {EditSeller} = require("../../controllers/Auth/EditSeller.js")
-router.put("/Editseller",CheckAuth,EditSeller)
+router.put("/Editseller",CheckAuth,IsAdmin,EditSeller)
 
 const {Deleteseller} = require("../../controllers/Auth/DeleteSeller.js")
-router.delete("/removeseller",CheckAuth,Deleteseller)
+router.delete("/removeseller",CheckAuth,IsAdmin,Deleteseller)
 
 const {products } = require("../../controllers/Auth/Products.js")
 router.post("/uploadfile",products)
@@ -47,9 +48,9 @@ const {GoogleLogin} = require("../../controllers/Auth/GoogleLogin.js")
 router.get("/google",GoogleLogin)
 
 const {GetGoogleUser} = require("../../controllers/Auth/GetGoogleuser.js")
-router.get("/getggogleuser",GetGoogleUser)
+router.get("/getggogleuser",CheckAuth,IsAdmin,GetGoogleUser)
 
 const  DeleteGoogleUser = require("../../controllers/Auth/DeleteGoogleUser.js")
-router.delete("/deletedgoogleuser/:id", DeleteGoogleUser)
+router.delete("/deletedgoogleuser/:id",CheckAuth,IsAdmin,DeleteGoogleUser)
 
 module.exports = router; 
