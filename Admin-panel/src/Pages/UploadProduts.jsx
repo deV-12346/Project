@@ -4,7 +4,7 @@ import { UploadOutlined } from '@ant-design/icons';
 import { ToastContainer, toast } from 'react-toastify';
 import HeaderBar from '../Components/Header'; 
 import SidebarMenu from '../Components/Sidebar'; 
-import axiosinstance from"../../Axiosinstance"
+import axiosinstance from"../../axiosinstance"
 import { baseURL } from '../../config';
 
 const { Content } = Layout;

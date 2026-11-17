@@ -4,7 +4,7 @@ import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { ToastContainer, toast } from 'react-toastify';
 import HeaderBar from '../Components/Header';
 import SidebarMenu from '../Components/Sidebar';
-import Axiosinstance from '../../Axiosinstance';
+import Axiosinstance from '../../axiosinstance';
 import { baseURL } from '../../config';
 
 const { Content } = Layout;

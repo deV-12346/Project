@@ -24,7 +24,7 @@ const SellerSchema = new Schema({
         if (!this.isModified("password")) return next(); // Only hash if password is new/modified
     
         try {
-            const salt = await bcrypt.genSalt(2); // Generate salt
+            const salt = await bcrypt.genSalt(10); // Generate salt
             this.password = await bcrypt.hash(this.password, salt); // Hash password
             next();
         } catch (err) {

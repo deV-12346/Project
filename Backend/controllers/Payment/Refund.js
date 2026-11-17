@@ -1,4 +1,6 @@
 const Payment = require("../../Models/Payment")
+const Order = require("../../Models/Order")
+const User = require("../../Models/user.model")
 const {createRazorpayInstance} = require("../../Config/Razorpay.Config")
 const {CancelOrderMail} = require("../../Services/MailService/CancelOrder")
 const razorPayInstance = createRazorpayInstance  ()
@@ -14,6 +16,26 @@ const refundPayment = async (req,res,next)=>{
             message:"Payment not found"
          })
          }
+         if(refundpayment.status === "Refund"){
+          return res.status(400).json({
+            success:false,
+            message:"Payment already refunded"
+         })
+         }
+
+         // only the customer who owns the order (or an admin) may refund it
+         const callerId = req.user?.id
+         const owner = await Order.exists({payment_id:refundpayment._id,userId:callerId})
+         if(!owner){
+          const caller = await User.findById(callerId).select("role")
+          if(!caller || caller.role !== "admin"){
+            return res.status(403).json({
+              success:false,
+              message:"You are not allowed to refund this payment"
+            })
+          }
+         }
+
          const razorpay_payment_id = refundpayment.razorpay_payment_id
          const amount = refundpayment.amount*100
 
