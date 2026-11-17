@@ -2,7 +2,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./Pages/Home";
 import Shop from "./Pages/Shop";
 import Orders from "./Pages/Orders";
-import Login from "./Components/Login ";
+import Login from "./Components/Login";
 import Signup from "./Components/Signup";
 import Navbar from "./Components/Navbar";
 import Notfound from "./Pages/Notfound";
